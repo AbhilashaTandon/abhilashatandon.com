@@ -1,4 +1,4 @@
 export default function Resume() {
-    return <></>;
+    return <>This is my resume!</>;
   }
   

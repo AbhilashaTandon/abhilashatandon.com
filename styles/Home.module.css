@@ -1,7 +1,35 @@
-:root {
-  --text: #000000;
-  --background: #f6e3ff;
-  --primary: #9912ca;
-  --secondary: #deadff;
-  --accent: #209aff;
+.navbar {
+  display: flex;
+  margin: auto 0;
+  text-decoration: none;
+}
+
+.nav_link {
+  padding-left: 128px;
+  font-size: 1.5rem;
+  
+ 
+  font-weight: 600;
+  
+  color: var(--text);
+  text-decoration: none;
+}
+
+.logo {
+  font-size: 2rem;
+  padding-right: 64px;
+  padding-left: 64px;
+  
+  font-weight: 600;
+  
+  color: var(--text);
+  text-decoration: inherit;
+}
+
+.top {
+  list-style-type: none;
+  display: flex;
+  background-color: var(--secondary);
+  border-style: solid;
+  border-width: 2px;
 }

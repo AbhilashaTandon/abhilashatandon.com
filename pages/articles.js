@@ -1,3 +1,3 @@
 export default function Articles() {
-  return <></>;
+  return <>This is my blog!</>;
 }

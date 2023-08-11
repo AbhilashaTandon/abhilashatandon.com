@@ -18,7 +18,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main>
-        <h1>Abhilasha Tandon</h1>
+        <p>This is my website!</p>
       </main>
     </>
   );

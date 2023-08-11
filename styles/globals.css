@@ -1,0 +1,9 @@
+:root {
+    --text: hwb(0 0% 100%);
+    --background: #ffffff;
+    --primary: #9912ca;
+    --secondary: #deadff;
+    --accent: #209aff;
+    font-family: Trebuchet MS, sans-serif;
+    background-color: var(--background);
+  }
