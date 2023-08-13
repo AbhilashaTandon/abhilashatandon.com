@@ -1,0 +1,7 @@
+.border_style{
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 4px;
+    /* box-shadow: 5px 5px 5px var(--primary); */
+    border-color: var(--text);
+  }

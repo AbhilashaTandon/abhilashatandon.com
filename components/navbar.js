@@ -1,21 +1,24 @@
+const classNames = require('classnames');
 
 import Link from "next/link";
-import styles from "@/styles/Home.module.css";
+import Styles from "@/styles/Navbar.module.css";
+import General from "@/styles/General.module.css"
 import Logo from "./logo";
 
 function NavLink({route, name}){
   return(
     <li>
-      <Link href={route} className={styles.nav_link}>{name}</Link>
+      <Link href={route} className={Styles.nav_link}>{name}</Link>
     </li>
   );
 }
 
 export default function Navbar() {
+  var classnames = classNames(Styles.top);
   return (
-    <ul className={styles.top}>
+    <ul className={classnames}>
         <Logo />
-      <div className={styles.navbar}>
+      <div className={Styles.navbar}>
         <NavLink route="/projects" name="Projects"/>
         <NavLink route="/articles" name="Articles"/>
         <NavLink route="/resume" name="Resume"/>

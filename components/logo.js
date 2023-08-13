@@ -1,11 +1,11 @@
 
 import Link from "next/link";
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/Navbar.module.css";
 
 export default function Logo() {
   return (
     <Link href="/" className={styles.logo}>
-      Abhilasha Tandon
+      ABHILASHA TANDON
     </Link>
   );
 }

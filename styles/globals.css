@@ -1,9 +1,14 @@
 :root {
-    --text: hwb(0 0% 100%);
-    --background: #ffffff;
-    --primary: #9912ca;
-    --secondary: #deadff;
-    --accent: #209aff;
+    --text: #1c0c1d;
+    --background: #faf4fb;
+    --primary: #b2deaf;
+    --secondary: #b7e1df;
+    --accent: #3f913b;
     font-family: Trebuchet MS, sans-serif;
     background-color: var(--background);
+    padding: 2% 10% 0% 10%;
+    border-style: solid;
+    border-width: 5px;
+    border-color: var(--primary);
+    height: min(100%);
   }

@@ -1,0 +1,13 @@
+.grid {
+    display: grid;
+    grid-template-columns: 400px 400px;
+    place-items: center;
+}
+
+.box {
+    border: 2px;
+    border-radius: 1px;
+    border-width: 4px;
+    border-color: var(--primary);
+    width: clamp(200px, 40%, 600px);
+}
