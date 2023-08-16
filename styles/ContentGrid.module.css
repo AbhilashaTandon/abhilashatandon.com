@@ -1,13 +1,22 @@
 .grid {
+    margin-top: 100px;
     display: grid;
-    grid-template-columns: 400px 400px;
+    grid-template-columns: 300px 300px 300px;
+    column-gap: 60px;
+    row-gap: 40px;
     place-items: center;
+    justify-content: flex-start;
 }
 
 .box {
-    border: 2px;
-    border-radius: 1px;
-    border-width: 4px;
-    border-color: var(--primary);
-    width: clamp(200px, 40%, 600px);
+    justify-content: center;
+}
+
+.box:hover{
+    transition: .45s;
+}
+
+.img{
+    height: 200px;
+    width: 300px; 
 }

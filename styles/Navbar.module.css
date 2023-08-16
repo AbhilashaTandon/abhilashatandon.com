@@ -1,19 +1,16 @@
 .navbar {
   display: flex; /* makes horizontal list */
-  margin: auto 0; /* makes centered vertically */
+  align-items: center; /* makes centered vertically */
   text-decoration: none; /* gets rid of default link color + underline */
 }
 
 .nav_link {
-  
   padding: 2px 1em 0 1em;
   font-weight: 600;
   font-size: 1rem;
-  padding-right: 32px;
   
   color: var(--text);
   text-decoration: none;
-  
 }
 
 .logo {
@@ -22,7 +19,6 @@
   
   color: var(--text);
   text-decoration: none;
-  justify-content: flex-start;
 }
 
 .top {
@@ -31,5 +27,4 @@
 
   background-color: var(--background);
   justify-content: space-between;
-  
 }

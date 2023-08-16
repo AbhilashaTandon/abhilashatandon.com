@@ -10,9 +10,9 @@ export default function ContentBox({ image, title, desc, link }) {
   //box that previews article or project
   return (
     <div className={classnames}>
-      <Image src={image} alt="error" />
-      <h3>{title}</h3>
-      <p>{desc}</p>
+      <Image src={image} alt="error" className={Styles.img}/>
+      <div className={General.heading}>{title}</div>
+      <div className={General.body}>{desc}</div>
     </div>
   );
 }
