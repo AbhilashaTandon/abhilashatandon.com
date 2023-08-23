@@ -10,5 +10,5 @@
     border-style: solid;
     border-width: 5px;
     border-color: var(--primary);
-    height: min(100%);
-  }
+    min-height: 100%;
+}

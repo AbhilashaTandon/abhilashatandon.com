@@ -1,22 +1,52 @@
 .grid {
-    margin-top: 100px;
+    --column-width: 300px;
+    margin-top: 140px;
     display: grid;
-    grid-template-columns: 300px 300px 300px;
-    column-gap: 60px;
+    grid-template-columns: var(--column-width) var(--column-width) var(
+            --column-width
+        );
+    column-gap: calc((100% - var(--column-width) * 3) / 2);
     row-gap: 40px;
     place-items: center;
-    justify-content: flex-start;
 }
 
 .box {
     justify-content: center;
+    text-decoration: none; /* gets rid of default link color + underline */
+    color: var(--text);
+    position: relative;
 }
 
-.box:hover{
-    transition: .45s;
+.hover_text {
+    display: none;
 }
 
-.img{
+
+
+.box:hover > .hover_text {
+    display: grid;
+    color: var(--text);
+    -webkit-text-fill-color: var(--background);
+    -webkit-text-stroke: 1px;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    justify-content: center;
+
+    place-items: center;
+}
+
+.img {
     height: 200px;
-    width: 300px; 
+    width: var(--column-width);
+    object-fit: cover;
+}
+
+.box:hover > .img {
+    transition: 0.45s;
+    filter: brightness(50%);
 }
