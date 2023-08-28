@@ -6,26 +6,29 @@ import General from "@/styles/General.module.css";
 import Logo from "./logo";
 
 function NavLink({ route, name }) {
-  return (
-    <div>
-      <Link href={route} className={Styles.nav_link}>
-        {name}
-      </Link>
-    </div>
-  );
+  var link_style = classNames(Styles.nav_link, General.heading);
+    return (
+        <div>
+            <Link href={route} className={link_style}>
+                {name}
+            </Link>
+        </div>
+    );
 }
 
 export default function Navbar() {
-  var classnames = classNames(Styles.top);
-  return (
-    <div className={classnames}>
-      <Logo />
-      <div className={Styles.navbar}>
-        <NavLink route="/projects" name="Projects" />
-        <NavLink route="/articles" name="Articles" />
-        <NavLink route="/resume" name="Resume" />
-        <NavLink route="/about" name="About" />
-      </div>
-    </div>
-  );
+    return (
+        <div className={Styles.header}>
+            <div className={Styles.top}>
+                <Logo />
+                <div className={Styles.navbar}>
+                    <NavLink route="/projects" name="Projects" />
+                    <NavLink route="/articles" name="Articles" />
+                    <NavLink route="/resume" name="Resume" />
+                    <NavLink route="/about" name="About" />
+                </div>
+            </div>
+            <hr></hr>
+        </div>
+    );
 }

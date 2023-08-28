@@ -1,12 +1,18 @@
 .grid {
-    --column-width: 300px;
+    --aspect-ratio: 0.625;
+
+    --column-width: 330px;
+    --row-width: 210px;
+
+    --column-gap: calc((100% - var(--column-width) * 3) / 2);
+
     margin-top: 140px;
     display: grid;
     grid-template-columns: var(--column-width) var(--column-width) var(
             --column-width
         );
-    column-gap: calc((100% - var(--column-width) * 3) / 2);
-    row-gap: 40px;
+    column-gap: var(--column-gap);
+    row-gap: 20px;
     place-items: center;
 }
 
@@ -20,8 +26,6 @@
 .hover_text {
     display: none;
 }
-
-
 
 .box:hover > .hover_text {
     display: grid;
@@ -41,7 +45,7 @@
 }
 
 .img {
-    height: 200px;
+    height: var(--row-width);
     width: var(--column-width);
     object-fit: cover;
 }

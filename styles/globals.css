@@ -1,14 +1,11 @@
 :root {
-    --text: #1c0c1d;
-    --background: #faf4fb;
-    --primary: #b2deaf;
-    --secondary: #b7e1df;
-    --accent: #3f913b;
-    font-family: Trebuchet MS, sans-serif;
+    --text: #f1e7f8;
+    --background: #17091f;
+    --primary: #bf80ea;
+    --secondary: #0b050f;
+    --accent: #99e0c4;
+    font-family: 'Courier New', Courier, monospace;
     background-color: var(--background);
-    padding: 2% 15% 0% 15%;
-    border-style: solid;
-    border-width: 5px;
-    border-color: var(--primary);
+    padding: 2% clamp(0px, 15%, 15%) 0% clamp(0px, 15%, 15%);
     min-height: 100%;
 }
