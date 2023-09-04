@@ -1,8 +1,8 @@
 import ContentBox from "@/components/content-box";
-import testing1 from "../public/images/testing1.png"
-import testing2 from "../public/images/testing2.png"
-import testing3 from "../public/images/testing3.png"
-import testing4 from "../public/images/testing4.png"
+import testing1 from "../../public/images/testing1.png"
+import testing2 from "../../public/images/testing2.png"
+import testing3 from "../../public/images/testing3.png"
+import testing4 from "../../public/images/testing4.png"
 import styles from "@/styles/ContentGrid.module.css";
 import General from "@/styles/General.module.css"
 

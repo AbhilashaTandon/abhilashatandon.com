@@ -1,6 +1,4 @@
 .grid {
-    --aspect-ratio: 0.625;
-
     --column-width: 330px;
     --row-width: 210px;
 
@@ -10,7 +8,7 @@
     display: grid;
     grid-template-columns: var(--column-width) var(--column-width) var(
             --column-width
-        );
+        ); /* 3 columns of equal size */
     column-gap: var(--column-gap);
     row-gap: 20px;
     place-items: center;
@@ -19,38 +17,22 @@
 .box {
     justify-content: center;
     text-decoration: none; /* gets rid of default link color + underline */
-    color: var(--text);
     position: relative;
-}
-
-.hover_text {
-    display: none;
-}
-
-.box:hover > .hover_text {
-    display: grid;
-    color: var(--text);
-    -webkit-text-fill-color: var(--background);
-    -webkit-text-stroke: 1px;
-
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    justify-content: center;
-
-    place-items: center;
+    background-color: var(--secondary);
 }
 
 .img {
     height: var(--row-width);
     width: var(--column-width);
     object-fit: cover;
+    background-position: center;
 }
 
-.box:hover > .img {
+.box:hover .img {
     transition: 0.45s;
     filter: brightness(50%);
+}
+
+.desc{
+    margin: 0.5rem 1rem 0.8rem 1rem;
 }

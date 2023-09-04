@@ -1,12 +1,12 @@
-const classNames = require("classnames");
-
 import Link from "next/link";
 import Styles from "@/styles/Navbar.module.css";
 import General from "@/styles/General.module.css";
 import Logo from "./logo";
 
+const classNames = require("classnames");
+
 function NavLink({ route, name }) {
-  var link_style = classNames(Styles.nav_link, General.heading);
+  var link_style = classNames(Styles.nav_link, General.medium_text);
     return (
         <div>
             <Link href={route} className={link_style}>
