@@ -18,7 +18,7 @@
     justify-content: center;
     text-decoration: none; /* gets rid of default link color + underline */
     position: relative;
-    background-color: var(--secondary);
+    background-color: var(--primary);
 }
 
 .img {
@@ -35,4 +35,5 @@
 
 .desc{
     margin: 0.5rem 1rem 0.8rem 1rem;
+    color: var(--background);
 }

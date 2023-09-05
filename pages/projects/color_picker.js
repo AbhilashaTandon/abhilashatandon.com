@@ -52,9 +52,7 @@ function ColorGrid() {
   const [colors, setColors] = useState(init_colors);
 
   function handleClick(id) {
-    if(iter < 1){
-        setIter(1);
-    }
+    
     var new_colors = init_colors;
     new_colors[0] = colors[id+1];
     for (var i = 0; i < 6; i++) {
@@ -65,7 +63,7 @@ function ColorGrid() {
       new_colors[i+1] = normalize(current_color);
     }
     console.log(new_colors[0]);
-    setIter(a => a/2);
+    setIter(a => (a == 1) ? 1: a/2);
     setColors(new_colors);
   }
 
@@ -81,7 +79,7 @@ function ColorGrid() {
     <>
     <div
       className={ColorPicker.grid}
-    //   style={{ "background-color": "rgb(" + colors[0].join(",") + ")" }}
+      style={{ "background-color": "rgb(" + colors[0].join(",") + ")" }}
     >
       {button_display}
       

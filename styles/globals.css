@@ -1,9 +1,9 @@
 :root {
-    --text: #0a0118;
-    --background: #ffffff;
-    --primary: #7c56b8;
-    --secondary: #ddc9fc;
-    --accent: #620bef;
+    --text: #1c0d21;
+--background: #ebdbf0;
+--primary: #b439dd;
+--secondary: #e1c9e9;
+--accent: #8b43a3;
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
         "Lucida Sans", Arial, sans-serif;
     background-color: var(--background);
