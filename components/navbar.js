@@ -7,28 +7,28 @@ const classNames = require("classnames");
 
 function NavLink({ route, name }) {
   var link_style = classNames(Styles.nav_link, General.medium_text);
-    return (
-        <div>
-            <Link href={route} className={link_style}>
-                {name}
-            </Link>
-        </div>
-    );
+  return (
+    <div>
+      <Link href={route} className={link_style}>
+        {name}
+      </Link>
+    </div>
+  );
 }
 
 export default function Navbar() {
-    return (
-        <div className={Styles.header}>
-            <div className={Styles.top}>
-                <Logo />
-                <div className={Styles.navbar}>
-                    <NavLink route="/projects" name="Projects" />
-                    <NavLink route="/articles" name="Articles" />
-                    <NavLink route="/resume" name="Resume" />
-                    <NavLink route="/about" name="About" />
-                </div>
-            </div>
-            <hr></hr>
+  return (
+    <div className={Styles.header}>
+      <div className={Styles.top}>
+        <Logo />
+        <div className={Styles.navbar}>
+          <NavLink route="/projects" name="Projects" />
+          <NavLink route="/articles" name="Articles" />
+          <NavLink route="/resume" name="Resume" />
+          <NavLink route="/about" name="About" />
         </div>
-    );
+      </div>
+      <hr></hr>
+    </div>
+  );
 }

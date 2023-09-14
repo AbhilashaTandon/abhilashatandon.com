@@ -4,23 +4,28 @@ import Image from "next/image";
 import Styles from "@/styles/ContentGrid.module.css";
 import General from "@/styles/General.module.css";
 import Link from "next/link";
+import Date from "../components/date";
 
-export default function ContentBox({ image, title, desc, dest }) {
-    //box that previews article or project
-    var classnames = classNames(Styles.box, General.border_style);
-    return (
-        <div className={classnames}>
-            <div className={Styles.img_container}>
-                <Link href={dest}>
-                    <Image src={image} alt="error" className={Styles.img}/>
-                </Link>
-            </div>
-            <div className={Styles.desc}>
-                <h3 className={General.heading}>{title}</h3>
-                <h4 className={General.body}>{desc}</h4>
-            </div>
+export default function ContentBox({ title, desc, dest, date }) {
+  //box that previews article or project
+  var box_style = classNames(Styles.box, General.border_style);
+  var title_style = classNames(General.medium_text, Styles.title);
+  var desc_style = classNames(General.small_text, Styles.desc)
+
+  return (
+    <Link href={dest}>
+      <div className={box_style}>
+        <div className={Styles.text}>
+          <h3 className={title_style}>{title}</h3>
+
+          <h4 className={desc_style}>{desc}</h4>
+          <p className={General.small_text}>
+            <Date dateString={date} />
+          </p>
         </div>
-    );
+      </div>
+    </Link>
+  );
 }
 
 /*

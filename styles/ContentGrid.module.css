@@ -1,39 +1,44 @@
 .grid {
-    --column-width: 330px;
-    --row-width: 210px;
+  --column-width: 330px;
+  --row-width: 9rem;
 
-    --column-gap: calc((100% - var(--column-width) * 3) / 2);
+  --column-gap: calc((100% - var(--column-width) * 3) / 2);
 
-    margin-top: 140px;
-    display: grid;
-    grid-template-columns: var(--column-width) var(--column-width) var(
-            --column-width
-        ); /* 3 columns of equal size */
-    column-gap: var(--column-gap);
-    row-gap: 20px;
-    place-items: center;
+  display: grid;
+  grid-template-columns: var(--column-width) var(--column-width) var(
+      --column-width
+    ); /* 3 columns of equal size */
+  column-gap: var(--column-gap);
+  row-gap: 20px;
+  place-items: center;
 }
 
 .box {
-    justify-content: center;
-    text-decoration: none; /* gets rid of default link color + underline */
-    position: relative;
-    background-color: var(--primary);
+  justify-content: center;
+  text-decoration: none; /* gets rid of default link color + underline */
+  position: relative;
+  background-color: var(--primary);
+  width: var(--column-width);
+  height: var(--row-width);
+  padding: 0.1rem 0.5rem 0.5rem 0.5rem;
 }
 
-.img {
-    height: var(--row-width);
-    width: var(--column-width);
-    object-fit: cover;
-    background-position: center;
+.box:hover {
+  transition: 0.45s;
+  background-color: var(--accent);
 }
 
-.box:hover .img {
-    transition: 0.45s;
-    filter: brightness(50%);
+.text {
+  margin: 0.5rem 0rem 0.8rem 0.5rem;
+  text-decoration: none; /* gets rid of default link color + underline */
+  height: 2rem;
+}
+
+.title {
+  height: 1.5rem;
+  font-weight: bolder;
 }
 
 .desc{
-    margin: 0.5rem 1rem 0.8rem 1rem;
-    color: var(--background);
+  height: 2rem;
 }

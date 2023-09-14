@@ -1,15 +1,16 @@
-.profile{
-    border-radius: 50%; /* makes image circular */
-    width: 25vw;
-    height: 25vw;
-    object-fit: cover;
-    margin-left: 5vw;
+.profile {
+  /* profile picture */
+  border-radius: 50%; /* makes image circular */
+  width: 25vw;
+  height: 25vw;
+  object-fit: cover;
+  margin-left: 5vw;
 }
 
-.intro{
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10%;
-    justify-content: center;
-    align-items: center;
+.intro {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10%;
+  justify-content: center;
+  align-items: center;
 }

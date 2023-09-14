@@ -1,24 +1,21 @@
 .border_style {
-    border-radius: 8px;
-    overflow: hidden;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-
-
 .large_text {
-    font-size: 2rem;
-    font-weight: bolder;
-    color: var(--text);
+  font-size: 2rem;
+  font-weight: bolder;
+  color: var(--text);
 }
 
 .medium_text {
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: var(--text);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text);
 }
 
-.small_text{
-    font-size: .938rem;
-    font-weight: 100;
-    color: var(--primary);
+.small_text {
+  font-size: 1rem;
+  color: var(--text);
 }

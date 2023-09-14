@@ -7,7 +7,5 @@
 //closest politicians (probable vote choice in 2020 primary, 2020 general, etc)
 
 export default function Main() {
-    return (
-      <></>
-    )
+  return <></>;
 }

@@ -15,13 +15,16 @@ export async function getStaticProps() {
 
 export default function Articles({ allPostsData }) {
   return (
-    <>
-      <h1 className={General.large_text}>This is my blog!</h1>
-      <div className={styles.grid}>
-        {allPostsData.map(({ id, date, title, image }) => (
-          <ContentBox key={id} title={title} desc={date} dest={"/articles/" + id} />
-        ))}
-      </div>
-    </>
+    <div className={styles.grid}>
+      {allPostsData.map(({ id, date, title, desc }) => (
+        <ContentBox
+          key={id}
+          date={date}
+          title={title}
+          desc={desc}
+          dest={"/articles/" + id}
+        />
+      ))}
+    </div>
   );
 }

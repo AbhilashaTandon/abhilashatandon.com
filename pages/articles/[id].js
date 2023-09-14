@@ -1,5 +1,6 @@
 import { getAllPostIds, getPostData } from "../../lib/posts";
 import General from "@/styles/General.module.css";
+import Date from "@/components/date";
 
 export async function getStaticPaths() {
   const paths = getAllPostIds();
@@ -10,17 +11,26 @@ export async function getStaticPaths() {
 }
 
 export default function Article({ postData }) {
+  console.log(postData);
   return (
     <>
       <h1 className={General.large_text}>{postData.title}</h1>
-      <h3 className={General.medium_text}>{postData.id}</h3>
-      <h3 className={General.medium_text}>{postData.date}</h3>
+      <h3 className={General.medium_text}>
+        <Date dateString={postData.date} />
+      </h3>
+      <hr></hr>
+      <div
+        className={General.small_text}
+        dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
+      />
     </>
   );
 }
 
 export async function getStaticProps({ params }) {
-  const postData = getPostData(params.id);
+  // Add the "await" keyword like this:
+  const postData = await getPostData(params.id);
+
   return {
     props: {
       postData,
