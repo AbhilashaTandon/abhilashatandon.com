@@ -19,12 +19,12 @@ export async function getStaticProps() {
 
 export default function Projects({ projectsData }) {
   return (
-    <>
-      <h3 className={General.medium}>
+    <div>
+      <h4>
         This is where you can find various projects I like to work on in my
         spare time. Topics range from math, software, web development,
         linguistics, rpgs, and just whatever I am interested in at the moment.{" "}
-      </h3>
+      </h4>
       <div className={styles.grid}>
         {projectsData.map(({ id, date, title, desc }) => (
           <ContentBox
@@ -36,6 +36,6 @@ export default function Projects({ projectsData }) {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }

@@ -11,7 +11,6 @@ export async function getStaticPaths() {
 }
 
 export default function Article({ postData }) {
-  console.log(postData);
   return (
     <>
       <h1 className={General.large_text}>{postData.title}</h1>

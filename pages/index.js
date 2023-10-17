@@ -12,31 +12,25 @@ export default function Home() {
     <>
       <Head>
         <title>Abhilasha Tandon</title>
-        <meta charSet="UTF-8"></meta>
-        <meta
-          name="description"
-          content="A Passionate Developer with Versatile Skills"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <main>
+      <>
         <div class={HomeStyle.intro}>
           <div>
-            <h1 className={General.large_text}>Hello, World!</h1>
-            <p className={General.medium_text}>
+            <h2>Hello, World!</h2>
+            <h4>
               I&apos;m Abhilasha Tandon, a passionate developer with versatile
               skills. I&apos;m currently a senior at NYU&apos;s College of Arts
               and Science studying Computer Science and Mathematics.{" "}
-            </p>
-            <p>
+            </h4>
+            <h5>
               I love Machine Learning, Natural Language Processing, Web Design,
               Abstract Math, and creating efficient, elegant, and powerful
               software.
-            </p>
+            </h5>
           </div>
           <Image src={testing1} alt="error" class={HomeStyle.profile} />
         </div>
-      </main>
+      </>
     </>
   );
 }

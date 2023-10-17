@@ -1,16 +1,18 @@
 .grid {
-  --column-width: 330px;
-  --row-width: 9rem;
-
-  --column-gap: calc((100% - var(--column-width) * 3) / 2);
+  --column-gap: 20px;
+  --column-width: calc((100% - 2 * var(--column-gap)) / 3);
+  --row-width: calc(var(--column-width) * 0.5);
 
   display: grid;
+  justify-content: center;
   grid-template-columns: var(--column-width) var(--column-width) var(
       --column-width
     ); /* 3 columns of equal size */
   column-gap: var(--column-gap);
   row-gap: 20px;
   place-items: center;
+  padding: 0;
+  margin: 0;
 }
 
 .box {
@@ -18,27 +20,29 @@
   text-decoration: none; /* gets rid of default link color + underline */
   position: relative;
   background-color: var(--primary);
-  width: var(--column-width);
-  height: var(--row-width);
-  padding: 0.1rem 0.5rem 0.5rem 0.5rem;
+  width: 22vw;
+  height: 15vw;
+  padding: 0rem 1rem;
 }
 
 .box:hover {
   transition: 0.45s;
-  background-color: var(--accent);
+  background-color: var(--secondary);
 }
 
 .text {
-  margin: 0.5rem 0rem 0.8rem 0.5rem;
+  margin: 0rem;
   text-decoration: none; /* gets rid of default link color + underline */
-  height: 2rem;
+  display: grid;
+  color: var(--text);
 }
 
 .title {
-  height: 1.5rem;
   font-weight: bolder;
+  margin: 1rem 0 0 0;
 }
 
-.desc{
-  height: 2rem;
+.desc {
+  text-decoration: none;
+  margin: 0;
 }

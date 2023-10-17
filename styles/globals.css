@@ -1,13 +1,13 @@
-:root {
-  --text: #1c0d21;
-  --background: #ebdbf0;
-  --primary: #b439dd;
-  --secondary: #e1c9e9;
-  --accent: #8b43a3;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+@import url("https://fonts.googleapis.com/css?family=Roboto Mono:700|Roboto Mono:400");
+
+body {
+  --text: #130202;
+  --background: #f9f9f9;
+  --primary: #e087ff;
+  --secondary: #49a4fb;
+  --accent: #00813d;
+  font-family: "Roboto Mono";
   background-color: var(--background);
-  padding: 2% clamp(0px, 15%, 15%) 0% clamp(0px, 15%, 15%);
   min-height: 100%;
 }
 
@@ -25,4 +25,54 @@ a:hover {
 
 a:active {
   text-decoration: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+main {
+  /* everything except navbar */
+  padding: 0% clamp(0px, 10vw, 10vw) 0% clamp(0px, 10vw, 10vw);
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Roboto Mono";
+  font-weight: 700;
+}
+
+h4,
+h5 {
+  font-family: "Roboto Mono";
+  font-weight: 500;
+}
+
+html {
+  font-size: 100%;
+} /* 16px */
+
+h1 {
+  font-size: 3.053rem; /* 48.8px */
+}
+
+h2 {
+  font-size: 2.442rem; /* 39.04px */
+}
+
+h3 {
+  font-size: 1.954rem; /* 31.2px */
+}
+
+h4 {
+  font-size: 1.563rem; /* 24.96px */
+}
+
+h5 {
+  font-size: 1.25rem; /* 20px */
+}
+
+small {
+  font-size: 0.8rem; /* 12.8px */
 }

@@ -5,8 +5,16 @@ import Navbar from "../components/navbar.js";
 export default function App({ Component, pageProps }) {
   return (
     <>
+      <meta charSet="UTF-8"></meta>
+      <meta
+        name="description"
+        content="A Passionate Developer with Versatile Skills"
+      />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       <Navbar />
-      <Component {...pageProps} />
+      <main>
+        <Component {...pageProps} />
+      </main>
     </>
   );
 }

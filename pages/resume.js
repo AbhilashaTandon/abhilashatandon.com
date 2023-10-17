@@ -1,5 +1,5 @@
 import General from "@/styles/General.module.css";
 
 export default function Resume() {
-  return <p className={General.body}>This is my resume!</p>;
+  return <h5>This is my resume!</h5>;
 }

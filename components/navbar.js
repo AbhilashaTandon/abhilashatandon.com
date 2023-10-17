@@ -6,29 +6,26 @@ import Logo from "./logo";
 const classNames = require("classnames");
 
 function NavLink({ route, name }) {
-  var link_style = classNames(Styles.nav_link, General.medium_text);
+  var link_style = classNames(Styles.nav_link);
   return (
-    <div>
+    <h5>
       <Link href={route} className={link_style}>
         {name}
       </Link>
-    </div>
+    </h5>
   );
 }
 
 export default function Navbar() {
   return (
-    <div className={Styles.header}>
-      <div className={Styles.top}>
-        <Logo />
-        <div className={Styles.navbar}>
-          <NavLink route="/projects" name="Projects" />
-          <NavLink route="/articles" name="Articles" />
-          <NavLink route="/resume" name="Resume" />
-          <NavLink route="/about" name="About" />
-        </div>
+    <nav className={Styles.header}>
+      <Logo />
+      <div className={Styles.navbar}>
+        <NavLink route="/projects" name="Projects" />
+        <NavLink route="/articles" name="Articles" />
+        <NavLink route="/resume" name="Resume" />
+        <NavLink route="/about" name="About" />
       </div>
-      <hr></hr>
-    </div>
+    </nav>
   );
 }

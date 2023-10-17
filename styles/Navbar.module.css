@@ -9,33 +9,34 @@
 .nav_link {
   text-decoration: none;
   margin-left: min(1rem);
-  margin: 0;
+  color: var(--text);
 }
 
 .nav_link:hover {
   transition: 0.5s;
   color: var(--primary);
+  text-decoration: none;
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 600;
-
   color: var(--text);
   text-decoration: none;
   margin-right: min(1rem);
 }
 
-.top {
-  margin-top: 20px;
+.header {
+  /* navbar links */
+  position: sticky;
+  padding: 0rem 2.5rem;
+  margin: -1rem -0.5rem 0rem -0.5rem;
+  top: 0;
+  left: 0;
   list-style-type: none;
   display: flex; /* makes horizontal list */
-
+  justify-content: center;
+  align-items: center;
   background-color: var(--background);
   justify-content: space-between;
-}
-
-.header > hr {
-  width: 100%;
-  color: var(--text);
+  box-shadow: 0 10px 5px -5px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
