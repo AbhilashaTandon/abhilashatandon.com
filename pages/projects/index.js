@@ -4,7 +4,6 @@ import testing2 from "../../public/images/testing2.png";
 import testing3 from "../../public/images/testing3.png";
 import testing4 from "../../public/images/testing4.png";
 import styles from "@/styles/ContentGrid.module.css";
-import General from "@/styles/General.module.css";
 
 import { getSortedPostsData } from "../../lib/projects";
 

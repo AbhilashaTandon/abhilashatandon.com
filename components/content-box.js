@@ -2,13 +2,12 @@ const classNames = require("classnames");
 
 import Image from "next/image";
 import Styles from "@/styles/ContentGrid.module.css";
-import General from "@/styles/General.module.css";
 import Link from "next/link";
 import Date from "../components/date";
 
 export default function ContentBox({ title, desc, dest, date }) {
   //box that previews article or project
-  var box_style = classNames(Styles.box, General.border_style, Styles.text);
+  var box_style = classNames(Styles.box, Styles.text);
   var title_style = classNames(Styles.title);
   var desc_style = classNames(Styles.desc);
 

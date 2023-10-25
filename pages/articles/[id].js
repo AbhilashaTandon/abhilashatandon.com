@@ -1,5 +1,4 @@
 import { getAllPostIds, getPostData } from "../../lib/posts";
-import General from "@/styles/General.module.css";
 import Date from "@/components/date";
 
 export async function getStaticPaths() {
@@ -13,15 +12,12 @@ export async function getStaticPaths() {
 export default function Article({ postData }) {
   return (
     <>
-      <h1 className={General.large_text}>{postData.title}</h1>
-      <h3 className={General.medium_text}>
+      <h1>{postData.title}</h1>
+      <h3>
         <Date dateString={postData.date} />
       </h3>
       <hr></hr>
-      <div
-        className={General.small_text}
-        dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
-      />
+      <h4 dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
     </>
   );
 }

@@ -1,6 +1,5 @@
 import ContentBox from "@/components/content-box";
 import styles from "@/styles/ContentGrid.module.css";
-import General from "@/styles/General.module.css";
 
 import { getSortedPostsData } from "../../lib/posts";
 

@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import General from "@/styles/General.module.css";
 import testing1 from "../public/images/testing1.png";
 import HomeStyle from "@/styles/HomePage.module.css";
 

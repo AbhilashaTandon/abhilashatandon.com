@@ -23,6 +23,8 @@
   width: 22vw;
   height: 15vw;
   padding: 0rem 1rem;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .box:hover {

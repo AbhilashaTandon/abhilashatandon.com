@@ -6,7 +6,6 @@ date: '2023-09-13'
 ---
 */
 
-import General from "@/styles/General.module.css";
 import { useState } from "react";
 import ColorPicker from "@/styles/ColorPicker.module.css";
 import ContentGrid from "@/styles/ContentGrid.module.css";
@@ -107,18 +106,19 @@ function ColorGrid() {
   const [colors, setColors] = useState(init_colors);
 
   function handleClick(id) {
+    var new_colors = colors;
+    new_colors[0] = colors[id + 1]; //set current color to click location
+    // console.log(iter, colors);
     if (iter < 1) {
       //if amount to change colors is smaller than 1
-      var new_colors = colors;
       for (var i = 0; i < 6; i++) {
         for (var j = 0; j < 3; j++) {
           new_colors[i + 1][j] = colors[0][j]; //set all colors to picked color
         }
       }
-      setColors(new_colors);
     } else {
-      var new_colors = init_colors; //initialize colors
-      new_colors[0] = colors[id + 1]; //set current color to click location
+      new_colors = init_colors; //initialize colors
+
       for (var i = 0; i < 6; i++) {
         var current_color = [0, 0, 0];
         for (var j = 0; j < 3; j++) {
@@ -126,10 +126,9 @@ function ColorGrid() {
         }
         new_colors[i + 1] = normalize(current_color);
       }
-
-      setColors(new_colors);
-      setIter((a) => a / 2); //decrease iter
     }
+    setIter((a) => a / 2); //decrease iter
+    setColors(new_colors);
   }
 
   var buttons = [0, 1, 2, 3, 4, 5];
@@ -151,11 +150,12 @@ function ColorGrid() {
   return (
     <>
       <button onClick={reset}>Reset</button>
+
       <div
         className={ColorPicker.window}
         style={{ backgroundColor: format_color(colors[0]) }}>
         <div className={ContentGrid.grid}>{button_display}</div>
-        {/* <p className={General.medium_text}> Based loosely on the oppositional color model: <Link href = "">Wikipedia</Link></p> */}
+        {/* <h3> Based loosely on the oppositional color model: <Link href = "">Wikipedia</Link></h3> */}
       </div>
 
       <h5>

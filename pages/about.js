@@ -1,5 +1,3 @@
-import General from "@/styles/General.module.css";
-
 export default function About() {
   return <h5>About me</h5>;
 }

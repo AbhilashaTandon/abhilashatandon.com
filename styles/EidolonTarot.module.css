@@ -1,0 +1,45 @@
+.card {
+  display: grid;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+
+  text-align: center;
+
+  width: 10vw;
+  height: 17vw;
+  border-radius: 8px;
+  overflow: hidden;
+  padding-top: 1rem;
+}
+
+.card:hover {
+  transition: 0.45s;
+  filter: brightness(70%) saturate(130%);
+}
+
+.text {
+  margin: 0rem;
+  text-decoration: none; /* gets rid of default link color + underline */
+  color: var(--text);
+  margin: 0 0.2rem;
+}
+
+.spread {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+
+  --column-width: 10vw;
+  --column-gap: 2vw;
+
+  grid-template-columns:
+    var(--column-width) var(--column-width) var(--column-width)
+    var(--column-width)
+    var(--column-width); /* 5 columns of equal size */
+  column-gap: var(--column-gap);
+  row-gap: 20px;
+  place-items: center;
+  padding: 0;
+  margin: 0;
+}
