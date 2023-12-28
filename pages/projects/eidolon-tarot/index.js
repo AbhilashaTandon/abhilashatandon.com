@@ -124,20 +124,22 @@ export default function Main() {
     var new_fate = fateDeck.slice();
     var new_spread = spread.slice();
     var new_discard = discard.slice();
-    if (from_top) {
-      for (var i = 0; i < num_cards; i++) {
-        if (new_fate.length == 0) {
-          //if we ran out of cards then reshuffle and draw more
-          new_fate = shuffle(new_discard.slice());
-          new_discard = [];
-        }
-        new_spread.push(new_fate.pop());
+
+    for (var i = 0; i < num_cards; i++) {
+      if (new_fate.length == 0) {
+        //if we ran out of cards then reshuffle and draw more
+        new_fate = shuffle(new_discard.slice());
+        new_discard = [];
       }
-    } else {
-      var item = new_fate[0];
-      new_spread.push(item);
-      new_fate.splice(0, 1);
+      if (from_top) {
+        new_spread.push(new_fate.pop());
+      } else {
+        var item = new_fate[0];
+        new_spread.push(item);
+        new_fate.splice(0, 1);
+      }
     }
+
     setFateDeck(new_fate);
     setSpread(new_spread);
   }
@@ -204,8 +206,17 @@ export default function Main() {
       </h4>
       <Spread cards={spread} />
       <button onClick={shuffleFate}>Shuffle</button>
-      <button onClick={() => draw(3, true)}>Draw From Top</button>
-      <button onClick={() => draw(3, false)}>Draw From Bottom</button>
+
+      <small>Number of Cards</small>
+      <input type="number" min="1" max="5" id="card_num" />
+      <button
+        onClick={() => draw(document.getElementById("card_num").value, true)}>
+        Draw From Top
+      </button>
+      <button
+        onClick={() => draw(document.getElementById("card_num").value, false)}>
+        Draw From Bottom
+      </button>
     </>
   );
 }

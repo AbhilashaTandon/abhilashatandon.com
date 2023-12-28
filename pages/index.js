@@ -17,17 +17,16 @@ export default function Home() {
           <div>
             <h2>Hello, World!</h2>
             <h4>
-              I&apos;m Abhilasha Tandon, a passionate developer with versatile
-              skills. I&apos;m currently a senior at NYU&apos;s College of Arts
-              and Science studying Computer Science and Mathematics.{" "}
+              I&apos;m Abhilasha Tandon, a passionate developer with versatile skills. I&apos;m currently a senior at NYU&apos;s College of Arts and Science
+              studying Computer Science and Mathematics.{" "}
             </h4>
-            <h5>
-              I love Machine Learning, Natural Language Processing, Web Design,
-              Abstract Math, and creating efficient, elegant, and powerful
-              software.
-            </h5>
+            <h5>I love Machine Learning, Natural Language Processing, Web Design, Abstract Math, and creating efficient, elegant, and powerful software.</h5>
           </div>
-          <Image src={testing1} alt="error" class={HomeStyle.profile} />
+          <Image
+            src={testing1}
+            alt="error"
+            class={HomeStyle.profile}
+          />
         </div>
       </>
     </>
