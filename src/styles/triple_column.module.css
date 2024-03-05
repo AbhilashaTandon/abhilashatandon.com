@@ -1,0 +1,12 @@
+.light_background {
+  background-color: var(--primary-color);
+}
+
+.dark_background {
+  background-color: var(--primary-color);
+}
+
+.light_tile {
+  background-color: var(--secondary-color);
+  border-radius: 40px;
+}
