@@ -1,0 +1,43 @@
+.tile {
+  background-color: var(--secondary-color);
+  border-radius: 40px;
+  width: 24vw;
+  margin-left: 8px;
+  margin-right: 8px;
+  height: 70vh;
+  display: flex;
+  justify-content: top;
+  align-items: center;
+
+  flex-direction: column;
+}
+
+.skills {
+  padding: 0 13vw 17px 13vw;
+  left: 0;
+  top: 90vh;
+  width: 100vw;
+  position: absolute;
+
+  background-color: var(--primary-color);
+}
+
+.box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.subheading {
+  font-size: 32px;
+  font-family: var(--primary-font);
+  font-weight: 600;
+  text-decoration: underline;
+  align-items: center;
+  padding: 25px 0 21px 63px;
+}
+
+.image {
+  filter: invert(100%);
+  margin: 20px;
+}

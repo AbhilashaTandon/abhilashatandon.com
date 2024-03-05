@@ -1,13 +1,15 @@
 .header {
   left: 0;
-  top: 0;
+  top: -1.25rem;
   position: fixed;
   list-style-type: none;
   display: flex; /* makes horizontal list */
   justify-content: space-between;
   margin: 1.25rem 0rem 0rem 0rem;
-  padding: 0rem 20rem 1rem 15rem;
+  padding: 1.25rem 20rem 1rem 15rem;
   box-shadow: -0.5rem 1.5vh 0px -10px var(--primary-color);
+  background-color: var(--background-color);
+  z-index: 100;
 }
 
 #logo {

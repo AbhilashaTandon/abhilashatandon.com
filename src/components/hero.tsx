@@ -1,9 +1,10 @@
 import Image from "next/image";
-import Avatar from "@/../public/avatar.png";
+import Avatar from "../../public/avatar.png";
+import Style from "../styles/hero.module.css"
 
 export default function Hero() {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "-4vh" }}>
+    <div className={Style.hero}>
       <div style={{ textAlign: "left", width: "40vw" }}>
         <h3>Hi There 🙋🏽‍♀️! I’m</h3>
         <h1 style={{ color: "var(--primary-color)", marginLeft: "-.5rem" }}> Abhilasha Tandon</h1>
@@ -22,7 +23,7 @@ export default function Hero() {
           width={345}
           height={345}
           alt="error"
-          style={{ borderRadius: "50%" }}
+          style={{ position: "absolute", left: "60vw", top: "12vh"}}
         />
       </div>
     </div>

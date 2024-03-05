@@ -1,5 +1,5 @@
 :root {
-  --max-width: 74vw;
+  --max-width: min(74vw);
   --border-radius: 12px;
 
   --background-color: #110021;
@@ -63,11 +63,4 @@ h5 {
   font-size: 1.25rem;
   font-family: var(--secondary-font);
   font-weight: 300;
-}
-
-.subheading {
-  font-size: 32px;
-  font-family: var(--primary-font);
-  font-weight: 600;
-  text-decoration: underline;
 }
