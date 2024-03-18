@@ -1,7 +1,26 @@
 .hero {
   display: flex;
   justify-content: space-between;
+  position: absolute;
+  text-align: left;
+  z-index: 99;
+  width: var(--content-width);
+  height: 40vh;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  top: 1vh;
+}
+
+.image {
+  position: relative;
   align-items: center;
-  margin-top: -4vh;
-  left: 13vw;
+}
+
+.name {
+  color: var(--primary-color);
+  margin-left: -0.5rem;
 }

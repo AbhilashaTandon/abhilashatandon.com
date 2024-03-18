@@ -1,11 +1,14 @@
 :root {
-  --max-width: min(74vw);
   --border-radius: 12px;
 
   --background-color: #110021;
   --secondary-color: #551b8c;
   --primary-color: #bf7aff;
   --text-color: #eedefe;
+  --top-length: 1.4vh;
+
+  --content-width: max(1024px, 70vw);
+  --content-margins: calc((100vw - var(--content-width)) / 2);
 }
 
 * {
@@ -14,10 +17,8 @@
   margin: 0;
 }
 
-html,
-body {
-  padding: 4vh 8vw 0 8vw;
-  overflow-x: hidden;
+html {
+  padding: 8vh var(--content-margins) 0 var(--content-margins);
 }
 
 body {
@@ -36,21 +37,27 @@ a {
 }
 
 h1 {
-  font-size: 3.75rem;
+  font-size: 3rem;
   font-family: var(--primary-font);
   font-weight: 800;
+  line-height: 125%;
+  letter-spacing: -1%;
 }
 
 h2 {
-  font-size: 3rem;
-  font-family: var(--secondary-font);
-  font-weight: 700;
+  font-size: 2rem;
+  font-family: var(--primary-font);
+  font-weight: 600;
+  line-height: 125%;
+  letter-spacing: -1%;
 }
 
 h3 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-family: var(--secondary-font);
   font-weight: 500;
+  line-height: 125%;
+  letter-spacing: -1%;
 }
 
 h4 {
@@ -60,7 +67,15 @@ h4 {
 }
 
 h5 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-family: var(--secondary-font);
   font-weight: 300;
+}
+
+.subheading {
+  font-size: 2rem;
+  font-family: var(--primary-font);
+  font-weight: 600;
+  text-decoration: underline;
+  line-height: 125%;
 }

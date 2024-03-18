@@ -8,11 +8,10 @@ import Skills from "../components/skills.tsx";
 export default function Home() {
   return (
     <>
-      
       <main className={styles.main}>
         <Navbar></Navbar>
         <Hero />
-        <Skills/>
+        <Skills />
       </main>
     </>
   );
