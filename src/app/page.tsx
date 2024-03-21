@@ -4,6 +4,7 @@ import styles from "../styles/page.module.css";
 import Navbar from "../components/navbar.tsx";
 import Hero from "../components/hero.tsx";
 import Skills from "../components/skills.tsx";
+import Projects from "../components/projects.tsx";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
         <Navbar></Navbar>
         <Hero />
         <Skills />
+        <Projects />
       </main>
     </>
   );

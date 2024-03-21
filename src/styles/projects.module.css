@@ -1,0 +1,22 @@
+.smallBox {
+  width: 35vw;
+  height: 40vh;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.bigBox {
+  width: 35vw;
+  height: 30vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.projectGrid {
+  display: grid;
+  grid-auto-flow: row;
+  grid-gap: 1vw;
+  padding: 1vw;
+}

@@ -15,18 +15,16 @@
 
 .skills {
   padding: 0 13vw 17px 13vw;
-  left: 0;
-  top: 630px;
   width: 100vw;
-  position: absolute;
+  position: relative;
 
   background-color: var(--primary-color);
 }
 
-.box {
+.tiles {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
+  width: var(--content-width);
 }
 
 .subheading {

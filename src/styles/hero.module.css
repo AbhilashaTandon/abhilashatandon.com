@@ -1,21 +1,22 @@
 .hero {
   display: flex;
   justify-content: space-between;
-  position: absolute;
+  position: relative;
   text-align: left;
   z-index: 99;
   width: var(--content-width);
-  height: 40vh;
+  height: 60vh;
+  margin: 0 var(--content-margins) 0 var(--content-margins);
 }
 
 .content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  top: 1vh;
 }
 
 .image {
+  display: flex;
   position: relative;
   align-items: center;
 }

@@ -1,0 +1,25 @@
+.tile {
+  justify-content: center;
+  text-decoration: none; /* gets rid of default link color + underline */
+  position: relative;
+  border-radius: 8px;
+  height: 16vw;
+  width: 16vw;
+  background-color: rgb(0, 0, 0); /* this is reset by inline css */
+}
+
+.window {
+  margin: 0;
+  border-radius: 16px; /* rounded corners */
+  border-style: solid;
+  border-width: 4px;
+  border-color: black; /* i do this so if you pick white the section is still visible */
+
+  display: grid;
+  justify-content: center;
+  grid-template-columns: var(--column-width) var(--column-width) var(--column-width); /* 3 columns of equal size */
+  column-gap: var(--column-gap);
+  row-gap: 20px;
+  place-items: center;
+  padding: 2vh 0rem;
+}
