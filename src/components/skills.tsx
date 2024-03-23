@@ -15,7 +15,7 @@ function SkillTile({ title, body, symbol }: { title: string; body: string; symbo
         className={Styles.image}
       />
       <p
-        className={Styles.subheading}
+        className={Styles.section}
         style={{ textAlign: "center" }}>
         {title}
       </p>
@@ -27,11 +27,11 @@ function SkillTile({ title, body, symbol }: { title: string; body: string; symbo
 export default function Skills() {
   return (
     <div className={Styles.skills}>
-      <p
-        className={Styles.subheading}
-        style={{ color: "var(--secondary-color)" }}>
+      <h3
+        className={Styles.section}
+        style={{ color: "var(--secondary-color)", marginLeft: "var(--left-content-margin)" }}>
         My Skills
-      </p>
+      </h3>
       <div className={Styles.tiles}>
         <SkillTile
           title="Software Development "

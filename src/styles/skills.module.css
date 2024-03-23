@@ -1,11 +1,24 @@
+.skills {
+  width: 100vw;
+  position: relative;
+  background-color: var(--primary-color);
+}
+
+.tiles {
+  display: grid;
+  justify-content: space-between;
+  align-items: center;
+  width: var(--content-width);
+  margin: 0 var(--right-content-margin) 0 var(--left-content-margin);
+  column-gap: 1vw;
+  height: fit-content;
+}
+
 .tile {
   background-color: var(--secondary-color);
   border-radius: 40px;
-  width: 24vw;
-  margin-left: 8px;
-  margin-right: 8px;
-  padding-top: 20px;
-  height: 490px;
+  padding: 20px 0;
+  height: clamp(auto, 490px);
   display: flex;
   justify-content: top;
   align-items: center;
@@ -13,22 +26,8 @@
   flex-direction: column;
 }
 
-.skills {
-  padding: 0 13vw 17px 13vw;
-  width: 100vw;
-  position: relative;
-
-  background-color: var(--primary-color);
-}
-
-.tiles {
-  display: flex;
-  justify-content: space-between;
-  width: var(--content-width);
-}
-
-.subheading {
-  font-size: 32px;
+.section {
+  font-size: 2rem;
   font-family: var(--primary-font);
   font-weight: 600;
   text-decoration: underline;
@@ -39,4 +38,10 @@
 .image {
   filter: invert(100%);
   margin: 20px;
+}
+
+@media screen and (max-width: 900px) {
+  .tiles {
+    grid-auto-flow: row;
+  }
 }

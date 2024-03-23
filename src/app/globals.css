@@ -8,7 +8,8 @@
   --top-length: 1.4vh;
 
   --content-width: 75vw;
-  --content-margins: calc((100vw - var(--content-width)) / 2);
+  --left-content-margin: calc((100vw - var(--content-width)) / 2);
+  --right-content-margin: calc((100vw - var(--content-width)) / 2);
 }
 
 * {
@@ -93,4 +94,15 @@ button:hover {
   transition: 0.5s;
   color: var(--secondary-color);
   text-decoration: none;
+}
+
+@media screen and (max-width: 900px) {
+  :root {
+    --left-content-margin: 22vw;
+    --right-content-margin: calc((100vw - var(--content-width) - var(--left-content-margin) - 100px));
+  }
+
+  html {
+    padding-top: 4vh;
+  }
 }

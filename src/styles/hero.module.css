@@ -5,8 +5,8 @@
   text-align: left;
   z-index: 99;
   width: var(--content-width);
-  height: 60vh;
-  margin: 0 var(--content-margins) 0 var(--content-margins);
+  height: 550px;
+  margin: 0 var(--right-content-margin) 0 var(--left-content-margin);
 }
 
 .content {
@@ -23,5 +23,11 @@
 
 .name {
   color: var(--primary-color);
-  margin-left: -0.5rem;
+  margin-left: -0.25rem;
+}
+
+@media screen and (max-width: 900px) {
+  .hero {
+    height: 500px;
+  }
 }
