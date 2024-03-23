@@ -1,17 +1,23 @@
 .smallBox {
-  width: 35vw;
   height: 40vh;
-
-  position: relative;
-
-  overflow: hidden;
 }
 
 .bigBox {
-  width: 35vw;
   height: 30vh;
+}
+
+.smallBox,
+.bigBox {
+  width: 35vw;
   position: relative;
   overflow: hidden;
+  border-radius: 10px;
+}
+
+.smallBox:hover,
+.bigBox:hover {
+  filter: brightness(50%);
+  transition: 0.5s;
 }
 
 .projectGrid {
@@ -19,4 +25,9 @@
   grid-auto-flow: row;
   grid-gap: 1vw;
   padding: 1vw;
+}
+
+.projects {
+  margin-left: var(--left-content-margin);
+  margin-right: var(--right-content-margin);
 }

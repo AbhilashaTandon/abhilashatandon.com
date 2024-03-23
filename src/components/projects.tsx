@@ -77,7 +77,7 @@ export default async function Projects() {
     }
   }
   return (
-    <div>
+    <div className={Styles.projects}>
       <div style={{ display: "flex" }}>
         <ProjectGrid
           project_data={oddProjects}
