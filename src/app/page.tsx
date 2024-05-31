@@ -5,6 +5,7 @@ import Navbar from "../components/navbar.tsx";
 import Hero from "../components/hero.tsx";
 import Skills from "../components/skills.tsx";
 import Projects from "../components/projects.tsx";
+import React from "react";
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
       <main className={styles.main}>
         <Navbar></Navbar>
         <Hero />
-        <Skills />
+        <Skills/>
         <Projects />
       </main>
     </>

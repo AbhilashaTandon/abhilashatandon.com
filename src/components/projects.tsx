@@ -5,12 +5,14 @@ import Image from "next/image";
 
 import Styles from "../styles/projects.module.css";
 
-const projectsDir: string = "C://Dev//Web Dev//abhilashatandon.com//src//app//projects";
+const projectsDir: string = "..//abhilashatandon.com//src//app//projects";
+
+async function getProjectData(projectName: string) {}
 
 async function getProjects(): Promise<{ project_name: string; image: string }[]> {
   const projectPaths: string[] = await fs.readdir(projectsDir);
   const projects: { project_name: string; image: string }[] = projectPaths.map((project) => {
-    const image: string = "/project-icons/icon.png";
+    const image: string = "https://abhilashatandon.com/projects/" + project + "/icon.png";
 
     return { project_name: project, image: image };
   });
@@ -20,16 +22,19 @@ async function getProjects(): Promise<{ project_name: string; image: string }[]>
 
 function ProjectTile({ img, project_name, box_style }: { img: string; project_name: string; box_style: string }): JSX.Element {
   return (
-    <div className={box_style}>
-      <Image
-        src={img}
-        alt={project_name}
-        layout="fill"
-        objectFit="cover"
-        fill={true}
-        style={{ maxHeight: "100%" }}
-      />
-    </div>
+    <>
+      <div className={box_style}>
+        <Image
+          src={img}
+          alt={project_name}
+          layout="fill"
+          objectFit="cover"
+          fill={true}
+          style={{ maxHeight: "100%" }}
+        />
+      </div>
+      <h3>{project_name}</h3>
+    </>
   );
 }
 
@@ -77,7 +82,7 @@ export default async function Projects() {
     }
   }
   return (
-    <div className={Styles.projects}>
+    <div id="projects" className={Styles.projects}>
       <div style={{ display: "flex" }}>
         <ProjectGrid
           project_data={oddProjects}

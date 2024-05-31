@@ -1,8 +1,9 @@
-import Styles from "../styles/skills.module.css";
+import Styles from "../styles/skills.module.css"
 import Image, { StaticImageData } from "next/image";
 import SWE from "../../public/software-dev.png";
 import Web from "../../public/web-dev.png";
 import ML from "../../public/ml.png";
+import React from "react";
 
 function SkillTile({ title, body, symbol }: { title: string; body: string; symbol: StaticImageData }) {
   return (
@@ -26,7 +27,7 @@ function SkillTile({ title, body, symbol }: { title: string; body: string; symbo
 
 export default function Skills() {
   return (
-    <div className={Styles.skills}>
+    <div id="skills" className={Styles.skills}>
       <h3
         className={Styles.section}
         style={{ color: "var(--secondary-color)", marginLeft: "var(--left-content-margin)" }}>

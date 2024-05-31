@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Styles from "../styles/navbar.module.css";
+import React from "react";
 
 export default function Navbar() {
   return (
@@ -8,19 +9,19 @@ export default function Navbar() {
         <Logo name="ABHILASHATANDON.com" />
         <div></div>
         <NavLink
-          route="/Skills"
+          route="#skills"
           name="Skills"
         />
         <NavLink
-          route="/Projects"
+          route="#projects"
           name="Projects"
         />
         <NavLink
-          route="/Blog"
+          route="#blog"
           name="Blog"
         />
         <NavLink
-          route="/Contact"
+          route="#contact"
           name="Contact"
         />
         <div>
