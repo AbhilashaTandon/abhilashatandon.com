@@ -4,15 +4,14 @@ import React from "react";
 import Image from "next/image";
 
 import Styles from "../styles/projects.module.css";
+import Link from "next/link";
 
 const projectsDir: string = "..//abhilashatandon.com//src//app//projects";
-
-async function getProjectData(projectName: string) {}
 
 async function getProjects(): Promise<{ project_name: string; image: string }[]> {
   const projectPaths: string[] = await fs.readdir(projectsDir);
   const projects: { project_name: string; image: string }[] = projectPaths.map((project) => {
-    const image: string = "https://abhilashatandon.com/projects/" + project + "/icon.png";
+    const image: string = "/../../public/project_icons/" + project + ".png";
 
     return { project_name: project, image: image };
   });
@@ -20,12 +19,12 @@ async function getProjects(): Promise<{ project_name: string; image: string }[]>
   return projects;
 }
 
-function ProjectTile({ img, project_name, box_style }: { img: string; project_name: string; box_style: string }): JSX.Element {
+function ProjectTile({project_name, box_style }: {project_name: string; box_style: string }): JSX.Element {
   return (
-    <>
+    <Link href={"/projects/" + project_name}>
       <div className={box_style}>
         <Image
-          src={img}
+          src={require('./../../public/project-icons/' + project_name + '.png')}
           alt={project_name}
           layout="fill"
           objectFit="cover"
@@ -34,13 +33,14 @@ function ProjectTile({ img, project_name, box_style }: { img: string; project_na
         />
       </div>
       <h3>{project_name}</h3>
-    </>
+    </Link>
   );
 }
 
-async function ProjectGrid({ project_data, parity }: { project_data: { project_name: string; image: string }[]; parity: boolean }) {
-  const projectTiles = project_data.map((project: { project_name: string; image: string }, idx: number) => {
-    var style: string = "";
+//makes a nice fancy asymmetric grid
+async function ProjectGrid({ project_data, parity }: { project_data: { project_name: string; }[]; parity: boolean }) {
+  const projectTiles = project_data.map((project: { project_name: string;}, idx: number) => {
+    var style: string = ""; 
     switch (idx % 4) {
       case 0:
         style = parity ? Styles.bigBox : Styles.smallBox;
@@ -58,7 +58,6 @@ async function ProjectGrid({ project_data, parity }: { project_data: { project_n
     return (
       <ProjectTile
         key={project.project_name}
-        img={project.image}
         project_name={project.project_name}
         box_style={style}
       />
@@ -70,7 +69,6 @@ async function ProjectGrid({ project_data, parity }: { project_data: { project_n
 export default async function Projects() {
   const allProjects: {
     project_name: string;
-    image: string;
   }[] = await getProjects();
   const oddProjects = [];
   const evenProjects = [];
