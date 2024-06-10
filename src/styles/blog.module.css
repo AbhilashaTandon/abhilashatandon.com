@@ -1,7 +1,7 @@
-.skills {
+.blog {
   width: 100vw;
   position: relative;
-  background-color: var(--primary-color);
+  background-color: var(--secondary-color);
   padding-bottom: 5vh;
 }
 
@@ -18,7 +18,7 @@
 }
 
 .tile {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   border-radius: 40px;
   padding: 20px 0;
   height: 490px;

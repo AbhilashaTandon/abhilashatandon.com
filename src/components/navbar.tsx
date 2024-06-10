@@ -6,7 +6,11 @@ export default function Navbar() {
   return (
     <div className={Styles.navbar}>
       <div className={Styles.header}>
-        <Logo name="ABHILASHATANDON.com" />
+        
+        <Logo 
+          route = "#hero"
+          name="ABHILASHATANDON.com"
+        />
         <div></div>
         <NavLink
           route="#skills"
@@ -27,7 +31,7 @@ export default function Navbar() {
         <div>
           <div className={Styles.button}>
             <NavLink
-              route="/Resume"
+              route="/resume"
               name="Resume"
             />
           </div>
@@ -47,10 +51,10 @@ function NavLink({ route, name }: { route: string; name: string }) {
   );
 }
 
-function Logo({ name }: { name: string }) {
+function Logo({ route, name }: { route: string, name: string }) {
   return (
     <Link
-      href={name} //TODO: change this to the top of the page
+      href={route} //TODO: change this to the top of the page
       id={Styles.logo}>
       {name}
     </Link>

@@ -1,9 +1,11 @@
 .smallBox {
-  height: 40vh;
+  height: 60vh;
+  width: calc(100% - var(--left-content-margin));
 }
 
 .bigBox {
-  height: 30vh;
+  height: 45vh;
+  width: calc(100% - var(--left-content-margin));
 }
 
 .smallBox,
@@ -23,11 +25,26 @@
 .projectGrid {
   display: grid;
   grid-auto-flow: row;
-  grid-gap: 1vw;
   padding: 1vw;
+  
+  row-gap: 2vw;
 }
 
 .projects {
-  margin-left: var(--left-content-margin);
+  margin-left: calc(var(--left-content-margin) - .5vw);
   margin-right: var(--right-content-margin);
+}
+
+.projectName{
+  position: absolute;
+  font-weight: 900;
+   height: 100%;
+   display: flex;    
+   width: 100%;
+   z-index: 100;
+   margin-left: 1rem;
+   margin-top: 1rem;
+   /* black outline; */
+   -webkit-text-stroke-width: 1.5px;
+    -webkit-text-stroke-color: var(--background-color);
 }

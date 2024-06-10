@@ -101,8 +101,11 @@ button:hover {
     --left-content-margin: 22vw;
     --right-content-margin: calc((100vw - var(--content-width) - var(--left-content-margin) - 100px));
   }
+  
 
   html {
     padding-top: 4vh;
   }
 }
+
+

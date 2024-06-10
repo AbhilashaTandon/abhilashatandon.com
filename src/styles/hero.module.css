@@ -5,7 +5,7 @@
   text-align: left;
   z-index: 99;
   width: var(--content-width);
-  height: 550px;
+  height: 80vh;
   margin: 0 var(--right-content-margin) 0 var(--left-content-margin);
 }
 
@@ -28,6 +28,7 @@
 
 @media screen and (max-width: 900px) {
   .hero {
-    height: 500px;
+    height: 75vh;
+    top: 0;
   }
 }

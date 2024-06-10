@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
 
-  height: 50px;
+  height: 8vh;
   width: 100%;
   border-bottom: 1px solid var(--primary-color);
   padding-left: var(--left-content-margin);
@@ -57,27 +57,5 @@
 }
 
 @media screen and (max-width: 900px) {
-  .header {
-    grid-auto-flow: row;
-    height: 100%;
-    width: var(--left-content-margin);
-    left: 0;
-    text-align: left;
-  }
 
-  .navbar {
-    height: 100%;
-    width: 20vw;
-
-    border-right: 1px solid var(--primary-color);
-    justify-content: left;
-    padding-left: 10px;
-
-    word-break: break-all;
-  }
-
-  .button {
-    width: var(--left-content-margin);
-    max-width: max-content;
-  }
-}
+} 
