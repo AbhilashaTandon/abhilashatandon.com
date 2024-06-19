@@ -16,13 +16,22 @@
     font-size: 1.25rem;
 }
 
+.section:hover {
+    color: var(--secondary-color);
+    transition: 1s;
+}
+
 .button {
     background-color: var(--primary-color);
     color: var(--text-color);
     border-radius: 1vw;
     padding: .5% 1%;
     font-size: 1.25rem;
+}
 
+.button:hover {
+    background-color: var(--secondary-color);
+    transition: 1s;
 }
 
 .navbar {
@@ -34,23 +43,23 @@
 }
 
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 850px) {
     .logo {
         font-size: 1rem;
     }
 
     .section {
-        font-size: .75rem;
+        font-size: .833rem;
     }
 
     .button {
-        font-size: .75rem;
+        font-size: .833rem;
     }
 }
 
 @media screen and (max-width: 500px) {
     .logo {
-        font-size: .875rem;
+        font-size: .75rem;
     }
 
     .section {

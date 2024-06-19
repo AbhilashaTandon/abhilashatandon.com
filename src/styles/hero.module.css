@@ -1,0 +1,26 @@
+.hero {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.intro {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 30vw;
+}
+
+.image_container {
+    height: 50%;
+    width: 50%;
+}
+
+.image {
+    object-fit: contain;
+    width: 100% !important;
+    position: relative !important;
+    height: unset !important;
+
+}

@@ -17,6 +17,9 @@ export default function Navbar() {
             <div className={Styles.section}>
                 <Heading route="" name="Blog" />
             </div>
+            <div className={Styles.section}>
+                <Heading route="" name="Contact" />
+            </div>
             <div className={Styles.button}>
                 <Heading route="" name="Resume" />
             </div>
