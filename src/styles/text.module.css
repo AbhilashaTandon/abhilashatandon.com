@@ -1,0 +1,17 @@
+.section_header {
+    font-size: 2rem;
+    font-family: var(--primary-font);
+    font-weight: 600;
+    text-decoration: underline;
+    align-items: center;
+    padding: 25px 0 21px 0;
+    margin-left: var(--left-content-margin);
+}
+
+@media screen and (max-width: 1200px) {
+
+
+    .section_header {
+        font-size: 1.5rem;
+    }
+}

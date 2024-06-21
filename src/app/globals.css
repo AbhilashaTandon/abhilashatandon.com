@@ -18,12 +18,11 @@
 
 html {
   overflow-x: hidden;
-  margin-left: var(--content-margin);
-  margin-right: var(--content-margin);
 }
 
 body {
   background-color: var(--background-color);
+
 }
 
 a {

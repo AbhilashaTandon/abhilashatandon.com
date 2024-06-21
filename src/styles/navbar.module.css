@@ -40,6 +40,9 @@
     align-items: center;
     margin-top: 5vh;
     position: static;
+
+    padding-left: var(--content-margin);
+    padding-right: var(--content-margin);
 }
 
 

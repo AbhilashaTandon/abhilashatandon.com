@@ -1,0 +1,81 @@
+.smallBox {
+  height: 60vh;
+  width: calc(100% - var(--left-content-margin));
+}
+
+.bigBox {
+  height: 45vh;
+  width: calc(100% - var(--left-content-margin));
+}
+
+.smallBox,
+.bigBox {
+  width: 35vw;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.smallBox:hover,
+.bigBox:hover {
+  filter: brightness(50%);
+  transition: 0.5s;
+}
+
+.projectGrid {
+  display: grid;
+  grid-auto-flow: row;
+  padding: 1vw;
+
+  row-gap: 2vw;
+}
+
+.project_grids {
+  display: flex;
+}
+
+.projectTiles {
+  display: flex;
+}
+
+.projects {
+
+  padding-left: var(--content-margin);
+  padding-right: var(--content-margin);
+  margin-bottom: 5vw;
+}
+
+.projectName {
+  position: absolute;
+  font-weight: 900;
+  height: 100%;
+  display: flex;
+  width: 100%;
+  z-index: 100;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  /* black outline; */
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: var(--background-color);
+}
+
+@media screen and (max-width: 850px) {
+  .projectGrid {
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+  }
+
+  .project_grids {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .smallBox,
+  .bigBox {
+    width: var(--content-width);
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+}
