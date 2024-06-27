@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 export default function Hero() {
     return (
-        <div className={Styles.hero}>
+        <div className={Styles.hero} id="hero">
             <Intro />
             <Icon />
         </div>

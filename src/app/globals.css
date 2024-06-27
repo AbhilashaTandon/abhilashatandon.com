@@ -10,6 +10,17 @@
   --content-margin: calc((100vw - var(--content-width)) / 2);
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+
+    --background-color: #eedefe;
+    --secondary-color: #bf7aff;
+    --primary-color: #551b8c;
+    --text-color: #110021;
+
+  }
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -18,6 +29,7 @@
 
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -71,7 +83,7 @@ h4 {
 }
 
 h5 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-family: var(--secondary-font);
   font-weight: 300;
   color: var(--text-color);
@@ -137,6 +149,11 @@ h5 {
   .subheading {
     font-size: 1rem;
   }
+}
+
+nav {
+
+  position: fixed;
 }
 
 /*

@@ -7,6 +7,7 @@ import React from "react";
 import Text from "@/styles/text.module.css"
 
 function SkillTile({ title, body, symbol }: { title: string; body: string; symbol: StaticImageData }) {
+
     return (
         <div className={Styles.tile}>
             <Image
@@ -17,8 +18,7 @@ function SkillTile({ title, body, symbol }: { title: string; body: string; symbo
                 className={Styles.image}
             />
             <p
-                className={Styles.section}
-                style={{ textAlign: "center" }}>
+                className={Styles.title}>
                 {title}
             </p>
             <h5 style={{ textAlign: "center", color: "var(--text-color)" }}>{body}</h5>

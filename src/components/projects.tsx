@@ -11,7 +11,8 @@ import TextStyles from "../styles/text.module.css"
 const projectsDir: string = "..//abhilashatandon.com//src//app//projects";
 
 async function getProjects(): Promise<{ project_name: string; image: string }[]> {
-  const projectPaths: string[] = await fs.readdir(projectsDir);
+  const projectPaths: string[] = (await fs.readdir(projectsDir, { withFileTypes: true })).filter(dirent => dirent.isDirectory()).map(dirent => dirent.name);
+
   const projects: { project_name: string; image: string }[] = projectPaths.map((project) => {
     const image: string = "/../../public/project_icons/" + project + ".png";
 
@@ -93,10 +94,13 @@ export default async function Projects() {
     }
   }
   return (
-    <div className={Styles.projects}>
+    <div className={Styles.projects} id="projects">
       <h2 className={TextStyles.section_header}
         style={{ color: "var(--text-color)" }}>
-        My Projects
+        <Link href="/projects">
+          My Projects
+        </Link>
+
       </h2>
       <div className={Styles.project_grids}>
         <ProjectGrid

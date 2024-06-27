@@ -5,24 +5,35 @@ import Web from "../../public/web-dev.png";
 import ML from "../../public/ml.png";
 import React from "react";
 import TextStyles from "../styles/text.module.css"
-import { promises as fs } from "fs";
+import fs from "fs";
 
-// const blogsDir: string = "..//abhilashatandon.com//src//app//blogs";
+import path from "path";
+import matter from "gray-matter";
 
-// async function getblogs(): Promise<{ blog_name: string; image: string }[]> {
-//   const blogPaths: string[] = await fs.readdir(blogsDir);
-//   const blogs: { blog_name: string; image: string }[] = blogPaths.map((blog) => {
-//     const image: string = "/../../public/blog_icons/" + blog + ".png";
+const blogFolder = process.cwd() + "/src/app/blog"
 
-//     return { blog_name: blog, image: image };
-//   });
+export const getFileContent = (filename: string) => {
+  return fs.readFileSync(path.join(blogFolder, filename), "utf8");
+};
 
-//   return blogs;
-// }
+async function getBlogPosts() {
+  var all_files = fs.readdirSync(blogFolder)
+  var markdown = all_files.filter((path) => /\\.md?$/.test(path));
+
+  return markdown.map((file_path) => {
+    const blog_post = getFileContent(file_path); // retrieve the file contents
+    const slug = file_path.replace(/\\.md?$/, ""); // get the slug from the filename
+    const { data } = matter(blog_post); // extract frontmatter
+    return {
+      frontmatter: data,
+      slug: slug,
+    };
+  });
+}
 
 function BlogPostTile({ title, body, symbol }: { title: string; body: string; symbol: StaticImageData }) {
   return (
-    <div className={Styles.tile}>
+    <div className={Styles.tile} id="blog">
       <p
         className={Styles.section}
         style={{ textAlign: "center", color: "var(--secondary-color)" }}>
@@ -34,6 +45,7 @@ function BlogPostTile({ title, body, symbol }: { title: string; body: string; sy
 }
 
 export default function Blog() {
+  console.log(getBlogPosts())
   return (
     <div id="Blog" className={Styles.blog}>
       <h2

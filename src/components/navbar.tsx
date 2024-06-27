@@ -3,27 +3,28 @@ import Styles from "../styles/navbar.module.css";
 
 export default function Navbar() {
     return (
-        <div className={Styles.navbar}>
+        <nav className={Styles.navbar}>
             <div className={Styles.logo}>
-                <Heading route="" name="ABHILASHATANDON.com" />
+                <Heading route="#hero" name="ABHILASHATANDON.com" />
             </div>
             <div></div>
             <div className={Styles.section}>
-                <Heading route="" name="Skills" />
+                <Heading route="#skills" name="Skills" />
             </div>
             <div className={Styles.section}>
-                <Heading route="" name="Projects" />
+                <Heading route="#projects" name="Projects" />
             </div>
             <div className={Styles.section}>
-                <Heading route="" name="Blog" />
+                <Heading route="#blog" name="Blog" />
             </div>
             <div className={Styles.section}>
-                <Heading route="" name="Contact" />
+                <Heading route="#contact" name="Contact" />
             </div>
             <div className={Styles.button}>
-                <Heading route="" name="Resume" />
+                <Heading route="/resume" name="Resume" />
             </div>
-        </div>
+        </nav>
+
     )
 }
 

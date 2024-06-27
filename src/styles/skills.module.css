@@ -1,3 +1,31 @@
+.tile {
+    background-color: var(--secondary-color);
+    border-radius: 40px;
+    padding: 3vh 10px;
+    height: 63vh;
+    display: flex;
+    justify-content: top;
+    align-items: center;
+    flex-direction: column;
+}
+
+.image {
+    filter: invert(100%);
+    margin: 0vw;
+}
+
+.title {
+    font-size: 2rem;
+    font-family: var(--primary-font);
+    font-weight: 600;
+    text-decoration: underline;
+    align-items: center;
+    padding: 25px 0 21px 0;
+    text-align: center;
+    height: 30%;
+    display: flex;
+}
+
 .skills {
     width: 100vw;
     position: relative;
@@ -23,30 +51,6 @@
     height: fit-content;
 }
 
-.tile {
-    background-color: var(--secondary-color);
-    border-radius: 40px;
-    padding: 3vh 10px;
-    height: 63vh;
-    display: flex;
-    justify-content: top;
-    align-items: center;
-    flex-direction: column;
-}
-
-.section {
-    font-size: 2rem;
-    font-family: var(--primary-font);
-    font-weight: 600;
-    text-decoration: underline;
-    align-items: center;
-    padding: 25px 0 21px 0;
-}
-
-.image {
-    filter: invert(100%);
-    margin: 0vw;
-}
 
 @media screen and (max-width: 1200px) {
     .tiles {

@@ -1,3 +1,17 @@
+.navbar {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    z-index: 99;
+    width: 100vw;
+    padding-left: var(--content-margin);
+    padding-right: var(--content-margin);
+    background-color: var(--background-color);
+}
+
 .logo {
     font-weight: 800;
     font-family: var(--primary-font);
@@ -32,17 +46,6 @@
 .button:hover {
     background-color: var(--secondary-color);
     transition: 1s;
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 5vh;
-    position: static;
-
-    padding-left: var(--content-margin);
-    padding-right: var(--content-margin);
 }
 
 

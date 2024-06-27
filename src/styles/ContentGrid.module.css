@@ -5,7 +5,8 @@
 
   display: grid;
   justify-content: center;
-  grid-template-columns: var(--column-width) var(--column-width) var(--column-width); /* 3 columns of equal size */
+  grid-template-columns: var(--column-width) var(--column-width) var(--column-width);
+  /* 3 columns of equal size */
   column-gap: var(--column-gap);
   row-gap: 20px;
   place-items: center;
@@ -15,7 +16,8 @@
 
 .box {
   justify-content: center;
-  text-decoration: none; /* gets rid of default link color + underline */
+  text-decoration: none;
+  /* gets rid of default link color + underline */
   position: relative;
   background-color: var(--primary);
   width: 22vw;
@@ -32,7 +34,8 @@
 
 .text {
   margin: 0rem;
-  text-decoration: none; /* gets rid of default link color + underline */
+  text-decoration: none;
+  /* gets rid of default link color + underline */
   display: grid;
   color: var(--text);
 }
