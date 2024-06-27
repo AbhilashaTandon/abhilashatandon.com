@@ -1,5 +1,5 @@
 import Styles from "../styles/blog.module.css"
-import Image, { StaticImageData } from "next/image";
+import Image, { StaticImageData } from "next/legacy/image";
 import SWE from "../../public/software-dev.png";
 import Web from "../../public/web-dev.png";
 import ML from "../../public/ml.png";

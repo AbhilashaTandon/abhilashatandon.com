@@ -1,7 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import React from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 import Styles from "../styles/projects.module.css";
 import Link from "next/link";

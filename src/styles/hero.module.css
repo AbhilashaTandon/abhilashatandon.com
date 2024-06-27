@@ -5,6 +5,7 @@
 
     padding-left: var(--content-margin);
     padding-right: var(--content-margin);
+    height: 85vh;
 
 }
 
@@ -16,8 +17,10 @@
 }
 
 .image_container {
-    height: 50%;
+    height: 100%;
     width: 50%;
+    display: flex;
+    position: relative;
 }
 
 .image {
@@ -25,5 +28,17 @@
     width: 100% !important;
     position: relative !important;
     height: unset !important;
+}
 
+@media screen and (max-width: 850px) {
+    .hero {
+        height: 55vw;
+    }
+}
+
+
+@media screen and (max-width: 500px) {
+    .hero {
+        height: 60vw;
+    }
 }

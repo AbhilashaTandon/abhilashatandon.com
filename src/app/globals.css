@@ -98,7 +98,7 @@ h5 {
   color: var(--text-color);
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 850px) {
   h1 {
     font-size: 2rem;
   }

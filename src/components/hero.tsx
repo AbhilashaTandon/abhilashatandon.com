@@ -1,6 +1,6 @@
 import Styles from "../styles/hero.module.css";
 import Avatar from "../../public/avatar.png"
-import Image from 'next/image'
+import Image from "next/legacy/image"
 
 
 export default function Hero() {
@@ -28,9 +28,10 @@ function Icon() {
     return (
         <div className={Styles.image_container}>
             <Image
+
                 src={Avatar}
-                sizes="100vw"
                 className={Styles.image}
+                layout="fill"
 
                 alt="Picture of the author" />
         </div>
