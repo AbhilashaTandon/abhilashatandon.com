@@ -89,14 +89,7 @@ h5 {
   color: var(--text-color);
 }
 
-.subheading {
-  font-size: 2rem;
-  font-family: var(--primary-font);
-  font-weight: 600;
-  text-decoration: underline;
-  line-height: 125%;
-  color: var(--text-color);
-}
+
 
 @media screen and (max-width: 850px) {
   h1 {

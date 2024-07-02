@@ -1,0 +1,24 @@
+.path{
+    fill: var(--text-color);
+}
+
+.icons{
+    display: flex;
+    justify-content: space-around;
+    padding: 1vh 0 4vh 0;
+}
+
+.attrib{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 0 2vh 0;
+}
+
+.email{
+    margin-bottom: 2vh;
+}
+
+.contact{
+    padding: 0 var(--content-margin) 0 var(--content-margin);
+}
