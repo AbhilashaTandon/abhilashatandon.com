@@ -8,7 +8,7 @@ import Link from "next/link";
 
 import TextStyles from "../styles/text.module.css";
 
-const projectsDir: string = "..//abhilashatandon.com//src//app//projects";
+const projectsDir: string = "../app/projects";
 
 async function getProjects(): Promise<
   { project_name: string; image: string }[]
