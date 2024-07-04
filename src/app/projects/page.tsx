@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <>
       <nav className={NavStyle.logo}>
-        <Heading route="/" name="ABHILASHATANDON.com" />
+        <Heading route="" name="ABHILASHATANDON.com" />
       </nav>
       <main className={styles.page}>
         <Projects />
