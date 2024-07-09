@@ -52,7 +52,6 @@ function ProjectTile({
           alt={project_name}
           layout="fill"
           objectFit="cover"
-          style={{ maxHeight: "100%" }}
         />
         <h1 className={Styles.projectName}>{capFirst(project_name)}</h1>
       </div>
