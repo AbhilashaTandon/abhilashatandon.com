@@ -6,18 +6,12 @@ import ML from "../../public/ml.png";
 import React from "react";
 import TextStyles from "../styles/text.module.css";
 import fs from "fs";
+import Link from "next/link";
 
 import path from "path";
 import matter from "gray-matter";
 
-var log_file = fs.createWriteStream(
-  path.join(process.cwd(), "src/app/log.txt"),
-  {
-    flags: "w",
-  }
-);
-
-const blogFolder = path.join(process.cwd(), "src/app/blog");
+const blogFolder = path.join(process.cwd(), "src/app/blog/posts");
 
 export const getFileContent = (filename: string) => {
   return fs.readFileSync(path.join(blogFolder, filename), "utf8");
@@ -29,7 +23,6 @@ async function getBlogPosts(): Promise<
   var all_files = fs.readdirSync(blogFolder);
 
   var markdown = all_files.filter((path) => /\.md?$/.test(path));
-  log_file.write(markdown.join(", "));
 
   return markdown.map((file_path) => {
     const blog_post = getFileContent(file_path); // retrieve the file contents
@@ -42,9 +35,17 @@ async function getBlogPosts(): Promise<
   });
 }
 
-function BlogPostTile({ title, body }: { title: string; body: string }) {
+function BlogPostTile({
+  title,
+  body,
+  slug,
+}: {
+  title: string;
+  body: string;
+  slug: string;
+}) {
   return (
-    <div className={Styles.tile} id="blog">
+    <a href={"/blog/" + slug} className={Styles.tile} id="blog">
       <p
         className={Styles.section}
         style={{ textAlign: "center", color: "var(--secondary-color)" }}
@@ -54,41 +55,86 @@ function BlogPostTile({ title, body }: { title: string; body: string }) {
       <h5 style={{ textAlign: "center", color: "var(--secondary-color)" }}>
         {body}
       </h5>
-    </div>
+    </a>
   );
 }
 
-export default async function Blog() {
+export default async function Blog({ max_posts }: { max_posts: number }) {
   const blog_posts = await getBlogPosts();
 
   const published_posts = blog_posts.filter(
     (post) => post.frontmatter["isPublished"]
   );
 
-  const blogTiles = published_posts.map(
-    (post: { frontmatter: { [key: string]: any }; slug: string }) => {
-      return (
-        <BlogPostTile
-          key={post.slug}
-          title={post.frontmatter["title"]}
-          body={post.frontmatter["description"]}
-        />
-      );
-    }
-  );
+  published_posts.sort(function (a, b) {
+    // Turn your strings into dates, and then subtract them
+    // to get a value that is either negative, positive, or zero.
+    return (
+      Date.parse(b.frontmatter["publishedDate"]) -
+      Date.parse(a.frontmatter["publishedDate"])
+    );
+  });
 
-  return (
-    <div id="Blog" className={Styles.blog}>
-      <h2
-        className={TextStyles.section_header}
-        style={{
-          color: "var(--text-color)",
-          marginLeft: "var(--left-content-margin)",
-        }}
-      >
-        My Blog
-      </h2>
-      <div className={Styles.tiles}>{blogTiles}</div>
-    </div>
-  );
+  var blogTiles;
+  if (max_posts < 0) {
+    //for when not displayed on front page
+    blogTiles = published_posts.map(
+      (post: { frontmatter: { [key: string]: any }; slug: string }) => {
+        return (
+          <BlogPostTile
+            key={post.slug}
+            title={post.frontmatter["title"]}
+            body={post.frontmatter["description"]}
+            slug={post.slug}
+          />
+        );
+      }
+    );
+
+    return (
+      <div id="Blog" className={Styles.blogFull}>
+        <h2
+          className={TextStyles.section_header}
+          style={{
+            color: "var(--text-color)",
+            marginLeft: "var(--left-content-margin)",
+          }}
+        >
+          Blog Posts
+        </h2>
+        <div className={Styles.tiles}>{blogTiles}</div>
+      </div>
+    );
+  } else {
+    //for when on front page
+    blogTiles = published_posts
+      .slice(0, max_posts)
+      .map((post: { frontmatter: { [key: string]: any }; slug: string }) => {
+        return (
+          <BlogPostTile
+            key={post.slug}
+            title={post.frontmatter["title"]}
+            body={post.frontmatter["description"]}
+            slug={post.slug}
+          />
+        );
+      });
+
+    return (
+      <div id="Blog" className={Styles.blog}>
+        <Link href="/blog">
+          <h2
+            className={TextStyles.section_header}
+            style={{
+              color: "var(--text-color)",
+              marginLeft: "var(--left-content-margin)",
+            }}
+          >
+            My Blog
+          </h2>
+        </Link>
+        <div className={Styles.tiles}>{blogTiles}</div>
+      </div>
+    );
+  }
 }

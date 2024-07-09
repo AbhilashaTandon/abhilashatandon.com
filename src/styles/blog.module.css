@@ -9,6 +9,18 @@
   padding-right: var(--content-margin);
 }
 
+.blogFull{
+  width: 100vw;
+  position: absolute;
+  background-color: var(--secondary-color);
+  padding-bottom: 5vh;
+  margin-top: 5vh;
+
+
+  padding-left: var(--content-margin);
+  padding-right: var(--content-margin);
+}
+
 .tiles {
   display: grid;
   justify-content: space-between;

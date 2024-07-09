@@ -11,12 +11,12 @@ import Contact from "@/components/contact";
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <Navbar main_page={true} />
       <main className={styles.page}>
         <Hero />
         <Skills />
         <Projects />
-        <Blog />
+        <Blog max_posts={3} />
         <Contact />
       </main>
     </>
