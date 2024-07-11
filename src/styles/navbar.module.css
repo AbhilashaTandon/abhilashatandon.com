@@ -1,14 +1,10 @@
 .navbar {
-
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    padding: 1vh var(--content-margin) 1vh var(--content-margin);
     z-index: 99;
     width: 100vw;
-    padding-left: var(--content-margin);
-    padding-right: var(--content-margin);
     background-color: var(--background-color);
 }
 
@@ -24,32 +20,32 @@
     font-weight: 600;
     font-family: var(--primary-font);
     color: var(--text-color);
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 4px 4px rgb(0 0 0 / 25%);
     font-style: normal;
     line-height: normal;
     font-size: 1.25rem;
 }
 
 .section:hover {
-    color: var(--secondary-color);
+    color: var(--primary-color);
     transition: 1s;
 }
 
 .button {
-    background-color: var(--primary-color);
-    color: var(--text-color);
+    background-color: var(--text-color);
+    color: var(--background-color);
     border-radius: 1vw;
     padding: .5% 1%;
     font-size: 1.25rem;
 }
 
 .button:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     transition: 1s;
 }
 
 
-@media screen and (max-width: 850px) {
+@media screen and (width <= 850px) {
     .logo {
         font-size: 1rem;
     }
@@ -63,7 +59,7 @@
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (width <= 500px) {
     .logo {
         font-size: .75rem;
     }

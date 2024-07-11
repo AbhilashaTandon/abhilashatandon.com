@@ -4,13 +4,11 @@
     font-weight: 600;
     text-decoration: underline;
     align-items: center;
-    padding: 25px 0 21px 0;
+    padding: 25px 0 21px;
     margin-left: var(--left-content-margin);
 }
 
-@media screen and (max-width: 1200px) {
-
-
+@media screen and (width <= 1200px) {
     .section_header {
         font-size: 1.5rem;
     }

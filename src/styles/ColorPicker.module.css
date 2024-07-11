@@ -5,7 +5,7 @@
   border-radius: 8px;
   height: 16vw;
   width: 16vw;
-  background-color: rgb(0, 0, 0); /* this is reset by inline css */
+  background-color: var(--background-color); /* this is reset by inline css */
 }
 
 .window {
@@ -14,12 +14,10 @@
   border-style: solid;
   border-width: 4px;
   border-color: black; /* i do this so if you pick white the section is still visible */
-
   display: grid;
   justify-content: center;
   grid-template-columns: var(--column-width) var(--column-width) var(--column-width); /* 3 columns of equal size */
-  column-gap: var(--column-gap);
-  row-gap: 20px;
+  gap: 20px var(--column-gap);
   place-items: center;
-  padding: 2vh 0rem;
+  padding: 2vh 0;
 }

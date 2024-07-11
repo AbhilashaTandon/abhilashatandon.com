@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ColorPicker from "../../../styles/ColorPicker.module.css";
 import ContentGrid from "../../../styles/ContentGrid.module.css";
 
 export default function Main() {
   return (
     <main>
-      <h5>Click the color below that&apos;s closest to the one you have in mind!</h5>
+      <h5>
+        Click the color below that&apos;s closest to the one you have in mind!
+      </h5>
       <ColorGrid />
     </main>
   );
@@ -57,7 +59,8 @@ function format_color(color: number[], format: string | undefined) {
     return "hsv(" + color[0] + "°, " + color[1] + "%, " + color[2] + "%)";
   } else if (format === "hex") {
     //hex value
-    var to_hex = (x: { toString: (arg0: number) => string }) => ("0" + x.toString(16)).slice(-2);
+    var to_hex = (x: { toString: (arg0: number) => string }) =>
+      ("0" + x.toString(16)).slice(-2);
     return "#" + to_hex(color[0]) + to_hex(color[1]) + to_hex(color[2]);
   }
 }
@@ -91,30 +94,33 @@ function ColorGrid() {
   const [iter, setIter] = useState(128);
   const [colors, setColors] = useState(init_colors);
 
-  function handleClick(id: number) {
-    var new_colors = colors;
-    new_colors[0] = colors[id + 1]; //set current color to click location
+  function updateColors(id: number, colors: number[][], iter: number) {
+    var new_colors = colors.slice();
+    //set current color to click location
     // console.log(iter, colors);
     if (iter < 1) {
       //if amount to change colors is smaller than 1
-      for (var i = 0; i < 6; i++) {
-        for (var j = 0; j < 3; j++) {
-          new_colors[i + 1][j] = colors[0][j]; //set all colors to picked color
-        }
+      for (var i = 0; i < 7; i++) {
+        new_colors[i] = colors[id + 1].slice();
       }
     } else {
-      new_colors = init_colors; //initialize colors
+      new_colors = init_colors.slice(); //initialize colors
 
       for (var i = 0; i < 6; i++) {
         var current_color = [0, 0, 0];
         for (var j = 0; j < 3; j++) {
           current_color[j] = colors[id + 1][j] + iter * basis_vectors[i][j]; //set other colors to slightly varied versions of chosen color
         }
-        new_colors[i + 1] = normalize(current_color);
+        new_colors[i + 1] = normalize(current_color).slice();
       }
     }
+    new_colors[0] = colors[id + 1].slice();
+    return new_colors.slice();
+  }
+
+  function handleClick(id: number) {
     setIter((a) => a / 2); //decrease iter
-    setColors(new_colors.slice());
+    setColors((prevColors) => updateColors(id, prevColors, iter));
   }
 
   var buttons = [0, 1, 2, 3, 4, 5];
@@ -129,31 +135,47 @@ function ColorGrid() {
   ));
 
   function reset() {
-    setIter(() => 128);
-    setColors(() => init_colors.slice());
+    setIter(128);
+    setColors(init_colors.slice());
   }
 
   return (
     <>
-      <button
-        onClick={reset}
-        className={ColorPicker.reset}>
+      <button onClick={reset} className={ColorPicker.reset}>
         <h5>Reset</h5>
       </button>
 
       <div
         className={ColorPicker.window}
-        style={{ backgroundColor: format_color(colors[0], "rgb") }}>
+        style={{ backgroundColor: format_color(colors[0], "rgb") }}
+      >
         <div className={ContentGrid.grid}>{button_display}</div>
         {/* <h3> Based loosely on the oppositional color model: <Link href = "">Wikipedia</Link></h3> */}
       </div>
 
-      <h5>Current color: {format_color(colors[0], "rgb") + "\t" + format_color(colors[0], "hsv") + "\t" + format_color(colors[0], "hex")}</h5>
+      <h5>
+        Current color:{" "}
+        {format_color(colors[0], "rgb") +
+          "\t" +
+          format_color(colors[0], "hsv") +
+          "\t" +
+          format_color(colors[0], "hex")}
+      </h5>
     </>
   );
 }
 
-function ColorButton({ id, format_color, handleClick, colors }: { id: number; format_color: Function; handleClick: Function; colors: number[][] }) {
+function ColorButton({
+  id,
+  format_color,
+  handleClick,
+  colors,
+}: {
+  id: number;
+  format_color: Function;
+  handleClick: Function;
+  colors: number[][];
+}) {
   //single color button tile
   var formatted_color = format_color(colors[id + 1], "hex"); //converts to html
   var brightness = colors[id + 1].reduce((a: any, b: any) => a + b); //sum of colors
@@ -164,11 +186,13 @@ function ColorButton({ id, format_color, handleClick, colors }: { id: number; fo
         backgroundColor: formatted_color, //inline css is the only way
       }}
       className={ColorPicker.tile}
-      onClick={() => handleClick(id)}>
+      onClick={() => handleClick(id)}
+    >
       <h3
         style={{
           color: brightness > 384 ? "black" : "white", //propr text color contrast
-        }}>
+        }}
+      >
         {formatted_color}
       </h3>
     </button>

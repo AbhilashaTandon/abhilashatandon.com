@@ -1,5 +1,5 @@
 import styles from "../page.module.css";
-import NavStyle from "../../styles/navbar.module.css";
+import Navbar from "@/components/navbar";
 //import customStyling from "style.css";
 
 import Projects from "@/components/projects";
@@ -9,9 +9,7 @@ import Link from "next/link";
 export default function Page() {
   return (
     <>
-      <nav className={NavStyle.logo}>
-        <Heading route="" name="ABHILASHATANDON.com" />
-      </nav>
+      <Navbar main_page={false} />
       <main className={styles.page}>
         <Projects />
       </main>

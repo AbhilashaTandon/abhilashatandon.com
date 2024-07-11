@@ -1,8 +1,8 @@
+
 .hero {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
     padding-left: var(--content-margin);
     padding-right: var(--content-margin);
     height: 85vh;
@@ -30,15 +30,16 @@
     height: unset !important;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (width <= 850px) {
     .hero {
-        height: 55vw;
+        height: 45vw;
     }
 }
 
 
-@media screen and (max-width: 500px) {
+@media screen and ((width <= 500px) or (width <= 250px)) {
     .hero {
-        height: 60vw;
+        height: 85vw;
     }
 }
+

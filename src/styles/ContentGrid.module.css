@@ -6,9 +6,9 @@
   display: grid;
   justify-content: center;
   grid-template-columns: var(--column-width) var(--column-width) var(--column-width);
+
   /* 3 columns of equal size */
-  column-gap: var(--column-gap);
-  row-gap: 20px;
+  gap: 20px var(--column-gap);
   place-items: center;
   padding: 0;
   margin: 0;
@@ -17,12 +17,13 @@
 .box {
   justify-content: center;
   text-decoration: none;
+
   /* gets rid of default link color + underline */
   position: relative;
   background-color: var(--primary);
   width: 22vw;
   height: 15vw;
-  padding: 0rem 1rem;
+  padding: 0 1rem;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -33,16 +34,15 @@
 }
 
 .text {
-  margin: 0rem;
-  text-decoration: none;
-  /* gets rid of default link color + underline */
+  margin: 0;
+  text-decoration: none; /* gets rid of default link color + underline */
   display: grid;
   color: var(--text);
 }
 
 .title {
   font-weight: bolder;
-  margin: 1rem 0 0 0;
+  margin: 1rem;
 }
 
 .desc {

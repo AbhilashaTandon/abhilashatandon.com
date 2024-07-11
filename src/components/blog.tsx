@@ -92,16 +92,8 @@ export default async function Blog({ max_posts }: { max_posts: number }) {
     );
 
     return (
-      <div id="Blog" className={Styles.blogFull}>
-        <h2
-          className={TextStyles.section_header}
-          style={{
-            color: "var(--text-color)",
-            marginLeft: "var(--left-content-margin)",
-          }}
-        >
-          Blog Posts
-        </h2>
+      <div id="Blog" className={Styles.blog_full}>
+        <h2 className={Styles.section_header}>Blog Posts</h2>
         <div className={Styles.tiles}>{blogTiles}</div>
       </div>
     );
@@ -123,15 +115,7 @@ export default async function Blog({ max_posts }: { max_posts: number }) {
     return (
       <div id="Blog" className={Styles.blog}>
         <Link href="/blog">
-          <h2
-            className={TextStyles.section_header}
-            style={{
-              color: "var(--text-color)",
-              marginLeft: "var(--left-content-margin)",
-            }}
-          >
-            My Blog
-          </h2>
+          <h2 className={Styles.section_header}>My Blog</h2>
         </Link>
         <div className={Styles.tiles}>{blogTiles}</div>
       </div>

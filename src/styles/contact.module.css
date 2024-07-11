@@ -1,24 +1,40 @@
+.contact{
+    margin: 0 var(--content-margin) 0 var(--content-margin);
+}
+
 .path{
     fill: var(--text-color);
 }
 
+.path:hover{
+    fill: var(--primary-color);
+    transition: 1s;
+}
+
 .icons{
     display: flex;
-    justify-content: space-around;
-    padding: 1vh 0 4vh 0;
+    justify-content: space-between;
+    padding: 1vh 0 4vh;
 }
+
 
 .attrib{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 0 0 2vh 0;
+    padding: 0 0 2vh;
 }
 
 .email{
     margin-bottom: 2vh;
 }
 
-.contact{
-    padding: 0 var(--content-margin) 0 var(--content-margin);
+.link{
+    color: var(--text-color);
+    display: inline;
+}
+
+.link:hover{
+    color: var(--primary-color);
+    transition: 1s;
 }

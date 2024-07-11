@@ -16,9 +16,9 @@ function Intro() {
     <div className={Styles.intro}>
       <h3>Hi There 🙋🏽‍♀️! I’m</h3>
       <h1 style={{ color: "var(--primary-color)" }}>Abhilasha Tandon.</h1>
-      <h4>
+      <h2>
         I like making things. Designing things. Coding things. Creating things.
-      </h4>
+      </h2>
     </div>
   );
 }
@@ -27,6 +27,8 @@ function Icon() {
   return (
     <div className={Styles.image_container}>
       <Image
+        rel="preload" //loads faster
+        fetchPriority="high"
         src={Avatar}
         className={Styles.image}
         layout="fill"

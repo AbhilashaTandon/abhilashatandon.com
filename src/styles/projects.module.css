@@ -1,3 +1,4 @@
+
 .smallBox {
   height: 60vh;
   width: calc(100% - var(--left-content-margin));
@@ -19,14 +20,13 @@
 .smallBox:hover,
 .bigBox:hover {
   filter: brightness(50%);
-  transition: 0.5s;
+  transition: 1s;
 }
 
 .projectGrid {
   display: grid;
   grid-auto-flow: row;
   padding: 1vw;
-
   row-gap: 2vw;
 }
 
@@ -39,7 +39,6 @@
 }
 
 .projects {
-
   padding-left: var(--content-margin);
   padding-right: var(--content-margin);
   margin-bottom: 5vw;
@@ -54,12 +53,13 @@
   z-index: 1;
   margin-left: 1rem;
   margin-top: 1rem;
+
   /* black outline; */
   -webkit-text-stroke-width: 1.5px;
   -webkit-text-stroke-color: var(--background-color);
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (width <= 850px) {
   .projectGrid {
     grid-auto-flow: row;
     grid-template-columns: 1fr;
