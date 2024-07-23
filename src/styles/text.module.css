@@ -6,6 +6,7 @@
     align-items: center;
     padding: 25px 0 21px;
     margin-left: var(--left-content-margin);
+    color: var(--text-color);
 }
 
 @media screen and (width <= 1200px) {
@@ -13,3 +14,8 @@
         font-size: 1.5rem;
     }
 }
+
+  .section_header:hover{
+    color: var(--primary-color);
+    transition: 1s;
+  }

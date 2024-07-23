@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import { Nunito_Sans, Roboto } from "next/font/google";
+import Navbar from "@/components/navbar";
+import styles from "../page.module.css";
 
 const nunito = Nunito_Sans({
   subsets: ["latin"],
   variable: "--primary-font",
   weight: "variable",
-  display: "swap",
-});
-const roboto = Roboto({
-  subsets: ["latin"],
-  variable: "--secondary-font",
-  weight: ["300", "400", "500", "700"],
   display: "swap",
 });
 

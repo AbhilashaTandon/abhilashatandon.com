@@ -1,8 +1,5 @@
-import styles from "../page.module.css";
-import Navbar from "@/components/navbar";
-//import customStyling from "style.css";
-
 import Projects from "@/components/projects";
+import Navbar from "@/components/navbar";
 
 import Link from "next/link";
 
@@ -10,7 +7,7 @@ export default function Page() {
   return (
     <>
       <Navbar main_page={false} />
-      <main className={styles.page}>
+      <main>
         <Projects />
       </main>
     </>

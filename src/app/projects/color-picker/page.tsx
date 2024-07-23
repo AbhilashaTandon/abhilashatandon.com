@@ -3,15 +3,19 @@
 import { useState, useEffect } from "react";
 import ColorPicker from "../../../styles/ColorPicker.module.css";
 import ContentGrid from "../../../styles/ContentGrid.module.css";
+import Navbar from "@/components/navbar";
 
 export default function Main() {
   return (
-    <main>
-      <h5>
-        Click the color below that&apos;s closest to the one you have in mind!
-      </h5>
-      <ColorGrid />
-    </main>
+    <>
+      <Navbar main_page={false} />
+      <main className={ColorPicker.page}>
+        <h2>
+          Click the color below that&apos;s closest to the one you have in mind!
+        </h2>
+        <ColorGrid />
+      </main>
+    </>
   );
 }
 
@@ -142,7 +146,7 @@ function ColorGrid() {
   return (
     <>
       <button onClick={reset} className={ColorPicker.reset}>
-        <h5>Reset</h5>
+        <h3>Reset</h3>
       </button>
 
       <div
@@ -153,14 +157,14 @@ function ColorGrid() {
         {/* <h3> Based loosely on the oppositional color model: <Link href = "">Wikipedia</Link></h3> */}
       </div>
 
-      <h5>
+      <h3>
         Current color:{" "}
         {format_color(colors[0], "rgb") +
           "\t" +
           format_color(colors[0], "hsv") +
           "\t" +
           format_color(colors[0], "hex")}
-      </h5>
+      </h3>
     </>
   );
 }
@@ -184,13 +188,14 @@ function ColorButton({
       key={id}
       style={{
         backgroundColor: formatted_color, //inline css is the only way
+        borderColor: brightness > 384 ? "black" : "white",
       }}
       className={ColorPicker.tile}
       onClick={() => handleClick(id)}
     >
       <h3
         style={{
-          color: brightness > 384 ? "black" : "white", //propr text color contrast
+          color: brightness > 384 ? "black" : "white", //proper text color contrast
         }}
       >
         {formatted_color}

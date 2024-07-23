@@ -3,13 +3,15 @@
   text-decoration: none; /* gets rid of default link color + underline */
   position: relative;
   border-radius: 8px;
-  height: 16vw;
-  width: 16vw;
+  height: calc(12vw + 50px);
+  width: calc(12vw + 50px);
   background-color: var(--background-color); /* this is reset by inline css */
+  box-shadow: none;
+  border-width: 3px;
+  border-style: solid;
 }
 
 .window {
-  margin: 0;
   border-radius: 16px; /* rounded corners */
   border-style: solid;
   border-width: 4px;
@@ -20,4 +22,23 @@
   gap: 20px var(--column-gap);
   place-items: center;
   padding: 2vh 0;
+}
+
+.reset{
+  width: 12vw;
+  margin: 1rem 0;
+  background-color: var(--primary-color);
+}
+
+.reset > h3{
+  color: var(--background-color);
+}
+
+.reset:hover{
+  background-color: var(--secondary-color);
+  transition: 1s;
+}
+
+.page{
+  margin: 10vh var(--content-margin);
 }

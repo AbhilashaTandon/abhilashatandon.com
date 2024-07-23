@@ -31,7 +31,7 @@
 }
 
 .tile {
-  background-color: var(--text-color);
+  background-color: var(--background-color);
   border-radius: 40px;
   padding: 3vh 10px;
   height: 63vh;
@@ -41,8 +41,15 @@
   flex-direction: column;
 }
 
+.tile > p, .tile > h5{
+  text-align: center;
+   color: var(--primary-color);
+}
+
+
+
 .tile:hover{
-  background-color: var(--primary-color);
+  filter: brightness(50%);
   transition: 1s;
 }
 
@@ -58,16 +65,7 @@
   display: flex;
 }
 
-.section_header{
-    font-size: 2rem;
-    font-family: var(--primary-font);
-    font-weight: 600;
-    text-decoration: underline;
-    align-items: center;
-    padding: 25px 0 21px;
-    margin-left: var(--left-content-margin);
-    color: var(--text-color);
-  }
+
 
 .image {
   filter: invert(100%);

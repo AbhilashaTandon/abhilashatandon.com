@@ -1,6 +1,7 @@
 import Styles from "../styles/hero.module.css";
 import Avatar from "../../public/avatar.png";
 import Image from "next/legacy/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -19,6 +20,10 @@ function Intro() {
       <h2>
         I like making things. Designing things. Coding things. Creating things.
       </h2>
+
+      <button className={Styles.button}>
+        <Link href="#projects">Check Them Out!</Link>
+      </button>
     </div>
   );
 }

@@ -46,15 +46,8 @@ function BlogPostTile({
 }) {
   return (
     <a href={"/blog/" + slug} className={Styles.tile} id="blog">
-      <p
-        className={Styles.section}
-        style={{ textAlign: "center", color: "var(--secondary-color)" }}
-      >
-        {title}
-      </p>
-      <h5 style={{ textAlign: "center", color: "var(--secondary-color)" }}>
-        {body}
-      </h5>
+      <p className={Styles.section}>{title}</p>
+      <h5>{body}</h5>
     </a>
   );
 }
@@ -93,7 +86,7 @@ export default async function Blog({ max_posts }: { max_posts: number }) {
 
     return (
       <div id="Blog" className={Styles.blog_full}>
-        <h2 className={Styles.section_header}>Blog Posts</h2>
+        <h4 className={Styles.section_header}>Blog Posts</h4>
         <div className={Styles.tiles}>{blogTiles}</div>
       </div>
     );
@@ -115,7 +108,7 @@ export default async function Blog({ max_posts }: { max_posts: number }) {
     return (
       <div id="Blog" className={Styles.blog}>
         <Link href="/blog">
-          <h2 className={Styles.section_header}>My Blog</h2>
+          <h2 className={TextStyles.section_header}>My Blog</h2>
         </Link>
         <div className={Styles.tiles}>{blogTiles}</div>
       </div>

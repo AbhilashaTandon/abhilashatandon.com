@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { notFound } from "next/navigation";
+import Navbar from "@/components/navbar";
 
 import { getFileContent } from "@/components/blog";
 
@@ -35,9 +36,12 @@ export default async function Page({ params }: { params: { slug: string } }) {
   var post_data = await getBlogPost(params.slug);
 
   return (
-    <div>
-      <h1>{post_data.frontmatter["title"]}</h1>
-      {post_data.frontmatter["description"]}
-    </div>
+    <>
+      <Navbar main_page={false} />
+      <main>
+        <h1>{post_data.frontmatter["title"]}</h1>
+        {post_data.frontmatter["description"]}
+      </main>
+    </>
   );
 }

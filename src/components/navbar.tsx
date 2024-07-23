@@ -2,11 +2,21 @@ import Link from "next/link";
 import Styles from "../styles/navbar.module.css";
 
 export default function Navbar({ main_page }: { main_page: boolean }) {
-  var logo = (
-    <div className={Styles.logo}>
-      <Heading route="#hero" name="ABHILASHATANDON.com" />
-    </div>
-  );
+  var logo;
+  if (main_page) {
+    logo = (
+      <div className={Styles.logo}>
+        <Heading route="#hero" name="ABHILASHATANDON.com" />
+      </div>
+    );
+  } else {
+    logo = (
+      <div className={Styles.logo}>
+        <Heading route="/" name="ABHILASHATANDON.com" />
+      </div>
+    );
+  }
+
   var links = (
     <>
       <div></div>
@@ -22,9 +32,9 @@ export default function Navbar({ main_page }: { main_page: boolean }) {
       <div className={Styles.section}>
         <Heading route="#contact" name="Contact" />
       </div>
-      <div className={Styles.button}>
+      <button className={Styles.button}>
         <Heading route="/resume.pdf" name="Resume" />
-      </div>
+      </button>
     </>
   );
   if (main_page) {

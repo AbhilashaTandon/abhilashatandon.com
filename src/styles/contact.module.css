@@ -2,21 +2,11 @@
     margin: 0 var(--content-margin) 0 var(--content-margin);
 }
 
-.path{
-    fill: var(--text-color);
-}
-
-.path:hover{
-    fill: var(--primary-color);
-    transition: 1s;
-}
-
 .icons{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 1vh 0 4vh;
 }
-
 
 .attrib{
     display: flex;
@@ -34,7 +24,12 @@
     display: inline;
 }
 
+.link > h4{
+    color: var(--text-color);
+    display: inline;
+}
+
 .link:hover{
-    color: var(--primary-color);
+    color: var(--secondary-color);
     transition: 1s;
 }

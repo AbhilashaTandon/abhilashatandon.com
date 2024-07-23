@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Navbar main_page={true} />
-      <main className={styles.page}>
+      <main>
         <Hero />
         <Skills />
         <Projects />

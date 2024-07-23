@@ -1,42 +1,50 @@
 
-.smallBox {
-  height: 60vh;
-  width: calc(100% - var(--left-content-margin));
-}
 
-.bigBox {
-  height: 45vh;
+.box {
   width: calc(100% - var(--left-content-margin));
-}
-
-.smallBox,
-.bigBox {
-  width: 35vw;
   position: relative;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 20px;
 }
 
-.smallBox:hover,
-.bigBox:hover {
+.box:hover {
   filter: brightness(50%);
   transition: 1s;
 }
 
-.projectGrid {
+.grid {
   display: grid;
   grid-auto-flow: row;
-  padding: 1vw;
-  row-gap: 2vw;
+  gap: 20px;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: auto;
+  width: var(--content-width);
+  height: 800px;
+  grid-template-areas:
+    "project1 project1 project1 project2 project2 project2"
+    "project1 project1 project1 project2 project2 project2"
+    "project1 project1 project1 project3 project3 project3"
+    "project4 project4 project4 project3 project3 project3"
+    "project4 project4 project4 project3 project3 project3"
+    "project4 project4 project4 project3 project3 project3"
 }
 
-.project_grids {
-  display: flex;
+.grid .box:nth-child(1) {
+  grid-area: project1;
 }
 
-.projectTiles {
-  display: flex;
+.grid .box:nth-child(2) {
+  grid-area: project2;
 }
+
+.grid .box:nth-child(3) {
+  grid-area: project3;
+}
+
+.grid .box:nth-child(4) {
+  grid-area: project4;
+}
+
 
 .projects {
   padding-left: var(--content-margin);
@@ -70,8 +78,7 @@
     flex-direction: column;
   }
 
-  .smallBox,
-  .bigBox {
+  .box {
     width: var(--content-width);
     position: relative;
     overflow: hidden;

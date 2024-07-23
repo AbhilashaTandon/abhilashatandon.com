@@ -8,13 +8,31 @@
   --content-margin: calc((100vw - var(--content-width)) / 2);
 }
 
-@media (prefers-color-scheme: light) {
+
+
+@media (prefers-color-scheme: dark) {
   :root {
     --background-color: #eedefe;
     --secondary-color: #bf7aff;
     --primary-color: #551b8c;
     --text-color: #110021;
+  }
 
+  html {
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color: #110021;
+    --secondary-color: #551b8c;
+    --primary-color: #bf7aff;
+    --text-color: #eedefe;
+  }
+
+  html {
+    color-scheme: light;
   }
 }
 
@@ -22,6 +40,32 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+button, input[type="submit"], input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+  padding: .5% 1%;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+  border-radius: 1vw;
+  font-size: 1.25rem;
+  box-shadow: 2px 2px 8px var(--primary-color);
+}
+
+button:hover {
+    transition: 1s;
+}
+
+svg {
+    fill: var(--text-color);
+}
+
+svg:hover{
+    fill: var(--primary-color);
+    transition: 1s;
 }
 
 html {
@@ -39,11 +83,7 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
+
 
 h1 {
   font-size: 3rem;
@@ -86,7 +126,12 @@ h5 {
   color: var(--text-color);
 }
 
-
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 60px;
+}
 
 @media screen and (500px < width <= 850px) {
   h1 {

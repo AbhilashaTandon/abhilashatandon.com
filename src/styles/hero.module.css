@@ -13,7 +13,7 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    width: 30vw;
+    width: 50vw;
 }
 
 .image_container {
@@ -43,3 +43,18 @@
     }
 }
 
+.button {
+    background-color: var(--text-color);
+    color: var(--background-color);
+    border-radius: 1vw;
+    padding: 2% 4%;
+    margin: 4% 0;
+    text-align: center;
+    width: fit-content;
+    font-size: 1.75rem;
+}
+
+.button:hover {
+    background-color: var(--primary-color);
+    transition: 1s;
+}

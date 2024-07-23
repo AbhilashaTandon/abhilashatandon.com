@@ -2,32 +2,40 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1vh var(--content-margin) 1vh var(--content-margin);
+    padding: 2vh var(--content-margin) 2vh var(--content-margin);
     z-index: 99;
     width: 100vw;
     background-color: var(--background-color);
+    top: 0;
 }
+
+
 
 .logo {
     font-weight: 800;
     font-family: var(--primary-font);
     font-size: 1.5rem;
     color: var(--text-color);
+    text-shadow: 2px 2px 8px var(--primary-color);
+}
 
+.logo:hover {
+    color: var(--primary-color);
+    transition: 1s;
 }
 
 .section {
     font-weight: 600;
     font-family: var(--primary-font);
     color: var(--text-color);
-    text-shadow: 0 4px 4px rgb(0 0 0 / 25%);
     font-style: normal;
     line-height: normal;
     font-size: 1.25rem;
+    text-shadow: 1px 1px 8px var(--primary-color);
 }
 
 .section:hover {
-    color: var(--primary-color);
+    color: var(--secondary-color);
     transition: 1s;
 }
 
