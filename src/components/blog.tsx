@@ -108,7 +108,7 @@ export default async function Blog({ max_posts }: { max_posts: number }) {
     return (
       <div id="Blog" className={Styles.blog}>
         <Link href="/blog">
-          <h2 className={TextStyles.section_header}>My Blog</h2>
+          <h2>My Blog</h2>
         </Link>
         <div className={Styles.tiles}>{blogTiles}</div>
       </div>

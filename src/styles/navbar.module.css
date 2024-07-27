@@ -1,15 +1,14 @@
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    padding: 2vh var(--content-margin) 2vh var(--content-margin);
+    padding: 2vh;
     z-index: 99;
     width: 100vw;
     background-color: var(--background-color);
     top: 0;
+    box-shadow: 1px 1px 50px var(--secondary-color);
 }
-
-
 
 .logo {
     font-weight: 800;

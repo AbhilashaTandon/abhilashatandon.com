@@ -14,8 +14,3 @@
         font-size: 1.5rem;
     }
 }
-
-  .section_header:hover{
-    color: var(--primary-color);
-    transition: 1s;
-  }

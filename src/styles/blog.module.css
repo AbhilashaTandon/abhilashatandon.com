@@ -1,11 +1,26 @@
 
 .blog {
   width: 100vw;
-  position: relative;
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   padding-bottom: 5vh;
   padding-left: var(--content-margin);
   padding-right: var(--content-margin);
+}
+
+.blog h2{
+  font-size: 2rem;
+    font-family: var(--primary-font);
+    font-weight: 600;
+    text-decoration: underline;
+    align-items: center;
+    padding: 25px 0 21px;
+    margin-left: var(--left-content-margin);
+    color: var(--background-color);
+}
+
+.blog h2:hover{
+  color: var(--secondary-color);
+  transition: 1s;
 }
 
 .blog_full{

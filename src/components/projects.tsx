@@ -42,7 +42,7 @@ function ProjectTile({ project_name }: { project_name: string }): JSX.Element {
     <div className={Styles.box}>
       <Link href={"/projects/" + project_name}>
         <Image
-          src={require("./../../public/project-icons/" + project_name + ".png")}
+          src={"/project-icons/" + project_name + ".png"}
           alt={project_name}
           layout="fill"
           objectFit="cover"

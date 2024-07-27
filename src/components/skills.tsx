@@ -24,10 +24,8 @@ function SkillTile({
         height={75}
         className={Styles.image}
       />
-      <p className={Styles.title}>{title}</p>
-      <h4 style={{ textAlign: "center", color: "var(--text-color)" }}>
-        {body}
-      </h4>
+      <h3 className={Styles.title}>{title}</h3>
+      <h4>{body}</h4>
     </div>
   );
 }
@@ -35,15 +33,7 @@ function SkillTile({
 export default function Skills() {
   return (
     <div id="skills" className={Styles.skills}>
-      <h3
-        className={Text.section_header}
-        style={{
-          color: "var(--secondary-color)",
-          marginLeft: "var(--left-content-margin)",
-        }}
-      >
-        My Skills
-      </h3>
+      <h3 className={Text.section_header}>My Skills</h3>
       <div className={Styles.tiles}>
         <SkillTile
           title="Software Development "
