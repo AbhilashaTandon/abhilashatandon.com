@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Terra Firma</title>
+    <meta charset="utf-8" />
+    <style>
+      :root {
+        --text: #171618;
+        --background: #f0eff0;
+        --primary: #b63ddf;
+        --secondary: #e3e2e4;
+        --accent: #7f7981;
+        font-family: "Ubuntu Mono", monospace;
+        background-color: var(--background);
+      }
+
+      p {
+        text-align: justify;
+      }
+    </style>
+    <script src="math.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <center>
+      <canvas
+        height="450"
+        width="800"
+        id="canvas1"
+        style="
+          border-style: solid;
+          border-width: 8px;
+          border-radius: 16px;
+          border-color: var(--primary);
+          background-color: black;
+        "
+      ></canvas>
+
+      <h3>
+        Use arrow keys to move: up and down move forward and backward, left and
+        right turn view.
+      </h3>
+
+      <script>
+        // THIS FUNCTION DOES ALL OF THE INITIALIZING FOR THE GPU PROGRAM.
+
+        let start_gl = (
+          canvas,
+          meshData,
+          vertexSize,
+          vertexShader,
+          fragmentShader
+        ) => {
+          // GET THE 3D CONTEXT OF THE CANVAS
+
+          let gl = canvas.getContext("webgl");
+
+          // CREATE A PROGRAM THAT WILL RUN ON THE GPU
+
+          let program = gl.createProgram();
+          gl.program = program;
+
+          // THIS IS HOW WE COMPILE AND ATTACH A SHADER TO THE GPU PROGRAM
+
+          let addshader = (type, src) => {
+            let shader = gl.createShader(type);
+            gl.shaderSource(shader, src);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+              throw "Cannot compile shader:\n\n" + gl.getShaderInfoLog(shader);
+            gl.attachShader(program, shader);
+          };
+
+          // ADD THE VERTEX AND FRAGMENT SHADERS
+
+          addshader(gl.VERTEX_SHADER, vertexShader);
+          addshader(gl.FRAGMENT_SHADER, fragmentShader);
+
+          // LINK THE PROGRAM AND REPORT ANY ERRORS
+
+          gl.linkProgram(program);
+          if (!gl.getProgramParameter(program, gl.LINK_STATUS))
+            throw "Could not link the shader program!";
+          gl.useProgram(program);
+
+          // DECLARE A PLACE FOR MY VERTICES TO GO DOWN ON THE GPU
+
+          gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+
+          // PERMIT THE GPU TO RENDER NEARER THINGS IN FRONT OF FARTHER AWAY THINGS
+
+          gl.enable(gl.DEPTH_TEST);
+          gl.depthFunc(gl.LEQUAL);
+
+          // SET ANY ONE ATTRIBUTE OF A VERTEX
+
+          let vertexAttribute = (name, size, position) => {
+            let attr = gl.getAttribLocation(program, name);
+            gl.enableVertexAttribArray(attr);
+            gl.vertexAttribPointer(
+              attr,
+              size,
+              gl.FLOAT,
+              false,
+              vertexSize * 4,
+              position * 4
+            );
+          };
+
+          // SET THE POSITION ATTRIBUTE
+
+          vertexAttribute("aPos", 3, 0);
+
+          return gl;
+        };
+
+        // HERE WE ARE SETTING UP HOW THE CANVAS RESPONDS TO MOUSE EVENTS.
+
+        let r = canvas1.getBoundingClientRect(),
+          cursor = [0, 0, 0];
+        var complex_number_mouse_loc;
+        let setCursor = (e, z) => {
+          cursor = [
+            ((e.clientX - r.left) / canvas1.width) * 2 - 1,
+            1 - ((e.clientY - r.top) / canvas1.height) * 2,
+            z !== undefined ? z : cursor[2],
+          ];
+          complex_number_mouse_loc =
+            "mouse location: " +
+            (cursor[0] * 2 + 0.5).toFixed(3) +
+            " + " +
+            (cursor[1] + 0.025).toFixed(3) +
+            "i"; //add 0.025 to match with center of cursor
+        };
+        canvas1.onmousedown = (e) => setCursor(e, 1);
+        canvas1.onmousemove = (e) => setCursor(e);
+        canvas1.onmouseup = (e) => setCursor(e, 0);
+
+        window.addEventListener("keydown", this.check, false); //keypress checker
+
+        var key_pressed = 0;
+
+        function check(e) {
+          key_pressed = e.keyCode;
+        }
+
+        // ALL OF THE 3D MESH SHAPES THAT WE ARE RENDERING (FOR NOW IT'S JUST ONE SHAPE)
+
+        let meshData = [
+          {
+            type: 1,
+            mesh: new Float32Array([-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0]),
+          },
+        ];
+
+        let seed = Math.sin(Date.now() * 1000) * 1000; //random seed so its different each time we run it
+        let vertexShader = `
+                   attribute vec3 aPos;
+                   varying   vec3 vPos;
+                   void main() {
+                      gl_Position = vec4(aPos, 1.0);
+                      vPos = aPos;
+                   }
+                `;
+
+        let noise = `
+                precision mediump float;
+
+        #define MAX_ITER 16
+        #define WATER_LEVEL .5
+        #define MIN_DIST .05
+        #define MAX_DIST 19.
+        #define SKY_LEVEL 1.5
+        #define COLLISION_THRESH(x) max (.001, x * .001)
+
+        #define WATER_COLOR vec3(0.05, .3, .45)
+        #define ROCK_COLOR_1 vec3(0.533,0.518,0.604)
+        #define ROCK_COLOR_2 vec3(0.694,0.624,0.651)
+        #define GRASS_COLOR vec3 (0.25, .45, 0.15)
+
+        int lod_mix (float dist) { //less detail far away
+            float factor = clamp (0., 1., log (dist + 1.) / 3.);
+            return int (mix (9., -5., factor));
+        }
+
+        //hash function from https://www.shadertoy.com/view/4slGD4
+        vec2 hash (vec2 p) {
+            vec3 p3 = fract (vec3 (p.xyx) * vec3 (.1031, .1030, .0973));
+            p3 += dot (p3, p3.yzx + 19.19);
+            return fract ((p3.xx + p3.yz) * p3.zy);
+        }
+
+        //this function taken from https://www.shadertoy.com/view/tsl3zl
+        float gradientNoise (vec2 p) {
+            vec2 i = floor (p);
+            vec2 f = fract (p);
+            vec2 u = f * f * (3. - 2. * f);
+
+            return mix (mix (dot (hash (i), f), dot (hash (i + vec2 (1., 0.)), f - vec2 (1., 0.)), u.x), mix (dot (hash (i + vec2 (0., 1.)), f - vec2 (0., 1.)), dot (hash (i + vec2 (1., 1.)), f - vec2 (1., 1.)), u.x), u.y);
+        }
+
+        float layeredNoise (vec2 p, int lod, int turbulent) {
+            float noise = 0.;
+            float scale = 1.;
+            for(int i = 0; i < MAX_ITER; i++) {
+                float layer = gradientNoise (scale * p) / scale;
+                noise += (turbulent == 0) ? layer : abs (layer);
+                scale *= -2.1; //making it negative adds more variation
+
+                //rotation matrix from https://www.shadertoy.com/view/4slGD4
+                p = 2. * mat2 (0.27246, 0.35062, -0.34262, 0.29246) * p;
+
+                if(i >= lod) {
+                    break;
+                }
+            }
+            return (turbulent == 0) ? .5 + noise : noise;
+        }
+
+        float terrain_height (vec3 pos, int lod, float water_level, float dist, int normal) {
+            float noise = pow (2., .4) * pow (2. * max (water_level, layeredNoise (pos.xz, lod, 0)) - water_level * 2., 1.4);
+            float dist_factor = 1. - clamp (0., .5, dist) * 2.;
+            return (normal == 0 || pos.y < 0.001) ? noise : noise + gradientNoise (512. * pos.xz) / 512. * dist_factor;
+
+        }
+
+        float height_map (vec3 pos, int lod, float water_level) {
+            return pos.y - (terrain_height (pos, lod, water_level, 0., 0));
+        }
+
+        vec3 terrain_normal (vec3 pos, int lod, float dist) {
+            float epsilon = (pos.y > COLLISION_THRESH (dist)) ? min (.01 * dist, .1) : .7;
+
+
+            vec3 norm = vec3 (0., terrain_height (pos, lod, WATER_LEVEL, dist, 1), 0.);
+            vec3 norm2 = norm - vec3 (epsilon, terrain_height (pos + vec3 (epsilon, 0., 0.), lod, WATER_LEVEL, dist, 1), 0.);
+            vec3 norm3 = norm - vec3 (0., terrain_height (pos + vec3 (0., 0., -epsilon), lod, WATER_LEVEL, dist, 1), -epsilon);
+            norm = cross (norm2, norm3);
+            return normalize (norm);
+        }
+
+        vec4 raymarch (vec3 start, vec3 dir, int lod) {
+            float d = MIN_DIST;
+
+            for(float i = 0.; i < 400.; i++) {
+
+                vec3 collision = start + dir * d;
+
+                float hit_thresh = COLLISION_THRESH (d);
+
+                if(collision.y > SKY_LEVEL || abs (collision.y) < hit_thresh || collision.y < 2. * WATER_LEVEL - 1.) {
+                    return vec4 (collision, d);
+                }
+
+
+
+                lod = (lod == 0) ? lod_mix(d) : lod;
+
+                float height = height_map (collision, lod, WATER_LEVEL);
+
+                if(abs (height) < hit_thresh) {
+                    return vec4 (collision, d);
+                }
+
+                d += .25 * height + height * d * .005 + hit_thresh / 10.; //technique taken from https://www.shadertoy.com/view/7tBfzz
+                //causes HUGE speedups
+
+                if(d > MAX_DIST) {
+                    break;
+                }
+            }
+
+            return vec4 (start, 0.);
+
+        }
+
+        float s_curve (float x) {
+            return (1. / (1. + exp ((x - .5) * -10.)));
+        }
+
+        vec3 terrain_color (vec3 collision, float dist) {
+            float noise = .4 * layeredNoise (collision.xz * 10. + vec2 (5435.123, 5315.23), 10, 1) + .2;
+            if(collision.y + noise > .75) {
+                return vec3 (.9, .9, .9); //snow
+            }
+            if(abs (collision.y - 2. * WATER_LEVEL + 1.) < COLLISION_THRESH (dist)) {
+                float water_depth = WATER_LEVEL - height_map (collision, 1, -1.);
+                //fancy water effects
+
+                water_depth += 2. * gradientNoise(collision.xz * 300.);
+
+                return WATER_COLOR * pow (water_depth / 3.5, 1.01);
+            } else {
+                float steepness = terrain_normal (collision, 4, collision.z).y; //how steep the slope is
+
+                steepness = s_curve (clamp (steepness, 0., 1.));
+
+                vec2 shifted_collision = collision.xy * vec2 (1., 50.) + gradientNoise (collision.xy) * 40.;
+
+                float color_noise = layeredNoise (shifted_collision, 2, 0) + gradientNoise (collision.xz * 512.);
+
+                vec3 rock_color = mix (ROCK_COLOR_1, ROCK_COLOR_2, color_noise);
+                return mix (rock_color, GRASS_COLOR, steepness * steepness);
+
+            }
+        }
+
+        `;
+
+        // THE VERTEX SHADER, FOLLOWED BY THE FRAGMENT SHADER
+
+        let vertexSize = 3;
+        let fragmentShader =
+          `#define seed ` +
+          seed +
+          `
+                  ` +
+          noise +
+          `
+
+                  uniform float uTime;
+        uniform vec3 uCursor;
+        varying vec3 vPos;
+        uniform vec3 uPos;
+
+
+        #define FOG_COLOR vec3(0.447,0.635,0.776)
+        #define FOG_DIST 3.
+        #define SKY_COLOR vec3(0.075,0.624,0.875)
+        #define LIGHT_DIR normalize (vec3 (1., 1.25, 0.))
+        #define AMBIENT_AMOUNT .4
+
+        vec3 shade (vec3 color, vec3 normal, vec3 collision) {
+            vec4 shadow = raymarch (collision + normal * .0001, LIGHT_DIR, 4);
+
+            float gouraud = dot (normal, LIGHT_DIR);
+
+            if(shadow.w < .4) {
+                return color * max (AMBIENT_AMOUNT, gouraud * shadow.w);
+            }
+
+            return color * max (AMBIENT_AMOUNT, gouraud * 1.45);
+        }
+
+        vec3 fog (float dist, vec3 color) {
+            float fog_amount = min (1.3, pow (0.5, (dist - 3.) / FOG_DIST));
+            return mix (FOG_COLOR, color, fog_amount);
+        }
+
+        vec3 get_color (vec3 collision, float dist, vec2 vPos) {
+            if(collision.y > SKY_LEVEL) {
+                return mix (vec3 (1.), SKY_COLOR, vPos.y);
+            } else if(dist < MIN_DIST) { //gets rid of some darkness around the horizon
+                return (collision.y < 0.) ? WATER_COLOR : mix (vec3 (1.), SKY_COLOR, vPos.y); //horizon line
+            }
+
+            vec3 color = terrain_color (collision, dist);
+
+            color = shade (color, terrain_normal (collision, lod_mix (dist / 2.) + 1, dist), collision);
+
+            color = fog (dist, color);
+
+            return color;
+
+        }
+
+        void main() {
+            float cos_angle = cos(uPos.z);
+            float sin_angle = sin(uPos.z);
+            mat3 view_rot = mat3(cos_angle, 0., -sin_angle, 0., 1., 0., sin_angle, 0., cos_angle);
+
+            vec3 camera_pos = vec3 (0., 0., 0.) - vec3 (uPos.x, 0., uPos.y);
+            camera_pos += vec3 (0., terrain_height (camera_pos, 1, WATER_LEVEL, 0., 0) * 1.5 + .14, 0.);
+            vec3 dir = view_rot * normalize (vec3 (vPos.xy, -3.));
+            vec4 marched = raymarch (camera_pos, dir, 0);
+            vec3 collision = marched.xyz;
+            float dist = marched.w;
+
+            vec3 color = get_color (collision, dist, vPos.xy);
+
+            gl_FragColor = vec4 (pow (color, vec3 (1. / 1.2)), 1.); //lighting
+        }`;
+
+        console.log(fragmentShader);
+
+        // WAIT 100 MSECS BEFORE STARTING UP
+
+        setTimeout(() => {
+          // INITIALIZE GPU GRAPHICS
+
+          let gl = start_gl(
+            canvas1,
+            meshData,
+            vertexSize,
+            vertexShader,
+            fragmentShader
+          );
+
+          // PASS UNIFORM VARIABLES
+
+          let uTime = gl.getUniformLocation(gl.program, "uTime");
+          let uCursor = gl.getUniformLocation(gl.program, "uCursor");
+          let uPos = gl.getUniformLocation(gl.program, "uPos");
+
+          var current_x = 0;
+          var current_z = 0;
+          var current_rot = 0;
+
+          var move_step = 0.005; //how much we move each step in xz space
+          var rot_step = Math.PI / 120; //how much angle we rotate by each step
+
+          // WHEN DID WE START ANIMATING?
+
+          let startTime = Date.now() / 1000;
+
+          // START THE ANIMATION LOOP
+
+          setInterval(() => {
+            // PASS ELAPSED TIME DOWN TO THE GPU
+
+            if (key_pressed == 38) {
+              current_z += move_step * Math.cos(current_rot);
+              current_x += move_step * Math.sin(current_rot);
+              key_pressed = 0;
+            } // up
+            else if (key_pressed == 37) {
+              current_rot += rot_step;
+
+              key_pressed = 0;
+            } //left
+            else if (key_pressed == 40) {
+              current_z -= move_step * Math.cos(current_rot);
+              current_x -= move_step * Math.sin(current_rot);
+
+              key_pressed = 0;
+            } //down
+            else if (key_pressed == 39) {
+              current_rot -= rot_step;
+
+              key_pressed = 0;
+            } //right
+
+            gl.uniform1f(uTime, Date.now() / 1000 - startTime);
+            gl.uniform3f(uPos, current_x, current_z, current_rot); //pass info to frag shader
+
+            // PASS THE CURSOR STATE DOWN TO THE GPU
+
+            gl.uniform3fv(uCursor, cursor);
+
+            // LOOP THROUGH ALL OF MY SHAPES
+
+            for (let n = 0; n < meshData.length; n++) {
+              // PULL OUT THE ACTUAL MESH DATA
+
+              let mesh = meshData[n].mesh;
+
+              // LOAD THAT DATA DOWN INTO THE GPU
+
+              gl.bufferData(gl.ARRAY_BUFFER, mesh, gl.STATIC_DRAW);
+
+              // RENDER THAT DATA ACCORDING TO WHAT TYPE IT IS
+
+              gl.drawArrays(
+                meshData[n].type ? gl.TRIANGLE_STRIP : gl.TRIANGLES,
+                0,
+                mesh.length / vertexSize
+              );
+            }
+          }, 33);
+        }, 100);
+      </script>
+    </center>
+  </body>
+</html>

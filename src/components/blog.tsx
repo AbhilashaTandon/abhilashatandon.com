@@ -46,8 +46,8 @@ function BlogPostTile({
 }) {
   return (
     <a href={"/blog/" + slug} className={Styles.tile} id="blog">
-      <p className={Styles.section}>{title}</p>
-      <h5>{body}</h5>
+      <h3 className={Styles.section}>{title}</h3>
+      <h4>{body}</h4>
     </a>
   );
 }

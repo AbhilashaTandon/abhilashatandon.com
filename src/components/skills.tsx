@@ -37,17 +37,17 @@ export default function Skills() {
       <div className={Styles.tiles}>
         <SkillTile
           title="Software Development "
-          body="Seasoned in the software development lifecycle, I excel in writing  clean, maintainable code using Java, Python, and C++. I also am familiar with C#."
+          body="Seasoned in the software development lifecycle, I excel in writing  clean, maintainable code using Java, Python, and C++."
           symbol={SWE}
         />
         <SkillTile
           title="Web Development"
-          body="I create visually appealing, functional websites, focusing on elegant and simple design using Javascript, HTML, CSS, React.js, and Next.js"
+          body="I create visually appealing, functional websites, focusing on elegant and simple design using Javascript, Typescript, HTML, CSS, React.js, and Next.js."
           symbol={Web}
         />
         <SkillTile
           title="Machine Learning"
-          body="I innovate AI models for, natural language  processing, predictive models, and computer vision, with experience in PyTorch and Tensorflow."
+          body="I innovate AI models for, natural language processing, predictive models, and computer vision, with experience in PyTorch and Tensorflow."
           symbol={ML}
         />
       </div>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Raytracer</title>
+    <meta charset="utf-8" />
+    <style>
+      :root {
+        --text: #171618;
+        --background: #f0eff0;
+        --primary: #b63ddf;
+        --secondary: #e3e2e4;
+        --accent: #7f7981;
+        font-family: "Ubuntu Mono", monospace;
+        background-color: var(--background);
+      }
+
+      p {
+        text-align: justify;
+      }
+    </style>
+    <script src="math.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <center>
+      <canvas
+        height="600"
+        width="600"
+        id="canvas1"
+        style="
+          border-style: solid;
+          border-width: 8px;
+          border-radius: 16px;
+          border-color: var(--primary);
+          background-color: black;
+        "
+      ></canvas>
+
+      <script>
+        // THIS FUNCTION DOES ALL OF THE INITIALIZING FOR THE GPU PROGRAM.
+
+        let start_gl = (
+          canvas,
+          meshData,
+          vertexSize,
+          vertexShader,
+          fragmentShader
+        ) => {
+          // GET THE 3D CONTEXT OF THE CANVAS
+
+          let gl = canvas.getContext("webgl");
+
+          // CREATE A PROGRAM THAT WILL RUN ON THE GPU
+
+          let program = gl.createProgram();
+          gl.program = program;
+
+          // THIS IS HOW WE COMPILE AND ATTACH A SHADER TO THE GPU PROGRAM
+
+          let addshader = (type, src) => {
+            let shader = gl.createShader(type);
+            gl.shaderSource(shader, src);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+              throw "Cannot compile shader:\n\n" + gl.getShaderInfoLog(shader);
+            gl.attachShader(program, shader);
+          };
+
+          // ADD THE VERTEX AND FRAGMENT SHADERS
+
+          addshader(gl.VERTEX_SHADER, vertexShader);
+          addshader(gl.FRAGMENT_SHADER, fragmentShader);
+
+          // LINK THE PROGRAM AND REPORT ANY ERRORS
+
+          gl.linkProgram(program);
+          if (!gl.getProgramParameter(program, gl.LINK_STATUS))
+            throw "Could not link the shader program!";
+          gl.useProgram(program);
+
+          // DECLARE A PLACE FOR MY VERTICES TO GO DOWN ON THE GPU
+
+          gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+
+          // PERMIT THE GPU TO RENDER NEARER THINGS IN FRONT OF FARTHER AWAY THINGS
+
+          gl.enable(gl.DEPTH_TEST);
+          gl.depthFunc(gl.LEQUAL);
+
+          // SET ANY ONE ATTRIBUTE OF A VERTEX
+
+          let vertexAttribute = (name, size, position) => {
+            let attr = gl.getAttribLocation(program, name);
+            gl.enableVertexAttribArray(attr);
+            gl.vertexAttribPointer(
+              attr,
+              size,
+              gl.FLOAT,
+              false,
+              vertexSize * 4,
+              position * 4
+            );
+          };
+
+          // SET THE POSITION ATTRIBUTE
+
+          vertexAttribute("aPos", 3, 0);
+
+          return gl;
+        };
+
+        // HERE WE ARE SETTING UP HOW THE CANVAS RESPONDS TO MOUSE EVENTS.
+
+        let r = canvas1.getBoundingClientRect(),
+          cursor = [0, 0, 0];
+        let setCursor = (e, z) =>
+          (cursor = [
+            ((e.clientX - r.left) / canvas1.width) * 2 - 1,
+            1 - ((e.clientY - r.top) / canvas1.height) * 2,
+            z !== undefined ? z : cursor[2],
+          ]);
+        canvas1.onmousedown = (e) => setCursor(e, 1);
+        canvas1.onmousemove = (e) => setCursor(e);
+        canvas1.onmouseup = (e) => setCursor(e, 0);
+
+        // ALL OF THE 3D MESH SHAPES THAT WE ARE RENDERING (FOR NOW IT'S JUST ONE SHAPE)
+
+        let meshData = [
+          {
+            type: 1,
+            mesh: new Float32Array([-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0]),
+          },
+        ];
+
+        // THE VERTEX SHADER, FOLLOWED BY THE FRAGMENT SHADER
+        let NUM_SPHERES = 10;
+        let threshold = 5.95e-3;
+        let NUM_WALLS = 4;
+        let vertexSize = 3;
+        let vertexShader = `
+                           attribute vec3 aPos;
+                           varying   vec3 vPos;
+                           void main() {
+                              gl_Position = vec4(aPos, 1.0);
+                              vPos = aPos;
+                           }
+                        `;
+        let fragmentShader =
+          `
+        #define NUM_SPHERES ` +
+          NUM_SPHERES +
+          `
+        #define epsilon ` +
+          threshold +
+          `
+        #define NUM_WALLS ` +
+          NUM_WALLS +
+          `
+
+precision mediump float;
+uniform float uTime;
+uniform vec3 uCursor;
+varying vec3 vPos;
+uniform vec4 spheres[NUM_SPHERES];
+uniform vec3 colors[NUM_SPHERES];
+uniform vec4 walls[NUM_WALLS]; //plane equation
+uniform vec3 wall_boundaries[NUM_WALLS * 2]; //xmin xmax ymin ymax zmin zmax
+
+struct ray {
+    vec3 source; //V
+    vec3 dir; //W
+    float dist; //t
+    vec3 collision; //V + W * t
+    vec3 normal; //normal to surface at collision
+    vec3 diffuse_color; //color of light
+    float reflectance; //percentage of light surface reflects
+    vec3 shine_color;
+};
+
+vec3 phong_shade (ray r, vec3 ambient_color, vec3 diffuse_color, vec3 shine_color, vec3 light_dir) {
+    r.normal = normalize (r.normal);
+    r.dir = normalize (r.dir);
+    vec3 diffuse = diffuse_color * max (0., dot (r.normal, light_dir));
+    vec3 reflection = r.dir + 2. * max (0., dot (light_dir, r.normal));
+    vec3 shine = shine_color * pow (max (0., dot (-r.dir, reflection)), 4.);
+    return (ambient_color + diffuse + shine) * r.diffuse_color;
+}
+
+ray trace_sphere (ray r, vec4 sphere, vec3 color) {
+    vec3 center = sphere.xyz;
+    float radius = sphere.w;
+
+    vec3 v_prime = r.source - center;
+
+    float b = dot (v_prime, r.dir);
+    float c = dot (v_prime, v_prime) - radius * radius;
+    float d = b * b - c; //solve quadratic for sphere collision
+    r.dist = d > 0. ? -b - sqrt (d) : -1.;
+    r.collision = r.source + r.dir * r.dist;
+    r.normal = normalize ((r.collision - center) / radius);
+    r.diffuse_color *= color;
+    r.reflectance *= .3;
+    r.shine_color = r.diffuse_color;
+    return r;
+}
+
+vec3 color_plane (ray r) {
+    vec3 tile_color = vec3 ((mod (floor (r.collision.x + 1.) + floor (r.collision.z), 2.) + mod (floor (2. - r.collision.x) + floor (r.collision.z), 2.)) + .3); //checkerboard pattern
+    return tile_color;
+}
+
+bool between (float x, float a, float b) { //if x is between a and b
+    return (x < a && x > b) || (x > a && x < b);
+}
+
+ray trace_wall (ray r, vec4 wall, vec3 wall_boundary_a, vec3 wall_boundary_b, vec3 wall_color) {
+    float numer = -dot (vec4 (r.source, 1.), wall);
+    float denom = dot (wall, vec4 (r.dir, 0.));
+    r.dist = (abs (denom) > epsilon) ? numer / denom : -1.;
+    r.collision = r.source + r.dir * r.dist;
+
+    r.dist = (between (r.collision.x, wall_boundary_a.x, wall_boundary_b.x)) ? r.dist : -1.; //x boundary condition
+    r.dist = (between (r.collision.y, wall_boundary_a.y, wall_boundary_b.y)) ? r.dist : -1.; //y boundary condition
+    r.dist = (between (r.collision.z, wall_boundary_a.z, wall_boundary_b.z)) ? r.dist : -1.; //y boundary condition
+
+    r.normal = normalize (wall.xyz);
+    r.diffuse_color *= wall_color;
+    r.reflectance *= 0.;
+    r.shine_color = vec3 (0.);
+    return r;
+}
+
+ray trace_plane (ray r, vec4 plane) {
+    float numer = -dot (vec4 (r.source, 1.), plane);
+    float denom = dot (plane, vec4 (r.dir, 0.));
+    r.dist = (abs (denom) > epsilon) ? numer / denom : -1.;
+    r.collision = r.source + r.dir * r.dist;
+    r.normal = normalize (plane.xyz);
+    r.diffuse_color = r.diffuse_color * color_plane (r);
+    r.reflectance *= 0.;
+    r.shine_color = vec3 (0.);
+    return r;
+}
+
+ray trace_scene (ray input_ray, vec4 spheres[NUM_SPHERES], vec3 sphere_colors[NUM_SPHERES], vec4 walls[NUM_WALLS], vec3 wall_boundaries[NUM_WALLS * 2], vec3 wall_color, vec4 floor_, vec3 default_color) {
+    float t_min = 10000.;
+    ray temp = ray (input_ray.source, input_ray.dir, input_ray.dist, input_ray.collision, input_ray.normal, input_ray.diffuse_color, input_ray.reflectance, input_ray.shine_color);
+    ray out_ray = ray (input_ray.source, input_ray.dir, input_ray.dist, input_ray.collision, input_ray.normal, input_ray.diffuse_color, input_ray.reflectance, input_ray.shine_color);
+
+            //trace spheres
+
+    for(int n = 0; n < NUM_SPHERES; n++) {
+        temp = trace_sphere (input_ray, spheres[n], sphere_colors[n]);
+        if(temp.dist > 0. && temp.dist < t_min) {
+            t_min = temp.dist;
+            out_ray = temp;
+        }
+    }
+
+            //trace walls
+
+    for(int n = 0; n < NUM_WALLS; n++) {
+        temp = trace_wall (input_ray, walls[n], wall_boundaries[n * 2], wall_boundaries[n * 2 + 1], wall_color);
+        if(temp.dist > 0. && temp.dist < t_min) {
+            t_min = temp.dist;
+            out_ray = temp;
+        }
+    }
+
+            //trace floor
+
+    if(t_min >= 10000.) {
+        temp = trace_plane (input_ray, floor_);
+        if(temp.dist > 0.) {
+            t_min = temp.dist;
+            out_ray = temp;
+        } else {
+            out_ray = ray (input_ray.source, input_ray.dir, -1., input_ray.collision, input_ray.normal, default_color, input_ray.reflectance, input_ray.shine_color);
+        }
+    }
+    return out_ray;
+}
+
+vec3 color_gradient (float t, vec3 color_a, vec3 color_b, vec3 color_c, vec3 color_d) { //smooth gradient between 4 colors
+    if(t < 0.) {
+        return color_a;
+    }
+    if(t > 1.) {
+        return color_d;
+    }
+    if(t < .333) {
+        return mix (color_a, color_b, t * 3.);
+    } else if(t < .667) {
+        return mix (color_b, color_c, (t - .333) * 3.);
+    } else if(t < 1.) {
+        return mix (color_c, color_d, (t - .667) * 3.);
+    }
+    return color_d;
+}
+
+void main (void) {
+    vec4 plane = vec4 (0., 1., 0., .5); //ax + by + cz + d = 0
+
+    vec3 wall_color = vec3 (0.0, .5, 0.0);
+
+    float focal_length = 1.5;
+
+    float tau = 6.28318;
+    float time_of_day = mod (uTime, 120.) / 120.; //each day is 2 minutes
+    float uTime_slow = uTime * .2;
+
+    //sky colors
+    vec3 blue_sky = vec3 (0.5, 0.75, 1.);
+    vec3 dawn_dusk = vec3 (0.660, 0.333, 0.00660);
+    vec3 twilight = vec3 (0.0152, 0.00990, 0.330);
+    vec3 midnight = vec3 (0.);
+
+    //light colors
+    vec3 noon_sun = vec3 (.99, .99, .95);
+    vec3 morning_sun = vec3 (.8, .8, .7);
+    vec3 evening_sun = vec3 (0.0175, 0.00660, 0.660);
+    vec3 moonlight = vec3 (.1);
+
+    vec3 light_color = vec3 (.99, .99, .95);
+    vec3 ambient_color = 1. - light_color;
+    vec3 background_color = vec3 (0.);
+    if(time_of_day < .5) {
+        background_color = color_gradient ((time_of_day) * 2., blue_sky, dawn_dusk, twilight, midnight);
+        light_color = color_gradient ((time_of_day) * 2., noon_sun, morning_sun, evening_sun, moonlight);
+    } else if(time_of_day > .5) {
+        background_color = color_gradient ((time_of_day - .5) * 2., midnight, twilight, dawn_dusk, blue_sky);
+        light_color = color_gradient ((time_of_day - .5) * 2., moonlight, evening_sun, morning_sun, noon_sun);
+    }
+    vec3 light_dir = normalize (vec3 (cos (time_of_day * tau + 1.5707) * 2. - 1., sin (time_of_day * tau + 1.5707), 0.));
+
+    float mod_uTime = (-uTime_slow + 1.5707);
+
+    vec3 actual_color = vec3 (0.);
+
+    for(int i = 0; i < 4; i++) {
+
+        vec3 color = background_color;
+
+        vec2 mod_vPos = vPos.xy + vec2 (((i == 1 || i == 3) ? 1. / 600. : 0.), ((i > 1) ? 1. / 600. : 0.)); //create a slightly different ray each time, but still close enough to correspond to the same pixel on the screen
+
+        vec3 camera_pos = vec3 (0., 2., focal_length); //position of camera
+        camera_pos += 10. * vec3 (cos (uTime_slow), 0., sin (uTime_slow) - 1.); //move camera around in circle
+
+        mat3 y_rot = mat3 (cos (mod_uTime), 0., -sin (mod_uTime), 0., 1., 0., sin (mod_uTime), 0., cos (mod_uTime));
+
+        vec3 disp = camera_pos - vec3 (0., -0.5, -7.); //center of scene
+
+        float horiz_dist = length (disp.xz);
+        float vert_dist = length (disp.y);
+
+        float rotate_down_angle = -tan (vert_dist / horiz_dist);
+
+        mat3 x_rot = mat3 (1., 0., 0., 0., cos (rotate_down_angle), sin (rotate_down_angle), 0., -sin (rotate_down_angle), cos (rotate_down_angle));
+
+        vec3 camera_angle = y_rot * x_rot * normalize (vec3 (mod_vPos, -focal_length)); //direction to scene, rotate so always facing spheres
+
+                //TODO: this is a messy way of doing camera pos and angle, fix later
+
+        ray r = ray (camera_pos, camera_angle, 0., camera_pos, camera_angle, light_color, 1., light_color);
+
+        r = trace_scene (r, spheres, colors, walls, wall_boundaries, wall_color, plane, background_color);
+
+               //  color = r.diffuse_color;
+        if(r.dist > epsilon) {
+                    //REFLECTIONS
+
+            vec3 refl_dir = r.dir - 2. * dot (r.dir, r.normal) * r.normal;
+            ray refl = ray (r.collision + epsilon * refl_dir, refl_dir, 0., r.collision, refl_dir, color, r.reflectance, color);
+            refl = trace_scene (refl, spheres, colors, walls, wall_boundaries, wall_color, plane, background_color);
+            r.diffuse_color = (refl.dist > 0.) ? mix (r.diffuse_color, refl.diffuse_color, r.reflectance) : r.diffuse_color;
+
+                    //SHADOWS
+
+            vec3 diffuse_color = r.diffuse_color; //normal color of object
+            vec3 shine_color = r.shine_color; //color of shine on object
+
+            if(r.dist > 0.) { //if in shadow
+                ray shadow = ray (r.collision + epsilon * light_dir, light_dir, 0., r.collision, light_dir, vec3 (0., 0., 0.), r.reflectance, vec3 (0., 0., 0.));
+                shadow = trace_scene (shadow, spheres, colors, walls, wall_boundaries, wall_color, plane, background_color);
+
+                diffuse_color = (shadow.dist > 0.) ? vec3 (0.) : diffuse_color; //normal color of object
+                shine_color = (shadow.dist > 0.) ? vec3 (0.) : shine_color; //color of shine on object
+            }
+            color = phong_shade (r, ambient_color, diffuse_color, shine_color, light_dir);
+
+        } else {
+            color = background_color;
+        }
+        actual_color += min (vec3 (1.), color) * .25;
+    }
+
+    gl_FragColor = vec4 (pow (actual_color, vec3 (1. / 2.2)), 1.); //gamma correction
+}
+        `;
+
+        // WAIT 100 MSECS BEFORE STARTING UP
+
+        console.log(fragmentShader);
+
+        setTimeout(() => {
+          // INITIALIZE GPU GRAPHICS
+
+          let startTime = Date.now() / 1000;
+
+          let gl = start_gl(
+            canvas1,
+            meshData,
+            vertexSize,
+            vertexShader,
+            fragmentShader
+          );
+          var x = 0;
+          var z = -7;
+          //center point, 0,0, -7
+
+          let wall_dist = 12;
+          let wall_height = 2;
+
+          let spheres = [],
+            colors = [
+              1.0, 0.252, 0.252, 0.931, 0.384, 0.142, 0.711, 0.555, 0.13, 0.444,
+              0.731, 0.24, 0.186, 0.886, 0.526, 0.001, 1.0, 1.0, 0.01, 0.214,
+              1.0, 0.127, 0.04, 1.0, 0.731, 0.091, 1.0, 1.0, 0.16, 0.591,
+            ], //rainbowish gradient
+            walls = [
+              //plane equations
+              -1, //normal vector must go inwards
+              0,
+              0,
+              x + wall_dist, //x = 4
+
+              1, //normal vector must go inwards
+              0,
+              0,
+              -(x - wall_dist), //x = -4
+
+              0,
+              0,
+              -1, //normal vector must go inwards
+              z + wall_dist, //z = -3
+
+              0,
+              0,
+              1, //normal vector must go inwards
+              -(z - wall_dist), //z = -11
+            ],
+            wall_boundaries = [
+              //boundaries of wall
+              x + wall_dist - threshold,
+              -0.5, //wall cant go below floor
+              z - wall_dist,
+              x + wall_dist + threshold,
+              wall_height,
+              z + wall_dist,
+
+              x - wall_dist - threshold,
+              -0.5, //wall cant go below floor
+              z - wall_dist,
+              x - wall_dist + threshold,
+              wall_height,
+              z + wall_dist,
+
+              x - wall_dist,
+              -0.5, //wall cant go below floor
+              z + wall_dist - threshold,
+              x + wall_dist,
+              wall_height,
+              z + wall_dist + threshold,
+
+              x - wall_dist,
+              -0.5, //wall cant go below floor
+              z - wall_dist - threshold,
+              x + wall_dist,
+              wall_height,
+              z - wall_dist + threshold,
+            ];
+
+          function make_sphere() {
+            //makes random sphere at most 3 units away from x,y
+            var radius = Math.random() + 0.5;
+            return [
+              x + 3 * (2 * Math.random() - 1),
+              radius - 0.5,
+              z + 3 * (2 * Math.random() - 1),
+              radius,
+            ];
+          }
+
+          function collision(sphere_a, sphere_b) {
+            //if 2 spheres intersect
+            var dist = 0;
+            for (var i = 0; i < 3; i++) {
+              dist += (sphere_a[i] - sphere_b[i]) * (sphere_a[i] - sphere_b[i]);
+            }
+            dist = Math.sqrt(dist); //distance between sphere centers
+            return dist < sphere_a[3] + sphere_b[3]; //if distance between centers is less than sum of radii
+          }
+
+          function check_collisions(spheres, sphere_a) {
+            //if sphere_a intersects with any other sphere
+            for (var i = 0; i < spheres.length / 4; i++) {
+              if (collision(spheres.slice(i * 4, i * 4 + 4), sphere_a)) {
+                return true;
+              }
+            }
+            return false;
+          }
+
+          for (let n = 0; n < NUM_SPHERES; n++) {
+            new_sphere = make_sphere();
+            while (check_collisions(spheres, new_sphere)) {
+              //while random sphere is intersecting other one
+              new_sphere = make_sphere(); //regenerate
+            }
+            for (const x of new_sphere) {
+              spheres.push(x);
+            }
+          }
+
+          // PASS UNIFORM VARIABLES
+
+          let uTime = gl.getUniformLocation(gl.program, "uTime");
+          let uCursor = gl.getUniformLocation(gl.program, "uCursor");
+
+          let uS = gl.getUniformLocation(gl.program, "spheres");
+          let uC = gl.getUniformLocation(gl.program, "colors");
+
+          let uW = gl.getUniformLocation(gl.program, "walls");
+          let uWB = gl.getUniformLocation(gl.program, "wall_boundaries");
+          // WHEN DID WE START ANIMATING?
+
+          // START THE ANIMATION LOOP
+
+          setInterval(() => {
+            // PASS ELAPSED TIME DOWN TO THE GPU
+            let currentTime = Date.now() / 1000 - startTime;
+
+            console.log(currentTime);
+
+            gl.uniform1f(uTime, currentTime);
+
+            // PASS THE CURSOR STATE DOWN TO THE GPU
+
+            gl.uniform3fv(uCursor, cursor);
+
+            gl.uniform4fv(uS, spheres);
+            gl.uniform3fv(uC, colors);
+
+            gl.uniform4fv(uW, walls);
+            gl.uniform3fv(uWB, wall_boundaries);
+
+            // LOOP THROUGH ALL OF MY SHAPES
+
+            for (let n = 0; n < meshData.length; n++) {
+              // PULL OUT THE ACTUAL MESH DATA
+
+              let mesh = meshData[n].mesh;
+
+              // LOAD THAT DATA DOWN INTO THE GPU
+
+              gl.bufferData(gl.ARRAY_BUFFER, mesh, gl.STATIC_DRAW);
+
+              // RENDER THAT DATA ACCORDING TO WHAT TYPE IT IS
+
+              gl.drawArrays(
+                meshData[n].type ? gl.TRIANGLE_STRIP : gl.TRIANGLES,
+                0,
+                mesh.length / vertexSize
+              );
+            }
+          }, 30);
+        }, 100);
+      </script>
+    </center>
+  </body>
+</html>

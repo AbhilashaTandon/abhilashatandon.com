@@ -15,39 +15,33 @@
   display: grid;
   grid-auto-flow: row;
   gap: 40px;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: auto;
+  grid-template-columns: repeat(2, 1fr);
   width: var(--content-width);
   height: auto;
-  grid-template-areas:
-    "project1 project1 project1 project2 project2 project2"
-    "project1 project1 project1 project2 project2 project2"
-    "project1 project1 project1 project3 project3 project3"
-    "project4 project4 project4 project3 project3 project3"
-    "project4 project4 project4 project3 project3 project3"
-    "project4 project4 project4 project3 project3 project3";
-}
-
-.grid .box:nth-child(1) {
-  grid-area: project1;
-}
-
-.grid .box:nth-child(2) {
-  grid-area: project2;
-}
-
-.grid .box:nth-child(3) {
-  grid-area: project3;
-}
-
-.grid .box:nth-child(4) {
-  grid-area: project4;
 }
 
 .projects {
   padding-left: var(--content-margin);
   padding-right: var(--content-margin);
   margin-bottom: 5vw;
+}
+
+.projects > h3{
+  font-size: 2rem;
+    font-family: var(--primary-font);
+    font-weight: 600;
+    text-decoration: underline;
+    align-items: center;
+    padding: 25px 0 21px;
+    text-align: center;
+    height: 30%;
+    display: flex;
+    color: var(--text-color);
+}
+
+.projects > h3:hover{
+  color: var(--primary-color);
+  transition: 1s;
 }
 
 .projectName {

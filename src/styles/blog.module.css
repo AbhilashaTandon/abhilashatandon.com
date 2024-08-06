@@ -56,12 +56,14 @@
   flex-direction: column;
 }
 
-.tile > p, .tile > h5{
+.tile > p, .tile > h3{
   text-align: center;
-   color: var(--primary-color);
+  color: var(--primary-color);
 }
 
-
+.tile > h4{
+  margin: 0 20px;
+}
 
 .tile:hover{
   filter: brightness(50%);

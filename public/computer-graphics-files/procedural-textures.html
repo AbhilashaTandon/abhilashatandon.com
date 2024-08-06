@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Procedural Textures</title>
+    <meta charset="utf-8" />
+    <style>
+      :root {
+        --text: #171618;
+        --background: #f0eff0;
+        --primary: #b63ddf;
+        --secondary: #e3e2e4;
+        --accent: #7f7981;
+        font-family: "Ubuntu Mono", monospace;
+        background-color: var(--background);
+      }
+
+      p {
+        text-align: center;
+      }
+    </style>
+    <script src="math.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <center>
+      <h2>Procedural Textures</h2>
+      <canvas
+        height="550"
+        width="550"
+        id="canvas1"
+        style="
+          border-style: solid;
+          border-width: 8px;
+          border-radius: 16px;
+          border-color: var(--primary);
+          background-color: black;
+        "
+      ></canvas>
+
+      <script>
+        // THIS FUNCTION DOES ALL OF THE INITIALIZING FOR THE GPU PROGRAM.
+
+        let start_gl = (
+          canvas,
+          meshData,
+          vertexSize,
+          vertexShader,
+          fragmentShader
+        ) => {
+          // GET THE 3D CONTEXT OF THE CANVAS
+
+          let gl = canvas.getContext("webgl");
+
+          // CREATE A PROGRAM THAT WILL RUN ON THE GPU
+
+          let program = gl.createProgram();
+          gl.program = program;
+
+          // THIS IS HOW WE COMPILE AND ATTACH A SHADER TO THE GPU PROGRAM
+
+          let addshader = (type, src) => {
+            let shader = gl.createShader(type);
+            gl.shaderSource(shader, src);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+              throw "Cannot compile shader:\n\n" + gl.getShaderInfoLog(shader);
+            gl.attachShader(program, shader);
+          };
+
+          // ADD THE VERTEX AND FRAGMENT SHADERS
+
+          addshader(gl.VERTEX_SHADER, vertexShader);
+          addshader(gl.FRAGMENT_SHADER, fragmentShader);
+
+          // LINK THE PROGRAM AND REPORT ANY ERRORS
+
+          gl.linkProgram(program);
+          if (!gl.getProgramParameter(program, gl.LINK_STATUS))
+            throw "Could not link the shader program!";
+          gl.useProgram(program);
+
+          // DECLARE A PLACE FOR MY VERTICES TO GO DOWN ON THE GPU
+
+          gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+
+          // PERMIT THE GPU TO RENDER NEARER THINGS IN FRONT OF FARTHER AWAY THINGS
+
+          gl.enable(gl.DEPTH_TEST);
+          gl.depthFunc(gl.LEQUAL);
+
+          // SET ANY ONE ATTRIBUTE OF A VERTEX
+
+          let vertexAttribute = (name, size, position) => {
+            let attr = gl.getAttribLocation(program, name);
+            gl.enableVertexAttribArray(attr);
+            gl.vertexAttribPointer(
+              attr,
+              size,
+              gl.FLOAT,
+              false,
+              vertexSize * 4,
+              position * 4
+            );
+          };
+
+          // SET THE POSITION ATTRIBUTE
+
+          vertexAttribute("aPos", 3, 0);
+
+          return gl;
+        };
+
+        // HERE WE ARE SETTING UP HOW THE CANVAS RESPONDS TO MOUSE EVENTS.
+
+        let r = canvas1.getBoundingClientRect(),
+          cursor = [0, 0, 0];
+        let setCursor = (e, z) =>
+          (cursor = [
+            ((e.clientX - r.left) / canvas1.width) * 2 - 1,
+            1 - ((e.clientY - r.top) / canvas1.height) * 2,
+            z !== undefined ? z : cursor[2],
+          ]);
+        canvas1.onmousedown = (e) => setCursor(e, 1);
+        canvas1.onmousemove = (e) => setCursor(e);
+        canvas1.onmouseup = (e) => setCursor(e, 0);
+
+        // ALL OF THE 3D MESH SHAPES THAT WE ARE RENDERING (FOR NOW IT'S JUST ONE SHAPE)
+
+        let meshData = [
+          {
+            type: 1,
+            mesh: new Float32Array([-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0]),
+          },
+        ];
+
+        // THE VERTEX SHADER, FOLLOWED BY THE FRAGMENT SHADER
+        let vertexShader = `
+                                   attribute vec3 aPos;
+                                   varying   vec3 vPos;
+                                   void main() {
+                                      gl_Position = vec4(aPos, 1.0);
+                                      vPos = aPos;
+                                   }
+                                `;
+
+        let vertexSize = 3;
+        let fragmentShader = `#define WOOD_COLOR_1 vec3 (0.7255, 0.4902, 0.2824)
+        #define WOOD_COLOR_2 vec3(0.7098, 0.4157, 0.1765)
+        #define WOOD_COLOR_3 vec3(0.6706, 0.3804, 0.1961)
+        #define WOOD_COLOR_4 vec3(0.62,0.329,0.153)
+
+        #define MARBLE_COLOR_4 vec3(0.9647, 0.949, 0.9451)
+        #define MARBLE_COLOR_3 vec3(0.8745, 0.8353, 0.8078)
+        #define MARBLE_COLOR_2 vec3(0.7451, 0.5922, 0.451)
+        #define MARBLE_COLOR_1 vec3(0.5569, 0.5294, 0.5255)
+
+        #define FIRE_COLOR_1 vec3(0.2863, 0.0549, 0.0549)
+        #define FIRE_COLOR_2 vec3(0.7098, 0.0902, 0.0902)
+        #define FIRE_COLOR_3 vec3(0.9961, 0.5137, 0.2157)
+        #define FIRE_COLOR_4 vec3(1.0, 0.9216, 0.4706)
+
+        #define RUST_COLOR_1 vec3(0.82,0.776,0.706)
+        #define RUST_COLOR_2 vec3(0.878,0.569,0.408)
+        #define RUST_COLOR_3 vec3(0.737,0.369,0.227)
+        #define RUST_COLOR_4 vec3(0.62,0.2,0.11)
+
+        #define FOREST_COLOR vec3(0.0275, 0.2706, 0.0275)
+        #define OCEAN_COLOR vec3(0.,0.,.05)
+        #define DESERT_COLOR vec3(0.6941, 0.5961, 0.3725)
+
+        #define AMBIENT_COLOR vec3(1.)
+        #define LIGHT_COLOR vec3(1.0, 1.0, 1.0)
+
+        #define AMBIENT_LEVEL .1
+        #define FOCAL_LENGTH 3.
+
+        #define MAX_ITER 20 
+
+precision mediump float;
+uniform float uTime;
+uniform vec3 uCursor;
+varying vec3 vPos;
+
+vec3 color_gradient (float t, vec3 color_a, vec3 color_b, vec3 color_c, vec3 color_d) { //smooth gradient between 4 colors
+    if(t < 0.) {
+        return vec3 (0.);
+    }
+    if(t > 1.) {
+        return vec3 (1.);
+    }
+    if(t < .333) {
+        return mix (color_a, color_b, t * 3.);
+    } else if(t < .667) {
+        return mix (color_b, color_c, (t - .333) * 3.);
+    } else if(t < 1.) {
+        return mix (color_c, color_d, (t - .667) * 3.);
+    }
+    return color_d;
+}
+
+struct ray {
+    vec3 source; //V
+    vec3 dir; //W
+    float dist; //t
+    vec3 collision; //V + W * t
+    vec3 normal; //normal to surface at collision
+    vec3 color; //color of light
+};
+
+vec3 phong (ray r, vec3 fractions, float alpha, vec3 i_s, vec3 i_a, vec3 light_dir) { //fractions = float k_a, float k_d, float k_s
+    fractions = normalize (fractions);
+    vec3 refl = 2. * max (0., dot (light_dir, r.normal)) + r.dir;
+    vec3 diffuse = fractions.y * max (0., dot (light_dir, r.normal)) * r.color;
+    vec3 specular = fractions.z * pow (max (0., dot (refl, -r.dir)), alpha) * i_s;
+    vec3 ambient = fractions.x * i_a;
+    return (diffuse + specular + ambient) * r.color;
+}
+
+ray trace_sphere (ray r, vec4 sphere) {
+    vec3 center = sphere.xyz;
+    float radius = sphere.w;
+
+    vec3 v_prime = r.source - center;
+
+    float b = dot (v_prime, r.dir);
+    float c = dot (v_prime, v_prime) - radius * radius;
+    float d = b * b - c; //solve quadratic for sphere collision
+    r.dist = d > 0. ? -b - sqrt (d) : 1.;
+    r.collision = r.source + r.dir * r.dist;
+    r.normal = normalize ((r.collision - center) / radius);
+    return r;
+}
+
+float noise (vec3 point) {
+    float r = 0.;
+    for(int i = 0; i < 16; i++) {
+        vec3 D, p = point + mod (vec3 (i, i / 4, i / 8), vec3 (4.0, 2.0, 2.0)) +
+            1.7 * sin (vec3 (i, 5 * i, 8 * i)), C = floor (p), P = p - C - .5, A = abs (P);
+        C += mod (C.x + C.y + C.z, 2.) * step (max (A.yzx, A.zxy), A) * sign (P);
+        D = 34. * sin (987. * float (i) + 876. * C + 76. * C.yzx + 765. * C.zxy);
+        P = p - C - .5;
+        r += sin (6.3 * dot (P, fract (D) - .5)) * pow (max (0., 1. - 2. * dot (P, P)), 4.);
+    }
+    return .5 * sin (r);
+}
+
+float texture (vec3 P, int turbulent, int iter) { //iterated noise
+    float f = 0., s = 1.;
+    for(int i = 0; i < MAX_ITER; i++) {
+        float noise_layer = noise (s * P) / s;
+        f += (turbulent == 1) ? abs (noise_layer) : noise_layer;
+        s *= 2.;
+        P = vec3 (.866 * P.x + .5 * P.z, P.y + 100., -.5 * P.x + .866 * P.z);
+        if(i >= iter) {
+            return f;
+        }
+    }
+    return f;
+}
+
+vec3 wood_color (vec3 pos) {
+    vec3 color_map = .15 * vec3 (pos.x, pos.y * 4., pos.z); //stretched out surface coordinates for wood grain effect
+
+    float noise_param = pow (.5 * sin (100. * texture (color_map, 0, 6)) + .5, 2.5);
+
+    return color_gradient (noise_param, WOOD_COLOR_1, WOOD_COLOR_2, WOOD_COLOR_3, WOOD_COLOR_4);
+}
+
+vec3 marble_color (vec3 pos) {
+    vec3 color_map = 2.1 * vec3 (pos.x, pos.y, pos.z);
+
+    float noise_param = pow (texture (color_map, 1, 8), .4);
+
+    return color_gradient (noise_param, MARBLE_COLOR_1, MARBLE_COLOR_2, MARBLE_COLOR_3, MARBLE_COLOR_4);
+}
+
+vec3 fire_color (vec3 pos, float time) {
+    vec3 color_map = 2. * vec3 (pos.x, pos.y, pos.z) + vec3 (0., time, time); //add time so flames move up
+
+    float noise_param = max (0., sin (6. * texture (color_map, 1, 3) - .5));
+    return pow (color_gradient (noise_param, FIRE_COLOR_1, FIRE_COLOR_2, FIRE_COLOR_3, FIRE_COLOR_4), vec3 (3.));
+}
+
+vec3 rust_color (vec3 pos) {
+    vec3 color_map = 2. * vec3 (pos.x, pos.y, pos.z);
+
+    float noise_param = texture (color_map, 0, 6);
+    float color_idx = floor (4. * noise_param + 2.) / 3.;
+    float roughness = .5 * texture (2.3 * color_map.xyz + 0.531, 0, 6) + .5; //randomly shifted roughness
+    return (color_gradient (color_idx * .25 + 1.75 * roughness, RUST_COLOR_1, RUST_COLOR_2, RUST_COLOR_3, RUST_COLOR_4));
+}
+
+vec4 cloud_color (vec3 pos, float time) {
+    vec3 color_map = 2. * vec3 (pos.x + 1., pos.y, pos.z) + vec3 (time, 0., 0.); //add time so clouds move east
+
+    float noise_param = pow (max (0., sin (6. * texture (color_map, 1, 3) - .99)), 3.);
+    return vec4 (1., 1., 1., noise_param);
+}
+
+vec3 earth_color (vec3 pos) {
+    vec3 color_map = 2. * vec3 (pos.x, pos.y, pos.z);
+
+    float land_sea = texture (color_map * .2, 0, 6);
+
+    float y_coord = pos.y + .3 * texture (pos, 0, 6);
+
+    float desert = pow (max (0., (1. - pow ((y_coord - .333), 2.))), 40.) + pow (max (0., (1. - pow ((y_coord + .333), 2.))), 40.); //two peaks at horse latitudes
+
+    return (land_sea < 0.) ? mix (FOREST_COLOR, DESERT_COLOR, desert) : OCEAN_COLOR;
+}
+
+vec4 bubble_color (vec3 pos) {
+    float transparency = pow (length (pos.xy), 4.) + .1; //transparency low around edges, high in middle
+
+    float noise_param_m = .5 * sin (3. * texture (pos.xyz * .5, 1, 2)) + .5;
+    float noise_param_y = .5 * sin (3. * texture (pos.yzx * .5, 1, 2)) + .5;
+    float noise_param_c = .5 * sin (3. * texture (pos.zxy * .5, 1, 2)) + .5;
+
+    vec3 color = vec3 (1., 0., 1.) * noise_param_m + vec3 (1., 1., 0.) * noise_param_y + vec3 (0., 1., 1.) * noise_param_c;
+
+    return vec4 (color, transparency);
+}
+
+void main (void) {
+    vec3 light_dir = normalize (vec3 (cos (uTime * .5), -1., sin (uTime * .5)));
+
+    vec3 color = vec3 (.6) * (.5 - .3 * dot (normalize (vec3 (vPos.xy, -1.)), light_dir));
+
+    vec3 V = vec3 (0., 0., -FOCAL_LENGTH);
+    vec3 W = normalize (vec3 (vPos.xy, -FOCAL_LENGTH));
+
+            //WOOD SPHERE
+
+    ray r = ray (V, W, 0., V, W, vec3 (0.));
+
+    vec4 wood_sphere = vec4 (.66, -.33, 0., .3);
+
+    r = trace_sphere (r, wood_sphere);
+
+    if(r.dist < 0.) {
+        r.color = wood_color (r.collision);
+        color = phong (r, vec3 (AMBIENT_LEVEL, .90, .05), 10., LIGHT_COLOR, AMBIENT_COLOR, light_dir);
+    }
+
+            //MARBLE SPHERE
+
+    vec4 marble_sphere = vec4 (0., -.33, 0., .3);
+
+    r = ray (V, W, 0., V, W, vec3 (0.));
+
+    r = trace_sphere (r, marble_sphere);
+
+    if(r.dist < 0.) {
+        r.color = marble_color (r.collision);
+        color = phong (r, vec3 (AMBIENT_LEVEL, .90, .05), 10., LIGHT_COLOR, AMBIENT_COLOR, light_dir);
+    }
+
+            //FIRE SPHERE
+
+    vec4 fire = vec4 (-.66, -.33, 0., .3);
+    vec4 burning_sphere = vec4 (-.66, -.33, 0., .3); //a burning black sphere under the fire like embers
+
+    r = ray (V, W, 0., V, W, vec3 (0.));
+
+    r = trace_sphere (r, burning_sphere);
+
+    if(r.dist < 0.) {
+        color = vec3 (.02);
+    }
+
+    r = trace_sphere (r, fire);
+
+    if(r.dist < 0.) {
+        color = fire_color (r.collision, uTime * .2); //no shadows cause fires glow
+    }
+
+            //RUST SPHERE
+
+    vec4 rust_sphere = vec4 (.66, .33, 0., .3);
+
+    r = ray (V, W, 0., V, W, vec3 (0.));
+
+    r = trace_sphere (r, rust_sphere);
+
+    if(r.dist < 0.) {
+        r.color = rust_color (r.collision);
+        color = phong (r, vec3 (AMBIENT_LEVEL, .90, .05), 8., LIGHT_COLOR, AMBIENT_COLOR, light_dir);
+    }
+
+    //EARTH SPHERE
+
+    vec4 earth_sphere = vec4 (0., .33, 0., .3);
+
+    r = ray (V, W, 0., V, W, vec3 (0.));
+
+    r = trace_sphere (r, earth_sphere);
+
+    if(r.dist < 0.) {
+        r.color = earth_color ((r.collision - earth_sphere.xyz) / earth_sphere.w); //continents
+        color = phong (r, vec3 (AMBIENT_LEVEL, .90, .0), 8., LIGHT_COLOR, AMBIENT_COLOR, light_dir);
+        vec4 cloud_pattern = cloud_color (r.collision, uTime * .2); //clouds blow ontop of land and sea
+        color = mix (color, cloud_pattern.xyz, cloud_pattern.w);
+
+    }
+
+    //BUBBLE SPHERE
+
+    float path_noise_x = texture (vec3 (uTime * .1), 0, 0) + .1;
+    float path_noise_y = texture (vec3 (-uTime * .1), 0, 0) - .1;
+
+    //random noise in x and y so bubble will float around
+
+    vec4 bubble_sphere = vec4 (-.66, .33, 0., .3) + .3 * vec4 (smoothstep (0., 1., path_noise_x),smoothstep (0., 1., path_noise_y), 0., 0.);
+
+    r = ray (V, W, 0., V, W, vec3 (0.));
+
+    r = trace_sphere (r, bubble_sphere);
+
+    if(r.dist < 0.) {
+        vec4 bubble_pattern = bubble_color ((r.collision - bubble_sphere.xyz) / bubble_sphere.w);
+        vec3 bubble_color = bubble_pattern.xyz;
+        color = mix (color, bubble_color, bubble_pattern.w);
+    }
+
+    gl_FragColor = vec4 (pow (color, vec3 (1. / 2.2)), 1.); //gamma correction
+}`;
+
+        // WAIT 100 MSECS BEFORE STARTING U
+
+        setTimeout(() => {
+          console.log(fragmentShader);
+          // INITIALIZE GPU GRAPHICS
+
+          let startTime = Date.now() / 1000;
+
+          let gl = start_gl(
+            canvas1,
+            meshData,
+            vertexSize,
+            vertexShader,
+            fragmentShader
+          );
+
+          // PASS UNIFORM VARIABLES
+
+          let uTime = gl.getUniformLocation(gl.program, "uTime");
+          let uCursor = gl.getUniformLocation(gl.program, "uCursor");
+
+          // WHEN DID WE START ANIMATING?
+
+          // START THE ANIMATION LOOP
+
+          setInterval(() => {
+            // PASS ELAPSED TIME DOWN TO THE GPU
+            let currentTime = Date.now() / 1000 - startTime;
+
+            gl.uniform1f(uTime, currentTime);
+
+            // PASS THE CURSOR STATE DOWN TO THE GPU
+
+            gl.uniform3fv(uCursor, cursor);
+
+            // LOOP THROUGH ALL OF MY SHAPES
+
+            for (let n = 0; n < meshData.length; n++) {
+              // PULL OUT THE ACTUAL MESH DATA
+
+              let mesh = meshData[n].mesh;
+
+              // LOAD THAT DATA DOWN INTO THE GPU
+
+              gl.bufferData(gl.ARRAY_BUFFER, mesh, gl.STATIC_DRAW);
+
+              // RENDER THAT DATA ACCORDING TO WHAT TYPE IT IS
+
+              gl.drawArrays(
+                meshData[n].type ? gl.TRIANGLE_STRIP : gl.TRIANGLES,
+                0,
+                mesh.length / vertexSize
+              );
+            }
+          }, 30);
+        }, 100);
+      </script>
+      <p>Wood, Marble, Fire, Rusty Metal, an Earthlike planet, and a Bubble.</p>
+    </center>
+  </body>
+</html>
