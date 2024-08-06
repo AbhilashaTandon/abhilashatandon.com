@@ -13,13 +13,13 @@
 .logo {
     font-weight: 800;
     font-family: var(--primary-font);
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     color: var(--text-color);
     text-shadow: 2px 2px 8px var(--primary-color);
 }
 
 .logo:hover {
-    color: var(--primary-color);
+    color: var(--primary-color);  
     transition: 1s;
 }
 
@@ -29,7 +29,7 @@
     color: var(--text-color);
     font-style: normal;
     line-height: normal;
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     text-shadow: 1px 1px 8px var(--primary-color);
 }
 
@@ -49,33 +49,4 @@
 .button:hover {
     background-color: var(--primary-color);
     transition: 1s;
-}
-
-
-@media screen and (width <= 850px) {
-    .logo {
-        font-size: 1rem;
-    }
-
-    .section {
-        font-size: .833rem;
-    }
-
-    .button {
-        font-size: .833rem;
-    }
-}
-
-@media screen and (width <= 500px) {
-    .logo {
-        font-size: .75rem;
-    }
-
-    .section {
-        font-size: .625rem;
-    }
-
-    .button {
-        font-size: .625rem;
-    }
 }

@@ -8,8 +8,3 @@
     color: var(--text-color);
 }
 
-@media screen and (width <= 850px) {
-    .intro{
-        font-size: 1.25rem;
-    }
-}

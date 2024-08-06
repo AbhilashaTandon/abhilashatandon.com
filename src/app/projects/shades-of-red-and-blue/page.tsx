@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import Styles from "@/styles/sorab.module.css";
 
 function Intro() {
   return (
@@ -7,13 +8,13 @@ function Intro() {
 
       <h3>Introduction</h3>
 
-      <p>
+      <h4>
         Welcome to &quot;Shades of Red and Blue,&quot; a comprehensive and
         unbiased political quiz designed to delve deeply into the landscape of
         American politics. My project aims to provide a nuanced understanding of
         political ideologies by utilizing actual data to place individuals on a
         detailed spectrum.
-      </p>
+      </h4>
 
       <p>
         In the realm of political discourse, a &quot;political spectrum&quot;
@@ -85,10 +86,12 @@ function Intro() {
 }
 
 export default function Sorab() {
-  <>
-    <Navbar main_page={false} />
-    <main>
-      <Intro />
-    </main>
-  </>;
+  return (
+    <>
+      <Navbar main_page={false} />
+      <main>
+        <Intro />
+      </main>
+    </>
+  );
 }

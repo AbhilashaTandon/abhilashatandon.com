@@ -92,14 +92,6 @@
   .tile {
     height: auto;
   }
-
-  .section {
-    font-size: 1.5rem;
-  }
-
-  .section_header {
-        font-size: 1.5rem;
-  }
 }
 
 @media screen and (width <= 1200px){

@@ -6,6 +6,8 @@
     padding-left: var(--content-margin);
     padding-right: var(--content-margin);
     height: 85vh;
+    margin-top: 2.5vh;
+    margin-bottom: 2.5vh;
 
 }
 
@@ -32,22 +34,22 @@
 
 @media screen and (width <= 850px) {
     .hero {
-        height: 45vw;
+        height: 60vh;
     }
 }
 
 
-@media screen and ((width <= 500px) or (width <= 250px)) {
+@media screen and ((width <= 500px)) {
     .hero {
-        height: 85vw;
+        height: 45vh;
     }
 }
 
 .button {
     background-color: var(--text-color);
     color: var(--background-color);
-    border-radius: 1vw;
-    padding: 2% 4%;
+    border-radius: 10px;
+    padding: 3% 6%;
     margin: 4% 0;
     text-align: center;
     width: fit-content;
@@ -59,8 +61,3 @@
     transition: 1s;
 }
 
-@media screen and (width <= 1200px) {
-    .button{
-        font-size: 1.125rem;
-    }
-}

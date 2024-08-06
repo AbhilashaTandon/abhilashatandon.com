@@ -8,9 +8,3 @@
     margin-left: var(--left-content-margin);
     color: var(--text-color);
 }
-
-@media screen and (width <= 1200px) {
-    .section_header {
-        font-size: 1.5rem;
-    }
-}
