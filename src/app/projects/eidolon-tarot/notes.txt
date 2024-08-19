@@ -1,6 +1,5 @@
 TODO:
 - Draw from bottom
-- Fix Undo redo (still dont work in some cases)
 - save and upload buttons
 - tarot card redesign
 
