@@ -29,7 +29,7 @@
 }
 
 .box:hover {
-  transition: 0.45s;
+  transition: var(--transition-time);
   background-color: var(--secondary);
 }
 

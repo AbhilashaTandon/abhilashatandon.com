@@ -1,16 +1,12 @@
 import Projects from "@/components/projects";
-import Navbar from "@/components/navbar";
 
 import Link from "next/link";
 
 export default function Page() {
   return (
-    <>
-      <Navbar main_page={false} />
-      <main>
-        <Projects />
-      </main>
-    </>
+    <main>
+      <Projects />
+    </main>
   );
 }
 

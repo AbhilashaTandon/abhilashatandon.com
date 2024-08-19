@@ -8,7 +8,7 @@
 
 .box:hover {
   filter: brightness(50%);
-  transition: 1s;
+  transition: var(--transition-time);
 }
 
 .grid {
@@ -41,7 +41,7 @@
 
 .projects > h3:hover{
   color: var(--primary-color);
-  transition: 1s;
+  transition: var(--transition-time);
 }
 
 .projectName {

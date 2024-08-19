@@ -7,15 +7,12 @@ import Navbar from "@/components/navbar";
 
 export default function Main() {
   return (
-    <>
-      <Navbar main_page={false} />
-      <main className={ColorPicker.page}>
-        <h2>
-          Click the color below that&apos;s closest to the one you have in mind!
-        </h2>
-        <ColorGrid />
-      </main>
-    </>
+    <main className={ColorPicker.page}>
+      <h2>
+        Click the color below that&apos;s closest to the one you have in mind!
+      </h2>
+      <ColorGrid />
+    </main>
   );
 }
 

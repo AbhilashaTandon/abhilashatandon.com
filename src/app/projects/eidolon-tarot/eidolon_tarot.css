@@ -1,0 +1,74 @@
+.eidolon-tarot{
+  display: flex;
+  flex-direction: column;
+}
+
+.ui{
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+}
+
+button{
+  background-color: var(--secondary-color);
+}
+
+button:hover{
+  background-color: var(--primary-color);
+  transition: var(--transition-time);
+}
+
+.card{
+    height: auto;
+    width: 110px;
+    background-size: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+#discard, #fate, #aside, #spread{
+    margin: 10px 0 0 10px;
+    background-color: rgb(202, 171, 231);
+    border-radius: 20px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    min-height: 240px;
+    height: min-content;
+}
+
+.table{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: repeat(2, auto);
+    /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+    width: 95%;
+    padding: 1vw;
+    height: min-content;
+}
+
+.grid .fate {
+  grid-area: fate;
+}
+
+.grid .discard {
+  grid-area: discard;
+}
+
+.grid .spread {
+  grid-area: spread;
+}
+
+.grid .aside {
+  grid-area: aside;
+}
+
+
+.layout{
+  display: grid;
+  grid-template-columns: repeat(6,1fr);
+  height: min-content;
+  gap: .5vw;
+  padding: .5vw;
+}

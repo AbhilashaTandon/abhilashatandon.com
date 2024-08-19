@@ -20,7 +20,7 @@
 
 .blog h2:hover{
   color: var(--secondary-color);
-  transition: 1s;
+  transition: var(--transition-time);
 }
 
 .blog_full{

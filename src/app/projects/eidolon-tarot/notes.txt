@@ -1,0 +1,87 @@
+TODO:
+- Draw from bottom
+- Fix Undo redo (still dont work in some cases)
+- save and upload buttons
+- tarot card redesign
+
+22 major tarot
+
+undo/redo buttons
+save/upload configurations
+
+4 sections
+fate deck: invisible, but can be made visible to search through it
+can draw from bottom or top, can return from bottom or top
+discard pile: visible
+spread: visible
+aside: visible, for ready for anything and the like
+
+resonant and dissonant
+
+allow people to freely move cards into discard or back to deck
+
+moves with unique effects on deck
+
+Scrap: When you throw yourself into the heart of a conflict and strive for victory
+through force, you are Scrapping. Draw with POW and play 1 card. If you play a
+negative or neutral card, advance your Damage Track and discard the top card
+from the Fate Deck.
+
+Reveal Your Master Plan: When you enact, or reveal that you've already
+enacted, a clever plan to nullify a threat or put yourself at an advantage, you are
+Revealing Your Master Plan. Draw GEN from the bottom of the deck.
+
+vanguard dissonant: When you play your dissonant card, apply the following Forecast: “Your brash actions
+cost you or your teammates something valuable.” You may not Break on Through
+anything else as long as your dissonant card remains in the discard pile.
+
+infiltrator resonant: When you play your resonant card, apply the following Forecast: “You slip into position
+to take the perfect shot.” Choose a card that’s still in the Fate Deck and place it in the
+discard pile. Shuffle the Fate Deck afterward.
+
+Dead Drop: When you Push Yourself, you may choose one card from your original
+spread to discard instead of sending to the bottom of the Fate Deck.
+
+Ambush: When you make a Move to attack an enemy from hiding, you may choose a
+card from the discard pile to play instead of drawing from the Fate Deck.
+
+Smooth Criminal (Requires Smooth Operator): You can put together a disguise of your
+choosing out of any available materials you have. Draw GLAM to determine the quality
+of your disguise. Choose a card already in the discard pile and set it aside. As long as
+you maintain your disguise, you may play and discard this card instead of drawing for
+an action. Discard this card if your disguise becomes compromised or you remove it.
+
+Navigator resonant: When you play your resonant card, apply the following Forecast: “For an instant, you
+understand everything, and know exactly what to do next.” Pick a Positive card out of
+the deck or discard pile and add it to your Ready for Anything spread.
+
+Navigator resonant: When you play your dissonant card, apply the following Forecast: “You’re too certain
+that you’re right, and you miss something important as a result.” Discard half of the
+Ready for Anything cards you have set aside (rounded up).
+
+Ready for Anything: At the beginning of Uptime, draw GEN and set all cards in your
+spread aside. At any point during this Uptime, you can play one of these cards instead
+of drawing. Discard any remaining cards you have once you return to Downtime.
+
+Read the Stars: Once per session, when you make a Move, you may choose to return
+all unplayed cards in your spread to the top of the Fate Deck, instead of sending them
+to the bottom.
+
+Conductor Dissonant: When you play your dissonant card, apply the following Forecast: “Life is a stage, and
+you’ve forgotten all your lines.” For as long as your dissonant card is in the discard
+pile, any time you Dazzle someone, do not draw; instead, the GM will act as though you
+played The Moon.
+
+Power Cycle: Once per session, you may shuffle the discard pile into the Fate Deck,
+then discard the same number of cards from the top of the deck (this ticks the Phantom
+Clock if it is at 6 PM or higher).
+
+Once per session, you may draw from the bottom of the Fate
+Deck instead of the top when making a Move (or from the top, if you’re Revealing Your
+Master Plan).
+
+Rampage: Once per session, when you play a negative or neutral card while Scrapping,
+you may discard the top 5 cards of the Fate Deck instead of just the top card.
+
+Deal From the Bottom: Once per session, when you make a Move, you can look at the
+bottom card of the Fate Deck, and draw from either the bottom or the top of the deck.

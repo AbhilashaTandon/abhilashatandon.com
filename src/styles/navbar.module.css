@@ -2,12 +2,13 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 2vh;
+    padding: 5px;
     z-index: 99;
     width: 100vw;
     background-color: var(--background-color);
+    position: sticky;
     top: 0;
-    box-shadow: 1px 1px 50px var(--secondary-color);
+    box-shadow: 1px 1px 25px var(--secondary-color)
 }
 
 .logo {
@@ -20,7 +21,7 @@
 
 .logo:hover {
     color: var(--primary-color);  
-    transition: 1s;
+    transition: var(--transition-time);
 }
 
 .section {
@@ -29,24 +30,24 @@
     color: var(--text-color);
     font-style: normal;
     line-height: normal;
-    font-size: 1.125rem;
+    font-size: 1rem;
     text-shadow: 1px 1px 8px var(--primary-color);
 }
 
 .section:hover {
     color: var(--secondary-color);
-    transition: 1s;
+    transition: var(--transition-time);
 }
 
 .button {
     background-color: var(--text-color);
     color: var(--background-color);
     border-radius: 1vw;
-    padding: .5% 1%;
-    font-size: 1.25rem;
+    padding: .4% .8%;
+    font-size: 1rem;
 }
 
 .button:hover {
     background-color: var(--primary-color);
-    transition: 1s;
+    transition: var(--transition-time);
 }

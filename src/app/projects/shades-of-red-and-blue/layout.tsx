@@ -7,11 +7,6 @@ const nunito = Nunito_Sans({
   variable: "--primary-font",
   weight: "variable",
 });
-const roboto = Roboto({
-  subsets: ["latin"],
-  variable: "--secondary-font",
-  weight: ["300", "400", "500", "700"],
-});
 
 export const metadata: Metadata = {
   title: "AbhilashaTandon.com",
@@ -25,7 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={nunito.className}>{children}</body>
+      <body className={nunito.className}>
+        <Navbar main_page={false} />
+        {children}
+      </body>
     </html>
   );
 }

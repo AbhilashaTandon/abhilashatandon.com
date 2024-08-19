@@ -10,12 +10,9 @@ import CustomStyles from "@/styles/computer-graphics.module.css";
 
 export default function Page() {
   return (
-    <>
-      <Navbar main_page={false} />
-      <main>
-        <Intro></Intro>
-      </main>
-    </>
+    <main>
+      <Intro></Intro>
+    </main>
   );
 }
 

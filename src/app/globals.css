@@ -6,6 +6,7 @@
   --text-color: #eedefe;
   --content-width: calc(70vw + 75px);
   --content-margin: calc((100vw - var(--content-width)) / 2);
+  --transition-time: .5s;
 }
 
 
@@ -133,7 +134,6 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    margin-top: 60px;
 }
 
 @media screen and (625px < width <= 850px) {
