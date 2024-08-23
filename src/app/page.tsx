@@ -11,8 +11,8 @@ export default function Home() {
     <main>
       <Navbar main_page={true} />
       <Hero />
-      <Skills />
       <Projects />
+      <Skills />
       <Blog max_posts={3} />
       <Contact />
     </main>

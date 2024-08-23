@@ -1,19 +1,21 @@
-import type { Metadata } from "next";
+"use client";
+
 import "./globals.css";
-import { Nunito_Sans, Roboto } from "next/font/google";
 
-const nunito = Nunito_Sans({
-  subsets: ["latin"],
-  variable: "--primary-font",
-  weight: "variable",
-  adjustFontFallback: false,
-  display: "swap",
-});
+import { ThemeContext, ThemeProvider } from "@/context/lightDarkMode";
+import React, { useContext } from "react";
 
-export const metadata: Metadata = {
-  title: "AbhilashaTandon.com",
-  description: "Code, Art, and Math",
-};
+// export const metadata: Metadata = {
+//   title: "AbhilashaTandon.com",
+//   description: "Code, Art, and Math",
+// };
+
+function ThemeContainer(props) {
+  const { darkMode } = useContext(ThemeContext);
+  return (
+    <div className={darkMode ? "darkMode" : "lightMode"}>{props.children}</div>
+  );
+}
 
 export default function RootLayout({
   children,
@@ -22,7 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={nunito.className}>{children}</body>
+      <body>
+        <ThemeProvider>
+          <ThemeContainer>{children}</ThemeContainer>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

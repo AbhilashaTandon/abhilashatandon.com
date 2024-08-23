@@ -7,7 +7,7 @@ The typical left-right spectrum is well-known and relatively common. It puts peo
 "Shades of Red and Blue" aims to clear up these inconsistencies with a more objective approach. Using machine learning techniques and extensive data from political surveys, this project builds a political spectrum based on hard evidence rather than guesswork.
 
 Methodology
-Here's how it works: I used data from the American National Election Survey (ANES) 2020, a detailed questionnaire from around the 2020 US Presidential election. This survey covers a wide range of topics related to political views, including policy preferences and demographic info.
+Here's how it works: I used data from the American National Election Survey (ANES) 2020, a questionnaire from during the 2020 US Presidential election. This survey covers a wide range of topics related to political views, including policy preferences and demographic info.
 
 I applied Principal Component Analysis (PCA) to the ideological questions in the dataset. PCA helps to reduce the complexity of the data, highlighting the main components that explain the most about political ideology. By assigning weights from the dataset, I created a more accurate and objective political spectrum.
 

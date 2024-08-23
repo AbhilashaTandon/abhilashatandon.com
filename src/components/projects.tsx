@@ -78,9 +78,11 @@ export default async function Projects() {
 
   return (
     <div className={Styles.projects} id="projects">
-      <h3>
-        <Link href="/projects">My Projects</Link>
-      </h3>
+      <h2 className={TextStyles.header}>
+        <Link href="/projects">
+          <u>My Projects</u>
+        </Link>
+      </h2>
       <ProjectGrid project_data={allProjects} />
     </div>
   );

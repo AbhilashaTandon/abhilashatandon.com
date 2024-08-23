@@ -1,21 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Fira%20Code:700|Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap'); 
+
+
+
 :root {
-  --border-radius: 12px;
-  --background-color: #110021;
-  --secondary-color: #551b8c;
-  --primary-color: #bf7aff;
-  --text-color: #eedefe;
-  --content-width: calc(70vw + 75px);
+  --text-color-light: #1F0029;
+  --background-color-light: #FDF5FF;
+  --primary-color-light: #EFBEFE;
+  --secondary-color-light: #cf67f2;
+  --accent-color-light: #5F027E;
+  --text-color-dark: #f5d6ff;
+  --background-color-dark: #0b000f;
+  --primary-color-dark: #320141;
+  --secondary-color-dark: #8013a4;
+  --accent-color-dark: #de81fd;
+  --content-width: calc(75vw + 75px);
   --content-margin: calc((100vw - var(--content-width)) / 2);
   --transition-time: .5s;
+  --border-width: 1px;
 }
-
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: #eedefe;
-    --secondary-color: #bf7aff;
-    --primary-color: #551b8c;
-    --text-color: #110021;
+    --text-color: var(--text-color-dark);
+  --background-color: var(--background-color-dark);
+  --primary-color: var(--primary-color-dark);
+  --secondary-color: var(--secondary-color-dark);
+  --accent-color: var(--accent-color-dark);
   }
 
   html {
@@ -25,15 +35,32 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    --background-color: #110021;
-    --secondary-color: #551b8c;
-    --primary-color: #bf7aff;
-    --text-color: #eedefe;
+    --text-color: var(--text-color-light);
+    --background-color: var(--background-color-light);
+    --primary-color: var(--primary-color-light);
+    --secondary-color: var(--secondary-color-light);
+    --accent-color: var(--accent-color-light);
   }
 
   html {
     color-scheme: light;
   }
+}
+
+.darkMode{
+  --text-color: var(--text-color-dark);
+  --background-color: var(--background-color-dark);
+  --primary-color: var(--primary-color-dark);
+  --secondary-color: var(--secondary-color-dark);
+  --accent-color: var(--accent-color-dark);
+}
+
+.lightMode{
+  --text-color: var(--text-color-light);
+  --background-color: var(--background-color-light);
+  --primary-color: var(--primary-color-light);
+  --secondary-color: var(--secondary-color-light);
+  --accent-color: var(--accent-color-light);
 }
 
 * {
@@ -43,29 +70,27 @@
 }
 
 button, input[type="submit"], input[type="reset"] {
-	background: none;
-	color: inherit;
-	border: none;
-  padding: .5% 1%;
+	color: var(--primary-color);
 	font: inherit;
 	cursor: pointer;
-	outline: inherit;
-  border-radius: 1vw;
-  font-size: 1.25rem;
+	outline: var(--border-width) solid;
+  border-width : var(--border-width);
   box-shadow: 2px 2px 8px var(--primary-color);
 }
 
 button:hover {
-    transition: 1s;
+  background-color: var(--secondary-color);
+  transition: var(--transition-time) ease-out;
+
 }
 
 svg {
-    fill: var(--text-color);
+  fill: var(--text-color);
 }
 
 svg:hover{
-    fill: var(--primary-color);
-    transition: 1s;
+  fill: var(--secondary-color);
+  transition: var(--transition-time) ease-out;
 }
 
 html {
@@ -76,7 +101,14 @@ html {
 
 body {
   background-color: var(--background-color);
+  font-family: 'Atkinson Hyperlegible', 'Fira Code', sans-serif;
+}
 
+main{
+  background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 a {
@@ -84,40 +116,39 @@ a {
   text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, p{
-  font-family: var(--primary-font);
+h1, h2, h3, h4, h5{
   color: var(--text-color);
+  font-family: 'Fira Code', 'Atkinson Hyperlegible', sans-serif;
 }
 
-
 h1 {
-  font-size: 3.05rem;
-  font-weight: 800;
+  font-size: 3.027rem;
+  font-weight: 700;
   line-height: 125%;
   letter-spacing: -1%;
 }
 
 h2 {
-  font-size: 2.44rem;
+  font-size: 1.953rem;
   font-weight: 700;
   line-height: 125%;
   letter-spacing: -1%;
 }
 
 h3 {
-  font-size: 1.95rem;
-  font-weight: 600;
+  font-size: 1.953rem;
+  font-weight: 400;
   line-height: 125%;
   letter-spacing: -1%;
 }
 
 h4 {
-  font-size: 1.56rem;
-  font-weight: 500;
+  font-size: 1.266rem;
+  font-weight: 400;
 }
 
 h5 {
-  font-size: 1.25rem;
+  font-size: 1.266rem;
   font-weight: 400;
 }
 
@@ -126,20 +157,9 @@ p {
   font-weight: 300;
 }
 
-.subheading {
-    font-size: 2.44rem;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-}
 
 @media screen and (625px < width <= 850px) {
   html {font-size: 12px;}
-  
-
 }
 
 @media screen and (width <= 625px) {
@@ -149,9 +169,3 @@ main {
 nav {
   position: fixed;
 }
-
-/*
-normal: 1x
-<750px width: .66667x
-<500px width: .5x
-*/

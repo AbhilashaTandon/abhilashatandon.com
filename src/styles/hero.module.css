@@ -1,27 +1,29 @@
-
 .hero {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     padding-left: var(--content-margin);
     padding-right: var(--content-margin);
     height: 85vh;
-    margin-top: 2.5vh;
-    margin-bottom: 2.5vh;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .intro {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    width: 50vw;
+    width: 35vw;
 }
 
 .image_container {
-    height: 100%;
-    width: 50%;
+    height: 30vw;
+    width: 30vw;
     display: flex;
     position: relative;
+    align-items: center;
+    justify-content: center;
 }
 
 .image {
@@ -29,6 +31,7 @@
     width: 100% !important;
     position: relative !important;
     height: unset !important;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 @media screen and (width <= 850px) {
@@ -45,18 +48,17 @@
 }
 
 .button {
-    background-color: var(--text-color);
-    color: var(--background-color);
+    background-color: var(--primary-color);
+    color: var(--text-color);
     border-radius: 30px;
     padding: 3% 6%;
     margin: 4% 0;
     text-align: center;
     width: fit-content;
-    font-size: 1.75rem;
 }
 
 .button:hover {
-    background-color: var(--primary-color);
-    transition: var(--transition-time);
+    background-color: var(--secondary-color);
+    transition: var(--transition-time) ease-out;
 }
 

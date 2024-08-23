@@ -85,7 +85,7 @@ export default function App() {
     setDiscardVisible((x) => !x);
   }
 
-  const [fateReturnBottom, setFateReturnBottom] = useState(false); //whether cards are returned to the bottom of the fate deck or not (the top)
+  const [fateReturnBottom, setFateReturnBottom] = useState(true); //whether cards are returned to the bottom of the fate deck or not (the top)
 
   function handleToggleFateReturnBottom() {
     setFateReturnBottom((x) => !x);

@@ -1,10 +1,3 @@
-.section_header {
-    font-size: 2rem;
-    font-family: var(--primary-font);
-    font-weight: 600;
-    text-decoration: underline;
-    align-items: center;
-    padding: 25px 0 21px;
-    margin-left: var(--left-content-margin);
-    color: var(--text-color);
+.header{
+    padding: 28px 0;
 }

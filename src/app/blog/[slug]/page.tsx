@@ -5,6 +5,8 @@ import matter from "gray-matter";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/navbar";
 
+import Markdown from "markdown-to-jsx";
+
 import Styles from "@/styles/blog_post.module.css";
 import Link from "next/link";
 
@@ -52,9 +54,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     </h4>
   ));
 
-  const body: JSX.Element[] = post_data.text
-    .split("---")
-    .map((paragraph: string) => <h5 key={paragraph}>{paragraph}</h5>);
+  const body = <Markdown>{post_data.text}</Markdown>;
 
   const back_to_blog: JSX.Element = (
     <div className={Styles.back_to_blog}>
