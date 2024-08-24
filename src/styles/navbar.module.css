@@ -5,17 +5,18 @@
     padding: 24px var(--content-margin);
     z-index: 99;
     width: 100vw;
-    height: 56px;
+    height: 3.5vw;
     background-color: var(--background-color);
-    position: sticky;
+    position: sticky; /* make it always at top of page */
     top: 0;
+    border-bottom: 1px solid var(--text-color);
 }
 
 .links{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    column-gap: 4vw;
+    column-gap: 2.5vw;
 }
 
 .logo {
@@ -49,15 +50,16 @@
 
 .button, .toggle{
     background-color: var(--primary-color);
-    border-radius: 1vw;
+    border-radius: 1rem;
     border: 1px solid var(--text-color);
-    padding: 5px 10px;
+    padding: .3rem .6rem;
     font-size: 1rem;
     width: auto;
 }
 
 .button:hover{
   background-color: var(--secondary-color);
+  color: var(--text-color);
   transition: var(--transition-time) ease-out;
 }
 

@@ -10,8 +10,8 @@ import React, { useContext } from "react";
 //   description: "Code, Art, and Math",
 // };
 
-function ThemeContainer(props) {
-  const { darkMode } = useContext(ThemeContext);
+function ThemeContainer(props: any) {
+  const { darkMode, toggleTheme } = useContext(ThemeContext);
   return (
     <div className={darkMode ? "darkMode" : "lightMode"}>{props.children}</div>
   );
@@ -26,7 +26,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeProvider>
-          <ThemeContainer>{children}</ThemeContainer>
+          <ThemeContainer>
+            <main>{children}</main>
+          </ThemeContainer>
         </ThemeProvider>
       </body>
     </html>

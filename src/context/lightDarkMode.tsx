@@ -2,9 +2,16 @@
 
 import React, { createContext, useState } from "react";
 
-export const ThemeContext = createContext();
+export type ThemeContextType = {
+  darkMode: boolean;
+  toggleTheme: () => void;
+};
 
-export function ThemeProvider(props) {
+export const ThemeContext = createContext<ThemeContextType>({
+  darkMode: false,
+} as ThemeContextType);
+
+export function ThemeProvider(props: any) {
   const [darkMode, setDarkMode] = useState(false);
 
   const toggleTheme = () => {

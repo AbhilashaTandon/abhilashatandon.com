@@ -8,13 +8,13 @@ import Navbar from "@/components/navbar";
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Navbar main_page={true} />
       <Hero />
       <Projects />
       <Skills />
       <Blog max_posts={3} />
       <Contact />
-    </main>
+    </>
   );
 }

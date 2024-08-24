@@ -1,6 +1,6 @@
 .eidolon-tarot{
-  display: flex;
-  flex-direction: column;
+  background-color: var(--background-color);
+  padding-bottom: 2vw;
 }
 
 .ui{
@@ -10,31 +10,36 @@
 }
 
 button{
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: .5vw 1vw;
+  border-radius: 32px;
 }
 
 button:hover{
-  background-color: var(--primary-color);
-  transition: var(--transition-time);
+  background-color: var(--secondary-color);
+  transition: var(--transition-time) ease-out;
 }
 
 .card{
+    margin: 1vw;
     height: auto;
-    width: 110px;
-    background-size: 100px;
+    width: 7vw;
+    background-size: 6vw;
     object-fit: cover;
     border-radius: 10px;
+    border: 1px solid var(--text-color);
 }
 
 #discard, #fate, #aside, #spread{
-    margin: 10px 0 0 10px;
-    background-color: rgb(202, 171, 231);
+    padding: 1vw 0 0 ;
+    background-color: var(--primary-color);
     border-radius: 20px;
-    padding: 5px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    min-height: 240px;
+    min-height: 19vw;
+    min-width: 45vw;
     height: min-content;
 }
 
@@ -43,8 +48,9 @@ button:hover{
     grid-template-columns: repeat(2, auto);
     grid-template-rows: repeat(2, auto);
     /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+    gap: 2vw;
     width: 95%;
-    padding: 1vw;
+    padding: 2vw 0;
     height: min-content;
 }
 
@@ -67,8 +73,8 @@ button:hover{
 
 .layout{
   display: grid;
-  grid-template-columns: repeat(6,1fr);
+  grid-template-columns: repeat(5,1fr);
   height: min-content;
-  gap: .5vw;
   padding: .5vw;
+  width: min-content;
 }

@@ -15,16 +15,16 @@ function Attrib({
 }) {
   if (new_line) {
     return (
-      <Link
-        className={Styles.link}
-        href={link}
-        title={title}
-        aria-label={title}
-      >
-        <h4>
+      <h4>
+        <Link
+          className={Styles.link}
+          href={link}
+          title={title}
+          aria-label={title}
+        >
           <u>{text}</u>
-        </h4>
-      </Link>
+        </Link>
+      </h4>
     );
   } else {
     return (
@@ -43,7 +43,7 @@ function Attrib({
 export default function Contact() {
   return (
     <div className={Styles.contact} id="contact">
-      <div className={Text.section_header}>Contact</div>
+      <h2 className={Text.header}>Contact</h2>
       <div className={Styles.icons}>
         <Link
           href="https://github.com/AbhilashaTandon"

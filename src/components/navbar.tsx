@@ -46,7 +46,12 @@ export default function Navbar({ main_page }: { main_page: boolean }) {
       </nav>
     );
   } else {
-    return <nav className={Styles.navbar}>{logo}</nav>;
+    return (
+      <nav className={Styles.navbar}>
+        {logo}
+        <ThemeSwitch />
+      </nav>
+    );
   }
 }
 
@@ -61,11 +66,11 @@ function Heading({
 }) {
   if (type === "logo") {
     return (
-      <h4>
+      <h5>
         <Link className={Styles.logo} href={route}>
           {name}
         </Link>
-      </h4>
+      </h5>
     );
   } else if (type === "section") {
     return (

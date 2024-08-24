@@ -1,0 +1,5 @@
+.container{
+    color: var(--text-color);
+    padding: 2vw var(--content-margin);
+}
+

@@ -1,272 +1,237 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Gravity Simulator</title>
-    <meta charset="utf-8" />
-    <style>
-      :root {
-        --text-color: #171618;
-        --background-color: #f0eff0;
-        --primary-color: #b63ddf;
-        --secondary-color: #e3e2e4;
-        --accent-color: #7f7981;
-        font-family: "Nunito Sans", monospace;
-        background-color: var(--background-color);
-      }
+<center>
+  <h2>Gravity Simulator</h2>
+  <canvas height="550" width="550" id="canvas1"></canvas>
 
-      p {
-        text-align: justify;
-      }
-    </style>
-    <script src="math.js" type="text/javascript"></script>
-  </head>
-  <body>
-    <center>
-      <h2>Gravity Simulator</h2>
-      <canvas
-        height="550"
-        width="550"
-        id="canvas1"
-        style="
-          border-style: solid;
-          border-width: 8px;
-          border-radius: 16px;
-          border-color: var(--primary-color);
-          background-color: black;
-        "
-      ></canvas>
+  <script>
+    let big_g = 8; //G, strength of gravity
+    let w = canvas1.width;
+    let h = canvas1.height;
+    let ctx = canvas1.getContext("2d");
+    let border = 4;
 
-      <script>
-        let big_g = 8; //G, strength of gravity
-        let w = canvas1.width;
-        let h = canvas1.height;
-        let ctx = canvas1.getContext("2d");
-        let border = 4;
+    function create_particle() {
+      return {
+        x: Math.floor(Math.random() * (w - border * 2)) + border,
+        y: Math.floor(Math.random() * (h - border * 2)) + border,
+        v_x: 0,
+        v_y: 0,
+        a_x: 0,
+        a_y: 0,
+        color: getRandomColor(),
+        mass: 1,
+      };
+    }
 
-        run();
-
-        function create_particle() {
-          return {
-            x: Math.floor(Math.random() * (w - border * 2)) + border,
-            y: Math.floor(Math.random() * (h - border * 2)) + border,
-            v_x: 0,
-            v_y: 0,
-            a_x: 0,
-            a_y: 0,
-            color: getRandomColor(),
-            mass: 1,
-          };
+    function tick(particle, delta_time, torus_mode) {
+      if (particle.x < border) {
+        //clean this up later
+        if (torus_mode) {
+          particle.x = w - border;
+        } else {
+          //bounce off sides
+          particle.x = border;
+          if (particle.v_x < 0) {
+            particle.v_x = -particle.v_x;
+          }
         }
-
-        function tick(particle, delta_time, torus_mode) {
-          if (particle.x < border) {
-            //clean this up later
-            if (torus_mode) {
-              particle.x = w - border;
-            } else {
-              //bounce off sides
-              particle.x = border;
-              if (particle.v_x < 0) {
-                particle.v_x = -particle.v_x;
-              }
-            }
+      }
+      if (particle.y < border) {
+        if (torus_mode) {
+          particle.y = h - border;
+        } else {
+          //bounce off sides
+          particle.y = border;
+          if (particle.v_y < 0) {
+            particle.v_y = -particle.v_y;
           }
-          if (particle.y < border) {
-            if (torus_mode) {
-              particle.y = h - border;
-            } else {
-              //bounce off sides
-              particle.y = border;
-              if (particle.v_y < 0) {
-                particle.v_y = -particle.v_y;
-              }
-            }
-          }
-          if (particle.x > w) {
-            if (torus_mode) {
-              particle.x = border;
-            } else {
-              //bounce off sides
-              particle.x = w - border;
-              if (particle.v_x > 0) {
-                particle.v_x = -particle.v_x;
-              }
-            }
-          }
-          if (particle.y > h) {
-            if (torus_mode) {
-              particle.y = border;
-            } else {
-              //bounce off sides
-              particle.y = h - border;
-              if (particle.v_y > 0) {
-                particle.v_y = -particle.v_y;
-              }
-            }
-          }
-          return {
-            x: particle.x + particle.v_x * delta_time,
-            y: particle.y + particle.v_y * delta_time,
-            v_x: particle.v_x + particle.a_x * delta_time,
-            v_y: particle.v_y + particle.a_y * delta_time,
-            a_x: 0,
-            a_y: 0,
-            color: particle.color,
-            mass: particle.mass,
-          };
         }
+      }
+      if (particle.x > w) {
+        if (torus_mode) {
+          particle.x = border;
+        } else {
+          //bounce off sides
+          particle.x = w - border;
+          if (particle.v_x > 0) {
+            particle.v_x = -particle.v_x;
+          }
+        }
+      }
+      if (particle.y > h) {
+        if (torus_mode) {
+          particle.y = border;
+        } else {
+          //bounce off sides
+          particle.y = h - border;
+          if (particle.v_y > 0) {
+            particle.v_y = -particle.v_y;
+          }
+        }
+      }
+      return {
+        x: particle.x + particle.v_x * delta_time,
+        y: particle.y + particle.v_y * delta_time,
+        v_x: particle.v_x + particle.a_x * delta_time,
+        v_y: particle.v_y + particle.a_y * delta_time,
+        a_x: 0,
+        a_y: 0,
+        color: particle.color,
+        mass: particle.mass,
+      };
+    }
 
-        function distance(particle_1, particle_2, torus_mode) {
-          let disp = displacement(particle_1, particle_2, torus_mode);
-          return Math.sqrt(
-            Math.pow(disp.x, 2) + Math.pow(disp.y, 2)
-            //toroidal distance
+    function distance(particle_1, particle_2, torus_mode) {
+      let disp = displacement(particle_1, particle_2, torus_mode);
+      return Math.sqrt(
+        Math.pow(disp.x, 2) + Math.pow(disp.y, 2)
+        //toroidal distance
+      );
+    }
+
+    function displacement(p_1, p_2, torus_mode) {
+      let x_diff = p_1.x - p_2.x;
+      let y_diff = p_1.y - p_2.y;
+      if (torus_mode) {
+        if (x_diff < -w / 2) {
+          x_diff += w;
+        }
+        if (x_diff > w / 2) {
+          x_diff -= w;
+        }
+        if (y_diff < -h / 2) {
+          y_diff += h;
+        }
+        if (y_diff > h / 2) {
+          y_diff -= h;
+        }
+      }
+      return {
+        x: x_diff,
+        y: y_diff,
+      };
+    }
+
+    function gravity(particles, torus_mode) {
+      for (var i = 0; i < particles.length; i++) {
+        for (var j = 0; j < i; j++) {
+          let dist = distance(particles[i], particles[j], torus_mode);
+          let disp = displacement(particles[j], particles[i], torus_mode);
+          particles[i].a_x +=
+            (big_g * (particles[j].mass * disp.x)) / Math.pow(dist, 3); //gravity equation, inverse square law, 1/r^3 * disp
+          particles[i].a_y +=
+            (big_g * (particles[j].mass * disp.y)) / Math.pow(dist, 3);
+          particles[j].a_x -=
+            (big_g * (particles[i].mass * disp.x)) / Math.pow(dist, 3); //gravity equation, inverse square law, 1/r^3 * disp
+          particles[j].a_y -=
+            (big_g * (particles[i].mass * disp.y)) / Math.pow(dist, 3);
+        }
+      }
+      return particles;
+    }
+
+    function merge(particles, torus_mode) {
+      for (var i = 0; i < particles.length; i++) {
+        for (var j = 0; j < i; j++) {
+          let first = particles[i];
+          let second = particles[j];
+          if (
+            distance(first, second, torus_mode) <
+            (Math.sqrt(first.mass) + Math.sqrt(second.mass)) / 2
+          ) {
+            //not exactly intersection distance, maybe fix later
+            //z = merge(x, y)
+            //z
+            //x.mass * x.vel + y.mass * y.vel = z.mass * z.vel = (x.mass + y.mass) * z.vel
+            //z.vel = x.mass * x.vel + y.mass * y.vel / (x.mass + y.mass)
+            var merged = {
+              x: (first.x + second.x) / 2,
+              y: (first.y + second.y) / 2,
+              v_x:
+                (first.mass * first.v_x + second.mass * second.v_x) /
+                (first.mass + second.mass),
+              v_y:
+                (first.mass * first.v_y + second.mass * second.v_y) /
+                (first.mass + second.mass), //momentum equation
+              a_x: 0,
+              a_y: 0,
+              color: first.mass > second.mass ? first.color : second.color,
+              mass: first.mass + second.mass,
+            };
+            particles[j] = merged;
+            particles.splice(i, 1); //remove element
+            i--; //push index back
+            if (i <= j) {
+              //cant have index collision, since dist(i,i) = 0
+              i = j + 1;
+            }
+          }
+        }
+      }
+      return particles;
+    }
+
+    function getRandomColor() {
+      //generates random color that is suitably bright
+      var digits = "0123456789ABCDEF";
+      var hex_code = "#";
+      for (var i = 0; i < 6; i++) {
+        hex_code += digits[Math.floor(Math.random() * 12 + 4)]; //add digit
+      } //add 4 so colors arent too dark, black background
+      return hex_code;
+    }
+
+    function run() {
+      let num_particles = count.value;
+
+      const torus_mode_button = document.querySelector("#torus_mode"); //find checkbox
+      let torus_mode = torus_mode_button.checked;
+      console.log(torus_mode);
+      let particles = []; //reset array each time
+      for (var i = 0; i < num_particles; i++) {
+        //makes particles
+        particles.push(create_particle());
+      }
+      setInterval(() => {
+        ctx.save();
+
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, w, h); //clears screen
+
+        particles = merge(particles, torus_mode); //merges nearby pixels
+        particles = gravity(particles, torus_mode); //updates acc with gravity equation
+
+        num_particles = particles.length;
+
+        for (var i = 0; i < num_particles; i++) {
+          ctx.fillStyle = particles[i].color;
+          ctx.beginPath();
+          ctx.arc(
+            particles[i].x,
+            particles[i].y,
+            Math.sqrt(particles[i].mass) * 2, //radius
+            0, //arc from 0
+            2 * Math.PI //to 2 pi
           );
+          ctx.fill();
+
+          particles[i] = tick(particles[i], 0.1, torus_mode); //update pos and vel
         }
 
-        function displacement(p_1, p_2, torus_mode) {
-          let x_diff = p_1.x - p_2.x;
-          let y_diff = p_1.y - p_2.y;
-          if (torus_mode) {
-            if (x_diff < -w / 2) {
-              x_diff += w;
-            }
-            if (x_diff > w / 2) {
-              x_diff -= w;
-            }
-            if (y_diff < -h / 2) {
-              y_diff += h;
-            }
-            if (y_diff > h / 2) {
-              y_diff -= h;
-            }
-          }
-          return {
-            x: x_diff,
-            y: y_diff,
-          };
-        }
+        ctx.restore();
+      }, 30); //30 millisecond iteration
+    }
 
-        function gravity(particles, torus_mode) {
-          for (var i = 0; i < particles.length; i++) {
-            for (var j = 0; j < i; j++) {
-              let dist = distance(particles[i], particles[j], torus_mode);
-              let disp = displacement(particles[j], particles[i], torus_mode);
-              particles[i].a_x +=
-                (big_g * (particles[j].mass * disp.x)) / Math.pow(dist, 3); //gravity equation, inverse square law, 1/r^3 * disp
-              particles[i].a_y +=
-                (big_g * (particles[j].mass * disp.y)) / Math.pow(dist, 3);
-              particles[j].a_x -=
-                (big_g * (particles[i].mass * disp.x)) / Math.pow(dist, 3); //gravity equation, inverse square law, 1/r^3 * disp
-              particles[j].a_y -=
-                (big_g * (particles[i].mass * disp.y)) / Math.pow(dist, 3);
-            }
-          }
-          return particles;
-        }
-
-        function merge(particles, torus_mode) {
-          for (var i = 0; i < particles.length; i++) {
-            for (var j = 0; j < i; j++) {
-              let first = particles[i];
-              let second = particles[j];
-              if (
-                distance(first, second, torus_mode) <
-                (Math.sqrt(first.mass) + Math.sqrt(second.mass)) / 2
-              ) {
-                //not exactly intersection distance, maybe fix later
-                //z = merge(x, y)
-                //z
-                //x.mass * x.vel + y.mass * y.vel = z.mass * z.vel = (x.mass + y.mass) * z.vel
-                //z.vel = x.mass * x.vel + y.mass * y.vel / (x.mass + y.mass)
-                var merged = {
-                  x: (first.x + second.x) / 2,
-                  y: (first.y + second.y) / 2,
-                  v_x:
-                    (first.mass * first.v_x + second.mass * second.v_x) /
-                    (first.mass + second.mass),
-                  v_y:
-                    (first.mass * first.v_y + second.mass * second.v_y) /
-                    (first.mass + second.mass), //momentum equation
-                  a_x: 0,
-                  a_y: 0,
-                  color: first.mass > second.mass ? first.color : second.color,
-                  mass: first.mass + second.mass,
-                };
-                particles[j] = merged;
-                particles.splice(i, 1); //remove element
-                i--; //push index back
-                if (i <= j) {
-                  //cant have index collision, since dist(i,i) = 0
-                  i = j + 1;
-                }
-              }
-            }
-          }
-          return particles;
-        }
-
-        function getRandomColor() {
-          //generates random color that is suitably bright
-          var digits = "0123456789ABCDEF";
-          var hex_code = "#";
-          for (var i = 0; i < 6; i++) {
-            hex_code += digits[Math.floor(Math.random() * 12 + 4)]; //add digit
-          } //add 4 so colors arent too dark, black background
-          return hex_code;
-        }
-
-        function run() {
-          let num_particles = count.value;
-
-          const torus_mode_button = document.querySelector("#torus_mode"); //find checkbox
-          let torus_mode = torus_mode_button.checked;
-          console.log(torus_mode);
-          let particles = []; //reset array each time
-          for (var i = 0; i < num_particles; i++) {
-            //makes particles
-            particles.push(create_particle());
-          }
-          setInterval(() => {
-            ctx.save();
-
-            ctx.fillStyle = "black";
-            ctx.fillRect(0, 0, w, h); //clears screen
-
-            particles = merge(particles, torus_mode); //merges nearby pixels
-            particles = gravity(particles, torus_mode); //updates acc with gravity equation
-
-            for (var i = 0; i < num_particles; i++) {
-              ctx.fillStyle = particles[i].color;
-              ctx.beginPath();
-              ctx.arc(
-                particles[i].x,
-                particles[i].y,
-                Math.sqrt(particles[i].mass) * 2, //radius
-                0, //arc from 0
-                2 * Math.PI //to 2 pi
-              );
-              ctx.fill();
-
-              particles[i] = tick(particles[i], 0.1, torus_mode); //update pos and vel
-            }
-
-            ctx.restore();
-          }, 30); //30 millisecond iteration
-        }
-      </script>
-      <div></div>
-      <input value="200" type="number" id="count" min="1" />
-      <button onclick="run()">Start</button>
-      <label>
-        <input type="checkbox" id="torus_mode" value="Torus Mode" />
-        Torus Mode
-      </label>
-      <p style="width: 50%">
-        If Torus Mode is enabled particles going off the edge will appear on the
-        edge at the opposite side. If it is disabled they will bounce off the
-        edges.
-      </p>
-    </center>
-  </body>
-</html>
+    run();
+  </script>
+  <div></div>
+  <input value="200" type="number" id="count" min="1" />
+  <button onclick="run()">Start</button>
+  <label>
+    <input type="checkbox" id="torus_mode" value="Torus Mode" />
+    Torus Mode
+  </label>
+  <p style="width: 50%">
+    If Torus Mode is enabled particles going off the edge will appear on the
+    edge at the opposite side. If it is disabled they will bounce off the edges.
+  </p>
+</center>

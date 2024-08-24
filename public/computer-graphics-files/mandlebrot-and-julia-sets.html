@@ -1,154 +1,124 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Mandlebrot and Julia Sets</title>
-    <meta charset="utf-8" />
-    <style>
-      :root {
-        --text: #171618;
-        --background: #f0eff0;
-        --primary: #b63ddf;
-        --secondary: #e3e2e4;
-        --accent: #7f7981;
-        font-family: "Ubuntu Mono", monospace;
-        background-color: var(--background);
-      }
+<center>
+  <h1>Mandlebrot and Julia Sets</h1>
+  <canvas
+    height="600"
+    width="1200"
+    id="canvas1"
+    style="cursor: crosshair"
+  ></canvas>
 
-      p {
-        text-align: justify;
-      }
-    </style>
-    <script src="math.js" type="text/javascript"></script>
-  </head>
-  <body>
-    <center>
-      <canvas
-        height="600"
-        width="1200"
-        id="canvas1"
-        style="
-          border-style: solid;
-          border-width: 8px;
-          border-radius: 16px;
-          border-color: var(--primary);
-          background-color: black;
-          cursor: crosshair;
-        "
-      ></canvas>
+  <script>
+    // THIS FUNCTION DOES ALL OF THE INITIALIZING FOR THE GPU PROGRAM.
 
-      <script>
-        // THIS FUNCTION DOES ALL OF THE INITIALIZING FOR THE GPU PROGRAM.
+    let start_gl = (
+      canvas,
+      meshData,
+      vertexSize,
+      vertexShader,
+      fragmentShader
+    ) => {
+      // GET THE 3D CONTEXT OF THE CANVAS
 
-        let start_gl = (
-          canvas,
-          meshData,
-          vertexSize,
-          vertexShader,
-          fragmentShader
-        ) => {
-          // GET THE 3D CONTEXT OF THE CANVAS
+      let gl = canvas.getContext("webgl");
 
-          let gl = canvas.getContext("webgl");
+      // CREATE A PROGRAM THAT WILL RUN ON THE GPU
 
-          // CREATE A PROGRAM THAT WILL RUN ON THE GPU
+      let program = gl.createProgram();
+      gl.program = program;
 
-          let program = gl.createProgram();
-          gl.program = program;
+      // THIS IS HOW WE COMPILE AND ATTACH A SHADER TO THE GPU PROGRAM
 
-          // THIS IS HOW WE COMPILE AND ATTACH A SHADER TO THE GPU PROGRAM
+      let addshader = (type, src) => {
+        let shader = gl.createShader(type);
+        gl.shaderSource(shader, src);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+          throw "Cannot compile shader:\n\n" + gl.getShaderInfoLog(shader);
+        gl.attachShader(program, shader);
+      };
 
-          let addshader = (type, src) => {
-            let shader = gl.createShader(type);
-            gl.shaderSource(shader, src);
-            gl.compileShader(shader);
-            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
-              throw "Cannot compile shader:\n\n" + gl.getShaderInfoLog(shader);
-            gl.attachShader(program, shader);
-          };
+      // ADD THE VERTEX AND FRAGMENT SHADERS
 
-          // ADD THE VERTEX AND FRAGMENT SHADERS
+      addshader(gl.VERTEX_SHADER, vertexShader);
+      addshader(gl.FRAGMENT_SHADER, fragmentShader);
 
-          addshader(gl.VERTEX_SHADER, vertexShader);
-          addshader(gl.FRAGMENT_SHADER, fragmentShader);
+      // LINK THE PROGRAM AND REPORT ANY ERRORS
 
-          // LINK THE PROGRAM AND REPORT ANY ERRORS
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS))
+        throw "Could not link the shader program!";
+      gl.useProgram(program);
 
-          gl.linkProgram(program);
-          if (!gl.getProgramParameter(program, gl.LINK_STATUS))
-            throw "Could not link the shader program!";
-          gl.useProgram(program);
+      // DECLARE A PLACE FOR MY VERTICES TO GO DOWN ON THE GPU
 
-          // DECLARE A PLACE FOR MY VERTICES TO GO DOWN ON THE GPU
+      gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
 
-          gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+      // PERMIT THE GPU TO RENDER NEARER THINGS IN FRONT OF FARTHER AWAY THINGS
 
-          // PERMIT THE GPU TO RENDER NEARER THINGS IN FRONT OF FARTHER AWAY THINGS
+      gl.enable(gl.DEPTH_TEST);
+      gl.depthFunc(gl.LEQUAL);
 
-          gl.enable(gl.DEPTH_TEST);
-          gl.depthFunc(gl.LEQUAL);
+      // SET ANY ONE ATTRIBUTE OF A VERTEX
 
-          // SET ANY ONE ATTRIBUTE OF A VERTEX
+      let vertexAttribute = (name, size, position) => {
+        let attr = gl.getAttribLocation(program, name);
+        gl.enableVertexAttribArray(attr);
+        gl.vertexAttribPointer(
+          attr,
+          size,
+          gl.FLOAT,
+          false,
+          vertexSize * 4,
+          position * 4
+        );
+      };
 
-          let vertexAttribute = (name, size, position) => {
-            let attr = gl.getAttribLocation(program, name);
-            gl.enableVertexAttribArray(attr);
-            gl.vertexAttribPointer(
-              attr,
-              size,
-              gl.FLOAT,
-              false,
-              vertexSize * 4,
-              position * 4
-            );
-          };
+      // SET THE POSITION ATTRIBUTE
 
-          // SET THE POSITION ATTRIBUTE
+      vertexAttribute("aPos", 3, 0);
 
-          vertexAttribute("aPos", 3, 0);
+      return gl;
+    };
 
-          return gl;
-        };
+    // HERE WE ARE SETTING UP HOW THE CANVAS RESPONDS TO MOUSE EVENTS.
 
-        // HERE WE ARE SETTING UP HOW THE CANVAS RESPONDS TO MOUSE EVENTS.
+    let r = canvas1.getBoundingClientRect(),
+      cursor = [0, 0, 0];
+    var complex_number_mouse_loc;
+    let setCursor = (e, z) => {
+      cursor = [
+        ((e.clientX - r.left) / canvas1.width) * 2 - 1,
+        1 - ((e.clientY - r.top) / canvas1.height) * 2,
+        z !== undefined ? z : cursor[2],
+      ];
+      complex_number_mouse_loc =
+        "mouse location: " +
+        (cursor[0] * 2 + 0.5).toFixed(3) +
+        " + " +
+        (cursor[1] + 0.025).toFixed(3) +
+        "i"; //add 0.025 to match with center of cursor
+    };
+    canvas1.onmousedown = (e) => setCursor(e, 1);
+    canvas1.onmousemove = (e) => setCursor(e);
+    canvas1.onmouseup = (e) => setCursor(e, 0);
 
-        let r = canvas1.getBoundingClientRect(),
-          cursor = [0, 0, 0];
-        var complex_number_mouse_loc;
-        let setCursor = (e, z) => {
-          cursor = [
-            ((e.clientX - r.left) / canvas1.width) * 2 - 1,
-            1 - ((e.clientY - r.top) / canvas1.height) * 2,
-            z !== undefined ? z : cursor[2],
-          ];
-          complex_number_mouse_loc =
-            "mouse location: " +
-            (cursor[0] * 2 + 0.5).toFixed(3) +
-            " + " +
-            (cursor[1] + 0.025).toFixed(3) +
-            "i"; //add 0.025 to match with center of cursor
-        };
-        canvas1.onmousedown = (e) => setCursor(e, 1);
-        canvas1.onmousemove = (e) => setCursor(e);
-        canvas1.onmouseup = (e) => setCursor(e, 0);
+    window.addEventListener("mousemove", () => {
+      document.getElementById("mouse_loc").innerHTML = complex_number_mouse_loc;
+    });
 
-        window.addEventListener("mousemove", () => {
-          document.getElementById("mouse_loc").innerHTML =
-            complex_number_mouse_loc;
-        });
+    // ALL OF THE 3D MESH SHAPES THAT WE ARE RENDERING (FOR NOW IT'S JUST ONE SHAPE)
 
-        // ALL OF THE 3D MESH SHAPES THAT WE ARE RENDERING (FOR NOW IT'S JUST ONE SHAPE)
+    let meshData = [
+      {
+        type: 1,
+        mesh: new Float32Array([-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0]),
+      },
+    ];
 
-        let meshData = [
-          {
-            type: 1,
-            mesh: new Float32Array([-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0]),
-          },
-        ];
+    // THE VERTEX SHADER, FOLLOWED BY THE FRAGMENT SHADER
 
-        // THE VERTEX SHADER, FOLLOWED BY THE FRAGMENT SHADER
-
-        let vertexSize = 3;
-        let vertexShader = `
+    let vertexSize = 3;
+    let vertexShader = `
            attribute vec3 aPos;
            varying   vec3 vPos;
            void main() {
@@ -156,7 +126,7 @@
               vPos = aPos;
            }
         `;
-        let fragmentShader = `
+    let fragmentShader = `
         precision mediump float;
 
 uniform float uTime;
@@ -238,92 +208,90 @@ void main(void) {
     gl_FragColor = vec4(sqrt(color), 1.);
 }`;
 
-        // WAIT 100 MSECS BEFORE STARTING UP
+    // WAIT 100 MSECS BEFORE STARTING UP
 
-        setTimeout(() => {
-          // INITIALIZE GPU GRAPHICS
+    setTimeout(() => {
+      // INITIALIZE GPU GRAPHICS
 
-          let gl = start_gl(
-            canvas1,
-            meshData,
-            vertexSize,
-            vertexShader,
-            fragmentShader
+      let gl = start_gl(
+        canvas1,
+        meshData,
+        vertexSize,
+        vertexShader,
+        fragmentShader
+      );
+
+      // PASS UNIFORM VARIABLES
+
+      let uTime = gl.getUniformLocation(gl.program, "uTime");
+      let uCursor = gl.getUniformLocation(gl.program, "uCursor");
+
+      // WHEN DID WE START ANIMATING?
+
+      let startTime = Date.now() / 1000;
+
+      // START THE ANIMATION LOOP
+
+      setInterval(() => {
+        // PASS ELAPSED TIME DOWN TO THE GPU
+
+        gl.uniform1f(uTime, Date.now() / 1000 - startTime);
+
+        // PASS THE CURSOR STATE DOWN TO THE GPU
+
+        gl.uniform3fv(uCursor, cursor);
+
+        // LOOP THROUGH ALL OF MY SHAPES
+
+        for (let n = 0; n < meshData.length; n++) {
+          // PULL OUT THE ACTUAL MESH DATA
+
+          let mesh = meshData[n].mesh;
+
+          // LOAD THAT DATA DOWN INTO THE GPU
+
+          gl.bufferData(gl.ARRAY_BUFFER, mesh, gl.STATIC_DRAW);
+
+          // RENDER THAT DATA ACCORDING TO WHAT TYPE IT IS
+
+          gl.drawArrays(
+            meshData[n].type ? gl.TRIANGLE_STRIP : gl.TRIANGLES,
+            0,
+            mesh.length / vertexSize
           );
+        }
+      }, 30);
+    }, 100);
+  </script>
+  <p id="mouse_loc"></p>
 
-          // PASS UNIFORM VARIABLES
-
-          let uTime = gl.getUniformLocation(gl.program, "uTime");
-          let uCursor = gl.getUniformLocation(gl.program, "uCursor");
-
-          // WHEN DID WE START ANIMATING?
-
-          let startTime = Date.now() / 1000;
-
-          // START THE ANIMATION LOOP
-
-          setInterval(() => {
-            // PASS ELAPSED TIME DOWN TO THE GPU
-
-            gl.uniform1f(uTime, Date.now() / 1000 - startTime);
-
-            // PASS THE CURSOR STATE DOWN TO THE GPU
-
-            gl.uniform3fv(uCursor, cursor);
-
-            // LOOP THROUGH ALL OF MY SHAPES
-
-            for (let n = 0; n < meshData.length; n++) {
-              // PULL OUT THE ACTUAL MESH DATA
-
-              let mesh = meshData[n].mesh;
-
-              // LOAD THAT DATA DOWN INTO THE GPU
-
-              gl.bufferData(gl.ARRAY_BUFFER, mesh, gl.STATIC_DRAW);
-
-              // RENDER THAT DATA ACCORDING TO WHAT TYPE IT IS
-
-              gl.drawArrays(
-                meshData[n].type ? gl.TRIANGLE_STRIP : gl.TRIANGLES,
-                0,
-                mesh.length / vertexSize
-              );
-            }
-          }, 30);
-        }, 100);
-      </script>
-      <p id="mouse_loc"></p>
-
-      <h1>Ok, what is all this?</h1>
-      <h3 style="width: 70%">
-        On the left side of the window is what's called the Mandelbrot set, a
-        very famous fractal in mathematics. On the right is a less famous but
-        still just as beautiful set of infinite fractals called the Julia sets.
-      </h3>
-      <h3 style="width: 70%">
-        The Mandelbrot set is constructed from complex numbers, numbers formed
-        by the addition of a real number "a" and a real number "b" times "i", or
-        the square root of -1. We express this as "a + bi". These numbers have
-        their own special rules for addition, multiplication, and all other
-        standard operations in math.
-      </h3>
-      <h3 style="width: 70%">
-        The Mandelbrot set is generated by a specific process. For every complex
-        number, we create a function. Let's call this function f<sub>z</sub>().
-        To calculate the Mandelbrot set, we iterate this function on 0. That is,
-        we consider the sequence: 0, f<sub>z</sub>(0), 0,
-        f<sub>z</sub>(f<sub>z</sub>(0)),
-        f<sub>z</sub>(f<sub>z</sub>(f<sub>z</sub>(0))), ...
-      </h3>
-      <h3 style="width: 70%">
-        If this sequence goes to infinity (which always happens if a value ever
-        achieves an absolute value greater than 2) then it is not in the
-        Mandelbrot set. If it does not, it is in the Mandelbrot set. (We can
-        also add a bit of a gradient by considering how many iterations it takes
-        to obtain an absolute value larger than 2. This makes the picture look a
-        bit nicer).
-      </h3>
-    </center>
-  </body>
-</html>
+  <h2>Ok, what is all this?</h2>
+</center>
+<h4>
+  On the left side of the window is what's called the Mandelbrot set, a very
+  famous fractal in mathematics. On the right is a less famous but still just as
+  beautiful set of infinite fractals called the Julia sets.
+</h4>
+<h3>Mandelbrot Set</h3>
+<h4>
+  The Mandelbrot set is constructed from complex numbers, numbers formed by the
+  addition of a real number "a" and a real number "b" times "i", or the square
+  root of -1. We express this as "a + bi". These numbers have their own special
+  rules for addition, multiplication, and all other standard operations in math.
+</h4>
+<h4>
+  The Mandelbrot set is generated by a specific process. For every complex
+  number, we create a function. Let's call this function f<sub>z</sub>(). To
+  calculate the Mandelbrot set, we iterate this function on 0. That is, we
+  consider the sequence: 0, f<sub>z</sub>(0), 0,
+  f<sub>z</sub>(f<sub>z</sub>(0)),
+  f<sub>z</sub>(f<sub>z</sub>(f<sub>z</sub>(0))), ...
+</h4>
+<h4>
+  If this sequence goes to infinity (which always happens if a value ever
+  achieves an absolute value greater than 2) then it is not in the Mandelbrot
+  set. If it does not, it is in the Mandelbrot set. (We can also add a bit of a
+  gradient by considering how many iterations it takes to obtain an absolute
+  value larger than 2. This makes the picture look a bit nicer).
+</h4>
+<h3>Julia Set</h3>

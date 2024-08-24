@@ -1,5 +1,7 @@
 .contact{
-    margin: 0 var(--content-margin) 0 var(--content-margin);
+    padding: 0 var(--content-margin) 0 var(--content-margin);
+    background-color: var(--primary-color);
+    border-top: 1px solid var(--text-color);
 }
 
 .icons{
@@ -27,9 +29,4 @@
 .link > h4{
     color: var(--text-color);
     display: inline;
-}
-
-.link:hover{
-    color: var(--secondary-color);
-    transition: var(--transition-time);
 }

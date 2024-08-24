@@ -3,11 +3,11 @@
   text-decoration: none; /* gets rid of default link color + underline */
   position: relative;
   border-radius: 8px;
-  height: calc(12vw + 50px);
-  width: calc(12vw + 50px);
+  height: calc(10vw + 50px);
+  width: calc(10vw + 50px);
   background-color: var(--background-color); /* this is reset by inline css */
   box-shadow: none;
-  border-width: 3px;
+  border-width: 1.5px;
   border-style: solid;
 }
 
@@ -19,19 +19,19 @@
   display: grid;
   justify-content: center;
   grid-template-columns: var(--column-width) var(--column-width) var(--column-width); /* 3 columns of equal size */
-  gap: 20px var(--column-gap);
+  gap: 1vw var(--column-gap);
   place-items: center;
-  padding: 2vh 0;
+  padding: 1.5vw 0;
+  margin: 1vw 0;
 }
 
 .reset{
-  width: 12vw;
+  width: min-content;
+  padding: .5vw 2vw;
   margin: 1rem 0;
   background-color: var(--primary-color);
-}
-
-.reset > h3{
-  color: var(--background-color);
+  color: var(--text-color);
+  border-radius: 32px;
 }
 
 .reset:hover{
@@ -40,5 +40,5 @@
 }
 
 .page{
-  margin: 10vh var(--content-margin);
+  margin: 5vh var(--content-margin);
 }

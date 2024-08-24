@@ -33,7 +33,7 @@ function SkillTile({
 export default function Skills() {
   return (
     <div id="skills" className={Styles.skills}>
-      <h3 className={Text.section_header}>My Skills</h3>
+      <h2 className={Text.header}>My Skills</h2>
       <div className={Styles.tiles}>
         <SkillTile
           title="Software Development "
@@ -42,12 +42,12 @@ export default function Skills() {
         />
         <SkillTile
           title="Web Development"
-          body="I create visually appealing, functional websites, focusing on elegant and simple design using Javascript, Typescript, HTML, CSS, React.js, and Next.js."
+          body="I create websites, focusing on elegant and simple design using Javascript, Typescript, HTML, CSS, React.js, and Next.js."
           symbol={Web}
         />
         <SkillTile
           title="Machine Learning"
-          body="I innovate AI models for, natural language processing, predictive models, and computer vision, with experience in PyTorch and Tensorflow."
+          body="I innovate AI models for natural language processing and computer vision, with experience in PyTorch and Tensorflow."
           symbol={ML}
         />
       </div>

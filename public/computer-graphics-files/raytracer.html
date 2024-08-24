@@ -1,142 +1,109 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Raytracer</title>
-    <meta charset="utf-8" />
-    <style>
-      :root {
-        --text: #171618;
-        --background: #f0eff0;
-        --primary: #b63ddf;
-        --secondary: #e3e2e4;
-        --accent: #7f7981;
-        font-family: "Ubuntu Mono", monospace;
-        background-color: var(--background);
-      }
+<center>
+  <h2>Raytracer</h2>
+  <canvas height="600" width="600" id="canvas1"></canvas>
 
-      p {
-        text-align: justify;
-      }
-    </style>
-    <script src="math.js" type="text/javascript"></script>
-  </head>
-  <body>
-    <center>
-      <canvas
-        height="600"
-        width="600"
-        id="canvas1"
-        style="
-          border-style: solid;
-          border-width: 8px;
-          border-radius: 16px;
-          border-color: var(--primary);
-          background-color: black;
-        "
-      ></canvas>
+  <script>
+    // THIS FUNCTION DOES ALL OF THE INITIALIZING FOR THE GPU PROGRAM.
 
-      <script>
-        // THIS FUNCTION DOES ALL OF THE INITIALIZING FOR THE GPU PROGRAM.
+    let start_gl = (
+      canvas,
+      meshData,
+      vertexSize,
+      vertexShader,
+      fragmentShader
+    ) => {
+      // GET THE 3D CONTEXT OF THE CANVAS
 
-        let start_gl = (
-          canvas,
-          meshData,
-          vertexSize,
-          vertexShader,
-          fragmentShader
-        ) => {
-          // GET THE 3D CONTEXT OF THE CANVAS
+      let gl = canvas.getContext("webgl");
 
-          let gl = canvas.getContext("webgl");
+      // CREATE A PROGRAM THAT WILL RUN ON THE GPU
 
-          // CREATE A PROGRAM THAT WILL RUN ON THE GPU
+      let program = gl.createProgram();
+      gl.program = program;
 
-          let program = gl.createProgram();
-          gl.program = program;
+      // THIS IS HOW WE COMPILE AND ATTACH A SHADER TO THE GPU PROGRAM
 
-          // THIS IS HOW WE COMPILE AND ATTACH A SHADER TO THE GPU PROGRAM
+      let addshader = (type, src) => {
+        let shader = gl.createShader(type);
+        gl.shaderSource(shader, src);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+          throw "Cannot compile shader:\n\n" + gl.getShaderInfoLog(shader);
+        gl.attachShader(program, shader);
+      };
 
-          let addshader = (type, src) => {
-            let shader = gl.createShader(type);
-            gl.shaderSource(shader, src);
-            gl.compileShader(shader);
-            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
-              throw "Cannot compile shader:\n\n" + gl.getShaderInfoLog(shader);
-            gl.attachShader(program, shader);
-          };
+      // ADD THE VERTEX AND FRAGMENT SHADERS
 
-          // ADD THE VERTEX AND FRAGMENT SHADERS
+      addshader(gl.VERTEX_SHADER, vertexShader);
+      addshader(gl.FRAGMENT_SHADER, fragmentShader);
 
-          addshader(gl.VERTEX_SHADER, vertexShader);
-          addshader(gl.FRAGMENT_SHADER, fragmentShader);
+      // LINK THE PROGRAM AND REPORT ANY ERRORS
 
-          // LINK THE PROGRAM AND REPORT ANY ERRORS
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS))
+        throw "Could not link the shader program!";
+      gl.useProgram(program);
 
-          gl.linkProgram(program);
-          if (!gl.getProgramParameter(program, gl.LINK_STATUS))
-            throw "Could not link the shader program!";
-          gl.useProgram(program);
+      // DECLARE A PLACE FOR MY VERTICES TO GO DOWN ON THE GPU
 
-          // DECLARE A PLACE FOR MY VERTICES TO GO DOWN ON THE GPU
+      gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
 
-          gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+      // PERMIT THE GPU TO RENDER NEARER THINGS IN FRONT OF FARTHER AWAY THINGS
 
-          // PERMIT THE GPU TO RENDER NEARER THINGS IN FRONT OF FARTHER AWAY THINGS
+      gl.enable(gl.DEPTH_TEST);
+      gl.depthFunc(gl.LEQUAL);
 
-          gl.enable(gl.DEPTH_TEST);
-          gl.depthFunc(gl.LEQUAL);
+      // SET ANY ONE ATTRIBUTE OF A VERTEX
 
-          // SET ANY ONE ATTRIBUTE OF A VERTEX
+      let vertexAttribute = (name, size, position) => {
+        let attr = gl.getAttribLocation(program, name);
+        gl.enableVertexAttribArray(attr);
+        gl.vertexAttribPointer(
+          attr,
+          size,
+          gl.FLOAT,
+          false,
+          vertexSize * 4,
+          position * 4
+        );
+      };
 
-          let vertexAttribute = (name, size, position) => {
-            let attr = gl.getAttribLocation(program, name);
-            gl.enableVertexAttribArray(attr);
-            gl.vertexAttribPointer(
-              attr,
-              size,
-              gl.FLOAT,
-              false,
-              vertexSize * 4,
-              position * 4
-            );
-          };
+      // SET THE POSITION ATTRIBUTE
 
-          // SET THE POSITION ATTRIBUTE
+      vertexAttribute("aPos", 3, 0);
 
-          vertexAttribute("aPos", 3, 0);
+      return gl;
+    };
 
-          return gl;
-        };
+    // HERE WE ARE SETTING UP HOW THE CANVAS RESPONDS TO MOUSE EVENTS.
 
-        // HERE WE ARE SETTING UP HOW THE CANVAS RESPONDS TO MOUSE EVENTS.
+    let r = canvas1.getBoundingClientRect(),
+      cursor = [0, 0, 0];
+    let setCursor = (e, z) =>
+      (cursor = [
+        ((e.clientX - r.left) / canvas1.width) * 2 - 1,
+        1 - ((e.clientY - r.top) / canvas1.height) * 2,
+        z !== undefined ? z : cursor[2],
+      ]);
+    canvas1.onmousedown = (e) => setCursor(e, 1);
+    canvas1.onmousemove = (e) => setCursor(e);
+    canvas1.onmouseup = (e) => setCursor(e, 0);
 
-        let r = canvas1.getBoundingClientRect(),
-          cursor = [0, 0, 0];
-        let setCursor = (e, z) =>
-          (cursor = [
-            ((e.clientX - r.left) / canvas1.width) * 2 - 1,
-            1 - ((e.clientY - r.top) / canvas1.height) * 2,
-            z !== undefined ? z : cursor[2],
-          ]);
-        canvas1.onmousedown = (e) => setCursor(e, 1);
-        canvas1.onmousemove = (e) => setCursor(e);
-        canvas1.onmouseup = (e) => setCursor(e, 0);
+    // ALL OF THE 3D MESH SHAPES THAT WE ARE RENDERING (FOR NOW IT'S JUST ONE SHAPE)
 
-        // ALL OF THE 3D MESH SHAPES THAT WE ARE RENDERING (FOR NOW IT'S JUST ONE SHAPE)
+    let meshData = [
+      {
+        type: 1,
+        mesh: new Float32Array([-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0]),
+      },
+    ];
 
-        let meshData = [
-          {
-            type: 1,
-            mesh: new Float32Array([-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0]),
-          },
-        ];
-
-        // THE VERTEX SHADER, FOLLOWED BY THE FRAGMENT SHADER
-        let NUM_SPHERES = 10;
-        let threshold = 5.95e-3;
-        let NUM_WALLS = 4;
-        let vertexSize = 3;
-        let vertexShader = `
+    // THE VERTEX SHADER, FOLLOWED BY THE FRAGMENT SHADER
+    let NUM_SPHERES = 10;
+    let threshold = 5.95e-3;
+    let NUM_WALLS = 4;
+    let vertexSize = 3;
+    let vertexShader = `
                            attribute vec3 aPos;
                            varying   vec3 vPos;
                            void main() {
@@ -144,17 +111,17 @@
                               vPos = aPos;
                            }
                         `;
-        let fragmentShader =
-          `
+    let fragmentShader =
+      `
         #define NUM_SPHERES ` +
-          NUM_SPHERES +
-          `
+      NUM_SPHERES +
+      `
         #define epsilon ` +
-          threshold +
-          `
+      threshold +
+      `
         #define NUM_WALLS ` +
-          NUM_WALLS +
-          `
+      NUM_WALLS +
+      `
 
 precision mediump float;
 uniform float uTime;
@@ -397,184 +364,182 @@ void main (void) {
 }
         `;
 
-        // WAIT 100 MSECS BEFORE STARTING UP
+    // WAIT 100 MSECS BEFORE STARTING UP
 
-        console.log(fragmentShader);
+    console.log(fragmentShader);
 
-        setTimeout(() => {
-          // INITIALIZE GPU GRAPHICS
+    setTimeout(() => {
+      // INITIALIZE GPU GRAPHICS
 
-          let startTime = Date.now() / 1000;
+      let startTime = Date.now() / 1000;
 
-          let gl = start_gl(
-            canvas1,
-            meshData,
-            vertexSize,
-            vertexShader,
-            fragmentShader
+      let gl = start_gl(
+        canvas1,
+        meshData,
+        vertexSize,
+        vertexShader,
+        fragmentShader
+      );
+      var x = 0;
+      var z = -7;
+      //center point, 0,0, -7
+
+      let wall_dist = 12;
+      let wall_height = 2;
+
+      let spheres = [],
+        colors = [
+          1.0, 0.252, 0.252, 0.931, 0.384, 0.142, 0.711, 0.555, 0.13, 0.444,
+          0.731, 0.24, 0.186, 0.886, 0.526, 0.001, 1.0, 1.0, 0.01, 0.214, 1.0,
+          0.127, 0.04, 1.0, 0.731, 0.091, 1.0, 1.0, 0.16, 0.591,
+        ], //rainbowish gradient
+        walls = [
+          //plane equations
+          -1, //normal vector must go inwards
+          0,
+          0,
+          x + wall_dist, //x = 4
+
+          1, //normal vector must go inwards
+          0,
+          0,
+          -(x - wall_dist), //x = -4
+
+          0,
+          0,
+          -1, //normal vector must go inwards
+          z + wall_dist, //z = -3
+
+          0,
+          0,
+          1, //normal vector must go inwards
+          -(z - wall_dist), //z = -11
+        ],
+        wall_boundaries = [
+          //boundaries of wall
+          x + wall_dist - threshold,
+          -0.5, //wall cant go below floor
+          z - wall_dist,
+          x + wall_dist + threshold,
+          wall_height,
+          z + wall_dist,
+
+          x - wall_dist - threshold,
+          -0.5, //wall cant go below floor
+          z - wall_dist,
+          x - wall_dist + threshold,
+          wall_height,
+          z + wall_dist,
+
+          x - wall_dist,
+          -0.5, //wall cant go below floor
+          z + wall_dist - threshold,
+          x + wall_dist,
+          wall_height,
+          z + wall_dist + threshold,
+
+          x - wall_dist,
+          -0.5, //wall cant go below floor
+          z - wall_dist - threshold,
+          x + wall_dist,
+          wall_height,
+          z - wall_dist + threshold,
+        ];
+
+      function make_sphere() {
+        //makes random sphere at most 3 units away from x,y
+        var radius = Math.random() + 0.5;
+        return [
+          x + 3 * (2 * Math.random() - 1),
+          radius - 0.5,
+          z + 3 * (2 * Math.random() - 1),
+          radius,
+        ];
+      }
+
+      function collision(sphere_a, sphere_b) {
+        //if 2 spheres intersect
+        var dist = 0;
+        for (var i = 0; i < 3; i++) {
+          dist += (sphere_a[i] - sphere_b[i]) * (sphere_a[i] - sphere_b[i]);
+        }
+        dist = Math.sqrt(dist); //distance between sphere centers
+        return dist < sphere_a[3] + sphere_b[3]; //if distance between centers is less than sum of radii
+      }
+
+      function check_collisions(spheres, sphere_a) {
+        //if sphere_a intersects with any other sphere
+        for (var i = 0; i < spheres.length / 4; i++) {
+          if (collision(spheres.slice(i * 4, i * 4 + 4), sphere_a)) {
+            return true;
+          }
+        }
+        return false;
+      }
+
+      for (let n = 0; n < NUM_SPHERES; n++) {
+        new_sphere = make_sphere();
+        while (check_collisions(spheres, new_sphere)) {
+          //while random sphere is intersecting other one
+          new_sphere = make_sphere(); //regenerate
+        }
+        for (const x of new_sphere) {
+          spheres.push(x);
+        }
+      }
+
+      // PASS UNIFORM VARIABLES
+
+      let uTime = gl.getUniformLocation(gl.program, "uTime");
+      let uCursor = gl.getUniformLocation(gl.program, "uCursor");
+
+      let uS = gl.getUniformLocation(gl.program, "spheres");
+      let uC = gl.getUniformLocation(gl.program, "colors");
+
+      let uW = gl.getUniformLocation(gl.program, "walls");
+      let uWB = gl.getUniformLocation(gl.program, "wall_boundaries");
+      // WHEN DID WE START ANIMATING?
+
+      // START THE ANIMATION LOOP
+
+      setInterval(() => {
+        // PASS ELAPSED TIME DOWN TO THE GPU
+        let currentTime = Date.now() / 1000 - startTime;
+
+        console.log(currentTime);
+
+        gl.uniform1f(uTime, currentTime);
+
+        // PASS THE CURSOR STATE DOWN TO THE GPU
+
+        gl.uniform3fv(uCursor, cursor);
+
+        gl.uniform4fv(uS, spheres);
+        gl.uniform3fv(uC, colors);
+
+        gl.uniform4fv(uW, walls);
+        gl.uniform3fv(uWB, wall_boundaries);
+
+        // LOOP THROUGH ALL OF MY SHAPES
+
+        for (let n = 0; n < meshData.length; n++) {
+          // PULL OUT THE ACTUAL MESH DATA
+
+          let mesh = meshData[n].mesh;
+
+          // LOAD THAT DATA DOWN INTO THE GPU
+
+          gl.bufferData(gl.ARRAY_BUFFER, mesh, gl.STATIC_DRAW);
+
+          // RENDER THAT DATA ACCORDING TO WHAT TYPE IT IS
+
+          gl.drawArrays(
+            meshData[n].type ? gl.TRIANGLE_STRIP : gl.TRIANGLES,
+            0,
+            mesh.length / vertexSize
           );
-          var x = 0;
-          var z = -7;
-          //center point, 0,0, -7
-
-          let wall_dist = 12;
-          let wall_height = 2;
-
-          let spheres = [],
-            colors = [
-              1.0, 0.252, 0.252, 0.931, 0.384, 0.142, 0.711, 0.555, 0.13, 0.444,
-              0.731, 0.24, 0.186, 0.886, 0.526, 0.001, 1.0, 1.0, 0.01, 0.214,
-              1.0, 0.127, 0.04, 1.0, 0.731, 0.091, 1.0, 1.0, 0.16, 0.591,
-            ], //rainbowish gradient
-            walls = [
-              //plane equations
-              -1, //normal vector must go inwards
-              0,
-              0,
-              x + wall_dist, //x = 4
-
-              1, //normal vector must go inwards
-              0,
-              0,
-              -(x - wall_dist), //x = -4
-
-              0,
-              0,
-              -1, //normal vector must go inwards
-              z + wall_dist, //z = -3
-
-              0,
-              0,
-              1, //normal vector must go inwards
-              -(z - wall_dist), //z = -11
-            ],
-            wall_boundaries = [
-              //boundaries of wall
-              x + wall_dist - threshold,
-              -0.5, //wall cant go below floor
-              z - wall_dist,
-              x + wall_dist + threshold,
-              wall_height,
-              z + wall_dist,
-
-              x - wall_dist - threshold,
-              -0.5, //wall cant go below floor
-              z - wall_dist,
-              x - wall_dist + threshold,
-              wall_height,
-              z + wall_dist,
-
-              x - wall_dist,
-              -0.5, //wall cant go below floor
-              z + wall_dist - threshold,
-              x + wall_dist,
-              wall_height,
-              z + wall_dist + threshold,
-
-              x - wall_dist,
-              -0.5, //wall cant go below floor
-              z - wall_dist - threshold,
-              x + wall_dist,
-              wall_height,
-              z - wall_dist + threshold,
-            ];
-
-          function make_sphere() {
-            //makes random sphere at most 3 units away from x,y
-            var radius = Math.random() + 0.5;
-            return [
-              x + 3 * (2 * Math.random() - 1),
-              radius - 0.5,
-              z + 3 * (2 * Math.random() - 1),
-              radius,
-            ];
-          }
-
-          function collision(sphere_a, sphere_b) {
-            //if 2 spheres intersect
-            var dist = 0;
-            for (var i = 0; i < 3; i++) {
-              dist += (sphere_a[i] - sphere_b[i]) * (sphere_a[i] - sphere_b[i]);
-            }
-            dist = Math.sqrt(dist); //distance between sphere centers
-            return dist < sphere_a[3] + sphere_b[3]; //if distance between centers is less than sum of radii
-          }
-
-          function check_collisions(spheres, sphere_a) {
-            //if sphere_a intersects with any other sphere
-            for (var i = 0; i < spheres.length / 4; i++) {
-              if (collision(spheres.slice(i * 4, i * 4 + 4), sphere_a)) {
-                return true;
-              }
-            }
-            return false;
-          }
-
-          for (let n = 0; n < NUM_SPHERES; n++) {
-            new_sphere = make_sphere();
-            while (check_collisions(spheres, new_sphere)) {
-              //while random sphere is intersecting other one
-              new_sphere = make_sphere(); //regenerate
-            }
-            for (const x of new_sphere) {
-              spheres.push(x);
-            }
-          }
-
-          // PASS UNIFORM VARIABLES
-
-          let uTime = gl.getUniformLocation(gl.program, "uTime");
-          let uCursor = gl.getUniformLocation(gl.program, "uCursor");
-
-          let uS = gl.getUniformLocation(gl.program, "spheres");
-          let uC = gl.getUniformLocation(gl.program, "colors");
-
-          let uW = gl.getUniformLocation(gl.program, "walls");
-          let uWB = gl.getUniformLocation(gl.program, "wall_boundaries");
-          // WHEN DID WE START ANIMATING?
-
-          // START THE ANIMATION LOOP
-
-          setInterval(() => {
-            // PASS ELAPSED TIME DOWN TO THE GPU
-            let currentTime = Date.now() / 1000 - startTime;
-
-            console.log(currentTime);
-
-            gl.uniform1f(uTime, currentTime);
-
-            // PASS THE CURSOR STATE DOWN TO THE GPU
-
-            gl.uniform3fv(uCursor, cursor);
-
-            gl.uniform4fv(uS, spheres);
-            gl.uniform3fv(uC, colors);
-
-            gl.uniform4fv(uW, walls);
-            gl.uniform3fv(uWB, wall_boundaries);
-
-            // LOOP THROUGH ALL OF MY SHAPES
-
-            for (let n = 0; n < meshData.length; n++) {
-              // PULL OUT THE ACTUAL MESH DATA
-
-              let mesh = meshData[n].mesh;
-
-              // LOAD THAT DATA DOWN INTO THE GPU
-
-              gl.bufferData(gl.ARRAY_BUFFER, mesh, gl.STATIC_DRAW);
-
-              // RENDER THAT DATA ACCORDING TO WHAT TYPE IT IS
-
-              gl.drawArrays(
-                meshData[n].type ? gl.TRIANGLE_STRIP : gl.TRIANGLES,
-                0,
-                mesh.length / vertexSize
-              );
-            }
-          }, 30);
-        }, 100);
-      </script>
-    </center>
-  </body>
-</html>
+        }
+      }, 30);
+    }, 100);
+  </script>
+</center>

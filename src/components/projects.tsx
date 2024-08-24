@@ -37,18 +37,27 @@ function capFirst(str: string) {
   });
 }
 
-function ProjectTile({ project_name }: { project_name: string }): JSX.Element {
+function ProjectTile({
+  project_name,
+  href,
+  image_dir,
+}: {
+  project_name: string;
+  href: string;
+  image_dir: string;
+}): JSX.Element {
   return (
-    <div className={Styles.box}>
-      <Link href={"/projects/" + project_name}>
+    <div className={Styles.project_tile}>
+      <Link href={href + project_name} className={Styles.image_wrapper}>
         <Image
-          src={"/project-icons/" + project_name + ".png"}
+          src={image_dir + project_name + ".png"}
           alt={project_name}
           layout="fill"
           objectFit="cover"
+          style={{ maxHeight: "100%" }}
         />
-        <h1 className={Styles.projectName}>{capFirst(project_name)}</h1>
       </Link>
+      <h1 className={Styles.projectName}>{capFirst(project_name)}</h1>
     </div>
   );
 }
@@ -64,6 +73,8 @@ async function ProjectGrid({
         <ProjectTile
           key={project.project_name}
           project_name={project.project_name}
+          href="/projects/"
+          image_dir="/project-icons/"
         />
       );
     }

@@ -41,7 +41,7 @@ const names = [
   "Hermit",
   "Wheel of Fortune",
   "Justice",
-  "HangedOne",
+  "Hanged One",
   "Death",
   "Temperance",
   "Devil",

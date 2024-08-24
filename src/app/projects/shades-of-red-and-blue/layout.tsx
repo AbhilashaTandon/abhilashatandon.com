@@ -1,12 +1,5 @@
 import type { Metadata } from "next";
-import { Nunito_Sans, Roboto } from "next/font/google";
 import Navbar from "@/components/navbar";
-
-const nunito = Nunito_Sans({
-  subsets: ["latin"],
-  variable: "--primary-font",
-  weight: "variable",
-});
 
 export const metadata: Metadata = {
   title: "AbhilashaTandon.com",
@@ -20,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={nunito.className}>
+      <body>
         <Navbar main_page={false} />
         {children}
       </body>

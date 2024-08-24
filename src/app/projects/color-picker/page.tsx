@@ -8,9 +8,9 @@ import Navbar from "@/components/navbar";
 export default function Main() {
   return (
     <main className={ColorPicker.page}>
-      <h2>
+      <h3>
         Click the color below that&apos;s closest to the one you have in mind!
-      </h2>
+      </h3>
       <ColorGrid />
     </main>
   );

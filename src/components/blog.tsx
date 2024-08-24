@@ -46,7 +46,7 @@ function BlogPostTile({
 }) {
   return (
     <a href={"/blog/" + slug} className={Styles.tile} id="blog">
-      <h3 className={Styles.section}>{title}</h3>
+      <h2 className={Styles.section}>{title}</h2>
       <h4>{body}</h4>
     </a>
   );
@@ -85,10 +85,18 @@ export default async function Blog({ max_posts }: { max_posts: number }) {
     );
 
     return (
-      <div id="Blog" className={Styles.blog_full}>
-        <h4 className={Styles.section_header}>Blog Posts</h4>
-        <div className={Styles.tiles}>{blogTiles}</div>
-      </div>
+      <>
+        <div id="Blog" className={Styles.blog}>
+          <h2 className={TextStyles.header}>Blog Posts</h2>
+          <div className={Styles.tiles}>{blogTiles}</div>
+
+          <h3>
+            <u>
+              <Link href="/">Back to Home</Link>
+            </u>
+          </h3>
+        </div>
+      </>
     );
   } else {
     //for when on front page
@@ -107,9 +115,12 @@ export default async function Blog({ max_posts }: { max_posts: number }) {
 
     return (
       <div id="Blog" className={Styles.blog}>
-        <Link href="/blog">
-          <h2>My Blog</h2>
-        </Link>
+        <h2 className={TextStyles.header}>
+          <u>
+            <Link href="/blog">My Blog</Link>
+          </u>
+        </h2>
+
         <div className={Styles.tiles}>{blogTiles}</div>
       </div>
     );

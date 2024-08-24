@@ -17,6 +17,8 @@ import {
   initial_state_history,
 } from "./state_management";
 
+import "./eidolon_tarot.css";
+
 export default function App() {
   const [history, setHistory] = useState(initial_state_history); //state of where cards are and what order the stacks are in
 
@@ -116,7 +118,7 @@ export default function App() {
 
   let ui = //has all buttons
     (
-      <div className="ui">
+      <p className="ui">
         <Button onClick={shuffleFate} text="Shuffle Discard into Fate" />
         <Button
           onClick={handleToggleFateVisibility}
@@ -137,15 +139,15 @@ export default function App() {
         <Button onClick={handleUndo} text={"Undo"} />
         <Button onClick={handleRedo} text={"Redo"} />
         <Button onClick={handleReset} text={"Reset"} />
-      </div>
+      </p>
     );
 
   return (
-    <>
+    <center className="eidolon_tarot">
       <DndContext onDragEnd={handleDragEnd}>
         <div className="table">{slot_items}</div>
       </DndContext>
       {ui}
-    </>
+    </center>
   );
 }
