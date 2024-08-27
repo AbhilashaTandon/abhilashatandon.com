@@ -2,6 +2,7 @@
   padding-left: var(--content-margin);
   padding-right: var(--content-margin);
   margin-bottom: 5vw;
+  width: 100vw;
 }
 
 .projects > h3{
@@ -10,7 +11,7 @@
     font-weight: 600;
     text-decoration: underline;
     align-items: center;
-    padding: 25px 0 21px;
+    padding: 25px 0;
     text-align: center;
     height: 30%;
     display: flex;
@@ -26,7 +27,7 @@
   display: grid;
   grid-auto-flow: row;
   gap: 40px;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, calc(calc(var(--content-width) - 80px)/2));
   max-width: var(--content-width);
   width: var(--content-width);
   height: auto;
@@ -37,7 +38,6 @@
   flex-direction: column;
   border: 1px solid var(--text-color);
   border-radius: 20px;
-  max-width: calc(var(--content-width) / 2 - 40px);
 }
 
 
@@ -66,38 +66,19 @@
   margin-top: 1rem;
   background-color: var(--background-color);
   color: var(--text-color);
-  max-width: calc(var(--content-width) / 2 - 40px);
 }
 
-@media screen and (width <= 850px) {
+@media screen and (width <= 1150px) {
   .grid {
     display: flex;
     flex-direction: column;
     width: var(--content-width);
-    grid-template-areas: none;
   }
 
   .box {
     width: auto;
     position: relative;
     overflow: hidden;
-    height: min(200px);
     border-radius: 10px;
-  }
-
-  .grid .box:nth-child(1) {
-    grid-area: none;
-  }
-
-  .grid .box:nth-child(2) {
-    grid-area: none;
-  }
-
-  .grid .box:nth-child(3) {
-    grid-area: none;
-  }
-
-  .grid .box:nth-child(4) {
-    grid-area: none;
   }
 }

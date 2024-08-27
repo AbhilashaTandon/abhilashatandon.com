@@ -3,7 +3,9 @@ import Styles from "@/styles/sorab.module.css";
 function Intro() {
   return (
     <>
-      <h2>Shades of Red and Blue</h2> <h3>Introduction</h3>
+      <h1>Currently Under Construction!</h1>
+      <h2>Check back later.</h2>
+      {/* <h2>Shades of Red and Blue</h2> <h3>Introduction</h3>
       <h4>
         Welcome to &quot;Shades of Red and Blue,&quot; a comprehensive and
         unbiased political quiz designed to delve deeply into the landscape of
@@ -67,7 +69,7 @@ function Intro() {
         the political spectrum through a lens of data-driven insights. Join me
         in uncovering the intricate shades of political belief and contribute to
         a more nuanced political discourse.
-      </h4>
+      </h4> */}
     </>
   );
 }

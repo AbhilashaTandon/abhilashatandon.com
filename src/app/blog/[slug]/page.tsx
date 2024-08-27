@@ -80,6 +80,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           {back_to_blog}
           <hr></hr>
           {body}
+          <hr></hr>
           {back_to_blog}
         </div>
       </main>

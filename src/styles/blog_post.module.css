@@ -3,7 +3,7 @@
 }
 
 .blog_post > h1{ /* title */
-    color: var(--primary-color);
+    color: var(--accent-color);
 }
 
 .blog_post > h3{ /* date */

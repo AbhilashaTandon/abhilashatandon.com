@@ -57,7 +57,7 @@ function ProjectTile({
           style={{ maxHeight: "100%" }}
         />
       </Link>
-      <h1 className={Styles.projectName}>{capFirst(project_name)}</h1>
+      <h3 className={Styles.projectName}>{capFirst(project_name)}</h3>
     </div>
   );
 }
