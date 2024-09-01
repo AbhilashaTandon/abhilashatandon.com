@@ -57,7 +57,7 @@ function ProjectTile({
           style={{ maxHeight: "100%" }}
         />
       </Link>
-      <h3 className={Styles.projectName}>{capFirst(project_name)}</h3>
+      <h3 className={Styles.projectName + " h2"}>{capFirst(project_name)}</h3>
     </div>
   );
 }
@@ -89,7 +89,7 @@ export default async function Projects() {
 
   return (
     <div className={Styles.projects} id="projects">
-      <h2 className={TextStyles.header}>
+      <h2 className={TextStyles.header + " h2 a"}>
         <Link href="/projects">
           <u>My Projects</u>
         </Link>

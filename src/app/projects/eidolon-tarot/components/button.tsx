@@ -8,8 +8,8 @@ export default function Button({
   text: string;
 }) {
   return (
-    <button onClick={onClick}>
-      <p>{text}</p>
+    <button onClick={onClick} className="button">
+      <h5 className="h5">{text}</h5>
     </button>
   );
 }

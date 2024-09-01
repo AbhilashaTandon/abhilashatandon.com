@@ -21,8 +21,8 @@
   grid-template-columns: var(--column-width) var(--column-width) var(--column-width); /* 3 columns of equal size */
   gap: 1vw var(--column-gap);
   place-items: center;
-  padding: 1.5vw 0;
-  margin: 1vw 0;
+  padding: 1.5vw;
+  margin: 1vw;
 }
 
 .reset{

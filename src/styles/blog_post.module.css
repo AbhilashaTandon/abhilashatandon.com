@@ -1,5 +1,10 @@
 .blog_post{
-    padding: 50px calc(25vw - 75px);
+    padding: 50px 0;
+    width: 45vw;
+}
+
+.header{
+    color: inherit;
 }
 
 .blog_post > h1{ /* title */
@@ -32,3 +37,4 @@ background-color: var(--secondary-color);
 .back_to_blog{
     margin: 1rem 0;
 }
+

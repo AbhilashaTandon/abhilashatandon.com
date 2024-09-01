@@ -1,8 +1,4 @@
 import Styles from "../styles/blog.module.css";
-import Image, { StaticImageData } from "next/legacy/image";
-import SWE from "../../public/software-dev.png";
-import Web from "../../public/web-dev.png";
-import ML from "../../public/ml.png";
 import React from "react";
 import TextStyles from "../styles/text.module.css";
 import fs from "fs";
@@ -13,26 +9,40 @@ import matter from "gray-matter";
 
 const blogFolder = path.join(process.cwd(), "src/app/blog/posts");
 
-export const getFileContent = (filename: string) => {
-  return fs.readFileSync(path.join(blogFolder, filename), "utf8");
+const getFileContent = (file_name: string) => {
+  return fs.readFileSync(path.join(blogFolder, file_name), "utf8");
 };
 
-async function getBlogPosts(): Promise<
-  { frontmatter: { [key: string]: any }; slug: string }[]
-> {
-  var all_files = fs.readdirSync(blogFolder);
+export function getBlogPost(file_name: string): {
+  frontmatter: { [key: string]: any };
+  text: string;
+  slug: string;
+} {
+  console.log(file_name);
+  const blog_post = getFileContent(file_name); // retrieve the file contents
+  const slug = path.basename(file_name).replace(/\.md?$/, "");
+  const { data, content } = matter(blog_post); // extract frontmatter
+  return {
+    frontmatter: data,
+    text: content,
+    slug: slug,
+  };
+}
 
-  var markdown = all_files.filter((path) => /\.md?$/.test(path));
+function getAllBlogPosts(): {
+  frontmatter: { [key: string]: any };
+  text: string;
+  slug: string;
+}[] {
+  const all_files: string[] = fs.readdirSync(blogFolder);
+  const markdown: string[] = all_files.filter((path) => /\.md?$/.test(path));
+  //checks if files end in .md
 
-  return markdown.map((file_path) => {
-    const blog_post = getFileContent(file_path); // retrieve the file contents
-    const slug = file_path.replace(/\.md?$/, ""); // get the slug from the filename
-    const { data } = matter(blog_post); // extract frontmatter
-    return {
-      frontmatter: data,
-      slug: slug,
-    };
+  const blog_posts = markdown.map((file_name) => {
+    return getBlogPost(file_name);
   });
+
+  return blog_posts;
 }
 
 function BlogPostTile({
@@ -46,14 +56,14 @@ function BlogPostTile({
 }) {
   return (
     <a href={"/blog/" + slug} className={Styles.tile} id="blog">
-      <h2 className={Styles.section}>{title}</h2>
-      <h4>{body}</h4>
+      <h2 className={Styles.section + " h2"}>{title}</h2>
+      <h3 className="h4">{body}</h3>
     </a>
   );
 }
 
 export default async function Blog({ max_posts }: { max_posts: number }) {
-  const blog_posts = await getBlogPosts();
+  const blog_posts = await getAllBlogPosts();
 
   const published_posts = blog_posts.filter(
     (post) => post.frontmatter["isPublished"]
@@ -72,7 +82,11 @@ export default async function Blog({ max_posts }: { max_posts: number }) {
   if (max_posts < 0) {
     //for when not displayed on front page
     blogTiles = published_posts.map(
-      (post: { frontmatter: { [key: string]: any }; slug: string }) => {
+      (post: {
+        frontmatter: { [key: string]: any };
+        text: string;
+        slug: string;
+      }) => {
         return (
           <BlogPostTile
             key={post.slug}
@@ -87,10 +101,10 @@ export default async function Blog({ max_posts }: { max_posts: number }) {
     return (
       <>
         <div id="Blog" className={Styles.blog}>
-          <h2 className={TextStyles.header}>Blog Posts</h2>
+          <h2 className={TextStyles.header + " h2"}>Blog Posts</h2>
           <div className={Styles.tiles}>{blogTiles}</div>
 
-          <h3>
+          <h3 className="h3">
             <u>
               <Link href="/">Back to Home</Link>
             </u>
@@ -115,7 +129,7 @@ export default async function Blog({ max_posts }: { max_posts: number }) {
 
     return (
       <div id="Blog" className={Styles.blog}>
-        <h2 className={TextStyles.header}>
+        <h2 className={TextStyles.header + " h2 a"}>
           <u>
             <Link href="/blog">My Blog</Link>
           </u>

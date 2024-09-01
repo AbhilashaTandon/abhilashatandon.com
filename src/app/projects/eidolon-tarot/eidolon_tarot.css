@@ -49,9 +49,9 @@ button:hover{
     grid-template-rows: repeat(2, auto);
     /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
     gap: 2vw;
-    width: 95%;
     padding: 2vw 0;
     height: min-content;
+    width: max-content;
 }
 
 .grid .fate {

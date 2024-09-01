@@ -15,17 +15,19 @@ export default function Hero() {
 function Intro() {
   return (
     <div className={Styles.intro}>
-      <h2>Hi There 🙋🏽‍♀️! I’m</h2>
-      <h1 style={{ color: "var(--accent-color)" }}>Abhilasha Tandon.</h1>
-      <h3>
+      <h1 className="h2">Hi There 🙋🏽‍♀️! I’m</h1>
+      <h2 className="h1" style={{ color: "var(--accent-color)" }}>
+        Abhilasha Tandon.
+      </h2>
+      <h3 className="h3">
         I like making things. Designing things. Coding things. Creating things.
       </h3>
 
-      <button className={Styles.button}>
-        <Link href="#projects">
-          <h3>Check Them Out!</h3>
-        </Link>
-      </button>
+      {/* <button className={Styles.button}> */}
+      <Link href="#projects" className="button">
+        <h4 className="h5">Check Them Out!</h4>
+      </Link>
+      {/* </button> */}
     </div>
   );
 }

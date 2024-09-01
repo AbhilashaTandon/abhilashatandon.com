@@ -11,8 +11,8 @@ function ThemeSwitch() {
     toggleTheme();
   };
   return (
-    <p>
-      <button onClick={handleClick} className={Styles.toggle}>
+    <p className="p">
+      <button onClick={handleClick} className="button">
         {darkMode ? "Light Mode" : "Dark Mode"}
       </button>
     </p>
@@ -21,72 +21,74 @@ function ThemeSwitch() {
 
 export default function Navbar({ main_page }: { main_page: boolean }) {
   let logo = (
-    <Heading
-      route={main_page ? "#hero" : "/"}
-      name="ABHILASHATANDON.com"
-      type="logo"
-    />
+    <Logo route={main_page ? "#hero" : "/"} name="ABHILASHATANDON.com" />
   );
 
   var links = (
     <div className={Styles.links}>
-      <Heading route="#projects" name="Projects" type="section" />
-      <Heading route="#skills" name="Skills" type="section" />
-      <Heading route="#blog" name="Blog" type="section" />
-      <Heading route="#contact" name="Contact" type="section" />
-      <Heading route="/resume.pdf" name="Resume" type="button" />
-      <ThemeSwitch />
+      <Section route="#projects" name="Projects" />
+      <Section route="#skills" name="Skills" />
+      <Section route="#blog" name="Blog" />
+      <Section route="#contact" name="Contact" />
     </div>
   );
   if (main_page) {
+    var buttons = (
+      <>
+        <Resume route="/resume.pdf" name="Resume" />
+        <ThemeSwitch />
+      </>
+    );
+  } else {
+    var buttons = <ThemeSwitch />;
+  }
+
+  if (main_page) {
     return (
       <nav className={Styles.navbar}>
-        {logo}
-        {links}
+        <div className={Styles.left_navbar}>
+          {logo}
+          {links}
+        </div>
+        <div className={Styles.right_navbar}>{buttons}</div>
       </nav>
     );
   } else {
     return (
       <nav className={Styles.navbar}>
-        {logo}
-        <ThemeSwitch />
+        <div>{logo}</div>
+        <div>{buttons}</div>
       </nav>
     );
   }
 }
 
-function Heading({
-  route,
-  name,
-  type,
-}: {
-  route: string;
-  name: string;
-  type: string;
-}) {
-  if (type === "logo") {
-    return (
-      <h5>
-        <Link className={Styles.logo} href={route}>
-          {name}
-        </Link>
-      </h5>
-    );
-  } else if (type === "section") {
-    return (
-      <p>
-        <Link className={Styles.section} href={route}>
-          {name}
-        </Link>
-      </p>
-    );
-  } else if (type === "button") {
-    return (
-      <p>
-        <Link className={Styles.button} href={route}>
-          {name}
-        </Link>
-      </p>
-    );
-  }
+function Logo({ route, name }: { route: string; name: string }) {
+  return (
+    <h5 className="h5">
+      <Link className="a" href={route}>
+        {name}
+      </Link>
+    </h5>
+  );
+}
+
+function Section({ route, name }: { route: string; name: string }) {
+  return (
+    <p className="p">
+      <Link className="a" href={route}>
+        {name}
+      </Link>
+    </p>
+  );
+}
+
+function Resume({ route, name }: { route: string; name: string }) {
+  return (
+    <p className="p">
+      <button className="button">
+        <Link href={route}>{name}</Link>
+      </button>
+    </p>
+  );
 }

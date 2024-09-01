@@ -68,7 +68,7 @@ function ProjectTile({
           style={{ maxHeight: "100%" }}
         />
       </Link>
-      <h1 className={Styles.projectName}>{capFirst(project_name)}</h1>
+      <h1 className={Styles.projectName + " h2"}>{capFirst(project_name)}</h1>
     </div>
   );
 }
@@ -101,7 +101,7 @@ async function Intro() {
 
   return (
     <div className={Styles.projects}>
-      <h2 className={CustomStyles.intro}>
+      <h2 className={CustomStyles.intro + " h2"}>
         In the fall of 2023, I had the privilege of enrolling in the Special
         Topics: Computer Graphics course at NYU under the esteemed guidance of
         graphics pioneer&nbsp;

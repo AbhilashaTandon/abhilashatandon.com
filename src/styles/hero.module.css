@@ -31,7 +31,6 @@
     width: 100% !important;
     position: relative !important;
     height: unset !important;
-    background-color: rgba(0, 0, 0, 0);
 }
 
 @media screen and (width <= 850px) {
@@ -54,7 +53,6 @@
     padding: 3% 6%;
     margin: 4% 0;
     text-align: center;
-    width: fit-content;
 }
 
 .button:hover {

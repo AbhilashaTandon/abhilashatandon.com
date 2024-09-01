@@ -8,7 +8,7 @@ import Navbar from "@/components/navbar";
 export default function Main() {
   return (
     <main className={ColorPicker.page}>
-      <h3>
+      <h3 className="h3">
         Click the color below that&apos;s closest to the one you have in mind!
       </h3>
       <ColorGrid />
@@ -143,7 +143,7 @@ function ColorGrid() {
   return (
     <>
       <button onClick={reset} className={ColorPicker.reset}>
-        <h3>Reset</h3>
+        <h5 className="h5">Reset</h5>
       </button>
 
       <div
@@ -154,7 +154,7 @@ function ColorGrid() {
         {/* <h3> Based loosely on the oppositional color model: <Link href = "">Wikipedia</Link></h3> */}
       </div>
 
-      <h3>
+      <h3 className="h3">
         Current color:{" "}
         {format_color(colors[0], "rgb") +
           "\t" +
@@ -191,6 +191,7 @@ function ColorButton({
       onClick={() => handleClick(id)}
     >
       <h3
+        className="h3"
         style={{
           color: brightness > 384 ? "black" : "white", //proper text color contrast
         }}

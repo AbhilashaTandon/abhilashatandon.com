@@ -325,7 +325,7 @@ void main (void) {
 
         vec3 camera_angle = y_rot * x_rot * normalize (vec3 (mod_vPos, -focal_length)); //direction to scene, rotate so always facing spheres
 
-                //TODO: this is a messy way of doing camera pos and angle, fix later
+                //this is a messy way of doing camera pos and angle, fix later
 
         ray r = ray (camera_pos, camera_angle, 0., camera_pos, camera_angle, light_color, 1., light_color);
 

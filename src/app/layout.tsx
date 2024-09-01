@@ -23,7 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en-US">
+      <head>
+        <title>AbhilashaTandon.com</title>
+        <meta name="color-scheme" content="light dark" />
+        <meta name="author" content="Abhilasha Tandon" />
+        <meta name="description" content="Code, Art, and Math" />
+      </head>
       <body>
         <ThemeProvider>
           <ThemeContainer>

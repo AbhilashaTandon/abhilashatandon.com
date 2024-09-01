@@ -15,9 +15,9 @@ function Attrib({
 }) {
   if (new_line) {
     return (
-      <h4>
+      <h4 className="h4">
         <Link
-          className={Styles.link}
+          className={Styles.link + " a"}
           href={link}
           title={title}
           aria-label={title}
@@ -32,7 +32,7 @@ function Attrib({
         href={link}
         title={title}
         aria-label={title}
-        className={Styles.link}
+        className={Styles.link + " a"}
       >
         <u>{text}</u>
       </Link>
@@ -43,7 +43,7 @@ function Attrib({
 export default function Contact() {
   return (
     <div className={Styles.contact} id="contact">
-      <h2 className={Text.header}>Contact</h2>
+      <h2 className={Text.header + " h2"}>Contact</h2>
       <div className={Styles.icons}>
         <Link
           href="https://github.com/AbhilashaTandon"
@@ -78,7 +78,7 @@ export default function Contact() {
       </div>
 
       <div className={Styles.attrib}>
-        <h3 className={Styles.email}>abhilashatandon167@gmail.com</h3>
+        <h3 className={Styles.email + " h3"}>abhilashatandon167@gmail.com</h3>
 
         <Attrib
           link="https://www.flaticon.com/free-icons/software-development"
@@ -100,7 +100,7 @@ export default function Contact() {
           new_line={true}
         ></Attrib>
 
-        <h4>
+        <h4 className="h4">
           Instagram Logo By{" "}
           <Attrib
             link="https://en.wikipedia.org/wiki/Instagram"

@@ -24,8 +24,8 @@ function SkillTile({
         height={75}
         className={Styles.image}
       />
-      <h3 className={Styles.title}>{title}</h3>
-      <h4>{body}</h4>
+      <h3 className={Styles.title + " h3"}>{title}</h3>
+      <h4 className="h4">{body}</h4>
     </div>
   );
 }
@@ -33,7 +33,7 @@ function SkillTile({
 export default function Skills() {
   return (
     <div id="skills" className={Styles.skills}>
-      <h2 className={Text.header}>My Skills</h2>
+      <h2 className={Text.header + " h2"}>My Skills</h2>
       <div className={Styles.tiles}>
         <SkillTile
           title="Software Development "

@@ -118,7 +118,7 @@ export default function App() {
 
   let ui = //has all buttons
     (
-      <p className="ui">
+      <h5 className="ui h5">
         <Button onClick={shuffleFate} text="Shuffle Discard into Fate" />
         <Button
           onClick={handleToggleFateVisibility}
@@ -139,7 +139,7 @@ export default function App() {
         <Button onClick={handleUndo} text={"Undo"} />
         <Button onClick={handleRedo} text={"Redo"} />
         <Button onClick={handleReset} text={"Reset"} />
-      </p>
+      </h5>
     );
 
   return (

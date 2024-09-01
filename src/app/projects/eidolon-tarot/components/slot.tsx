@@ -37,7 +37,7 @@ export default function Slot({
 
   return (
     <div className={name} ref={setNodeRef} id={name}>
-      <h4>{slot_header}</h4>
+      <h4 className="h4">{slot_header}</h4>
       {children}
     </div>
   );
