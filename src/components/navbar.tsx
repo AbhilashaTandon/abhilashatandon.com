@@ -11,7 +11,7 @@ function ThemeSwitch() {
     toggleTheme();
   };
   return (
-    <p className="p">
+    <p className="h5">
       <button onClick={handleClick} className="button">
         {darkMode ? "Light Mode" : "Dark Mode"}
       </button>
@@ -35,7 +35,7 @@ export default function Navbar({ main_page }: { main_page: boolean }) {
   if (main_page) {
     var buttons = (
       <>
-        <Resume route="/resume.pdf" name="Resume" />
+        <Resume route="/resume.pdf" name="My Resume" />
         <ThemeSwitch />
       </>
     );
@@ -65,17 +65,17 @@ export default function Navbar({ main_page }: { main_page: boolean }) {
 
 function Logo({ route, name }: { route: string; name: string }) {
   return (
-    <h5 className="h5">
+    <h4 className="h4">
       <Link className="a" href={route}>
         {name}
       </Link>
-    </h5>
+    </h4>
   );
 }
 
 function Section({ route, name }: { route: string; name: string }) {
   return (
-    <p className="p">
+    <p className="h5">
       <Link className="a" href={route}>
         {name}
       </Link>
@@ -85,7 +85,7 @@ function Section({ route, name }: { route: string; name: string }) {
 
 function Resume({ route, name }: { route: string; name: string }) {
   return (
-    <p className="p">
+    <p className="h5">
       <button className="button">
         <Link href={route}>{name}</Link>
       </button>

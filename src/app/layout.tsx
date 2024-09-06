@@ -32,9 +32,7 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeProvider>
-          <ThemeContainer>
-            <main>{children}</main>
-          </ThemeContainer>
+          <ThemeContainer>{children}</ThemeContainer>
         </ThemeProvider>
       </body>
     </html>

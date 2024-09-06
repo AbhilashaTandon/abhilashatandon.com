@@ -1,6 +1,6 @@
 .blog_post{
     padding: 50px 0;
-    width: 45vw;
+    width: min(690px, calc(100vw - var(--content-margin)));
 }
 
 .header{

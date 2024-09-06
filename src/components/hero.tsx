@@ -25,7 +25,7 @@ function Intro() {
 
       {/* <button className={Styles.button}> */}
       <Link href="#projects" className="button">
-        <h4 className="h5">Check Them Out!</h4>
+        <h4 className="h4">Check Them Out!</h4>
       </Link>
       {/* </button> */}
     </div>

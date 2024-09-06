@@ -15,7 +15,7 @@
   --min-content-margin: 2rem;
   --content-width: min(calc(100vw - calc(2 * var(--min-content-margin))),1250px);
   --content-margin: calc((100vw - var(--content-width)) / 2);
-  --transition-time: .5s;
+  --transition-time: .4s;
   --border-width: 1px;
 }
 
@@ -111,7 +111,7 @@ html {
 }
 
 body {
-  font-family: 'Atkinson Hyperlegible', 'Fira Code', sans-serif;
+  font-family: "Atkinson Hyperlegible", "Fira Code", sans-serif;
    height: 100%;
   
 }
@@ -124,7 +124,7 @@ main{
 }
 
 .a {
-  color: inherit;
+  color: var(--text-color);
   margin: 1rem 0;
   width: fit-content;
 }
@@ -140,12 +140,12 @@ button, a{
   color: inherit;
   text-decoration: none;
   width: fit-content;
+  border: none;
 }
 
 h1, h2, h3, h4, h5{
   color: var(--text-color);
-  font-family: 'Fira Code', 'Atkinson Hyperlegible', sans-serif;
-  padding: 1rem 0;
+  font-family: "Fira Code", "Atkinson Hyperlegible", sans-serif;
   font-size: 1rem;
 }
 
@@ -177,30 +177,33 @@ tr, th, td{
 }
 
 .h1 {
-  font-size: 3.027rem;
+  font-size: min(8.484vw, 3.027rem);
   font-weight: 700;
   line-height: 125%;
-  letter-spacing: -1%;
+  
+  /* letter-spacing: -1%; */
 }
 
 .h2 {
-  font-size: 2.44em;
+  font-size: min(6.787vw, 2.44em);
   font-weight: 700;
   line-height: 125%;
-  letter-spacing: -1%;
+
+  /* letter-spacing: -1%; */
   padding: 1vw 0;
 }
 
 .h3 {
-  font-size: 1.953rem;
+  font-size: min(5.430vw, 1.953rem);
   font-weight: 400;
   line-height: 125%;
-  letter-spacing: -1%;
+
+  /* letter-spacing: -1%; */
   padding: .75vw 0;
 }
 
 .h4 {
-  font-size: 1.56em;
+  font-size: min(4.344vw, 1.56em);
   line-height: 140%;
   font-weight: 400;
   padding: .6vw 0;
@@ -214,7 +217,7 @@ tr, th, td{
 }
 
 .p {
-  font-size: 1.266rem;
+  font-size: min(2.78vw, 1.266rem);
   line-height: 150%;
   font-weight: 300;
   text-indent: 3rem;
@@ -232,4 +235,10 @@ canvas{
   border-color: var(--accent-color);
   background-color: var(--background-color);
   margin: 2vw 0;
+}
+
+@media (min-width: 1201px) {  
+  
+  /* css code here */
+
 }

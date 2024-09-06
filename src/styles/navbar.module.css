@@ -7,7 +7,7 @@
     background-color: var(--background-color);
     position: sticky; /* make it always at top of page */
     top: 0;
-    width: 100%;
+    width: 100vw;
     border-bottom: 1px solid var(--text-color);
     height: 60px;
 }
@@ -15,9 +15,12 @@
 .links{
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: min(2vw);
 }
 
 .left_navbar, .right_navbar{
     display: flex;
     align-items: baseline;
+    gap: min(2vw);
 }
