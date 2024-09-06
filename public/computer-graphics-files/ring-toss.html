@@ -410,10 +410,8 @@
 
         if (pos[1] < -1) {
           //if hit floor
-          console.log(pos);
           if (scored(pos[0], pos[2])) {
             score += 1;
-            console.log(score);
             document.getElementById("score").textContent = "SCORE: " + score;
           }
           tossed = false;

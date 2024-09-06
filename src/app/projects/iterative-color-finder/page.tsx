@@ -98,7 +98,6 @@ function ColorGrid() {
   function updateColors(id: number, colors: number[][], iter: number) {
     var new_colors = colors.slice();
     //set current color to click location
-    // console.log(iter, colors);
     if (iter < 1) {
       //if amount to change colors is smaller than 1
       for (var i = 0; i < 7; i++) {

@@ -18,7 +18,6 @@ export function getBlogPost(file_name: string): {
   text: string;
   slug: string;
 } {
-  console.log(file_name);
   const blog_post = getFileContent(file_name); // retrieve the file contents
   const slug = path.basename(file_name).replace(/\.md?$/, "");
   const { data, content } = matter(blog_post); // extract frontmatter

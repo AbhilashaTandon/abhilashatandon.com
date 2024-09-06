@@ -65,9 +65,9 @@ export default function Navbar({ main_page }: { main_page: boolean }) {
 
 function Logo({ route, name }: { route: string; name: string }) {
   return (
-    <h4 className="h4">
+    <h4 className="h5">
       <Link className="a" href={route}>
-        {name}
+        <b>{name}</b>
       </Link>
     </h4>
   );

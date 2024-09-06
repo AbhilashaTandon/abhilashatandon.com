@@ -164,4 +164,4 @@ Ahh, we’ve saved one of the best for last. At least according to my taste. Thi
 
 One last thing before I stop rambling about this project. I think it's interesting to see what these genres look like if you plot them using UMAP in 2 dimensions. Take a look!
 
-![Spotify Genre Mapping](genre_plot.png "Spotify Genre Mapping")
+<iframe src="/blog/spotify-genre-mapping/embed" height="500" width="1000" style="position: absolute; left: 250" />

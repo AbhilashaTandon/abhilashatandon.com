@@ -1,8 +1,3 @@
-import fs from "fs";
-
-import path from "path";
-import matter from "gray-matter";
-import { notFound } from "next/navigation";
 import Navbar from "@/components/navbar";
 
 import Markdown from "markdown-to-jsx";

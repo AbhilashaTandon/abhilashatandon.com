@@ -149,8 +149,6 @@ export default function Card({
       }
     : undefined;
 
-  // console.log(name, card_type);
-
   const hover_text = visible
     ? name + ": " + polarities[card_type - 1] + "\n" + forecasts[card_type - 1]
     : "Hidden";

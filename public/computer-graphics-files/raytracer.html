@@ -366,8 +366,6 @@ void main (void) {
 
     // WAIT 100 MSECS BEFORE STARTING UP
 
-    console.log(fragmentShader);
-
     setTimeout(() => {
       // INITIALIZE GPU GRAPHICS
 
@@ -505,8 +503,6 @@ void main (void) {
       setInterval(() => {
         // PASS ELAPSED TIME DOWN TO THE GPU
         let currentTime = Date.now() / 1000 - startTime;
-
-        console.log(currentTime);
 
         gl.uniform1f(uTime, currentTime);
 

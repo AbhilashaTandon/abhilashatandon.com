@@ -27,6 +27,10 @@ const nextConfig = {
         source: "/projects/computer-graphics/terra-firma.html",
         destination: "/computer-graphics-files/terra-firma.html",
       },
+      {
+        source: "/blog/spotify-genre-mapping/embed",
+        destination: "/interactive_genre_plot.html",
+      },
     ];
   },
 };
