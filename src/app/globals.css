@@ -147,7 +147,8 @@ button, a{
   color: var(--text-color);
   font-family: Arvo, Roboto, sans-serif;
   font-size: 1rem;
-  margin: min(1vw, 1rem) 0;
+  margin: min(.5vw, 1rem) 0;
+  width: min(100%, 53ch); /* actually 75 char limit */
 }
 
 code{
@@ -219,6 +220,7 @@ tr, th, td{
   line-height: 140%;
   font-weight: 400;
   padding: .6vw 0;
+  
 }
 
 .h5 {

@@ -61,7 +61,6 @@
 .projectName {
   position: relative;
   font-weight: 700;
-  height: 25%;
   width: max-content;
   z-index: 1;
   margin-left: 1rem;

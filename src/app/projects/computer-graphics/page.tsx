@@ -101,19 +101,23 @@ async function Intro() {
 
   return (
     <div className={Styles.projects}>
-      <h2 className={CustomStyles.intro + " h2"}>
-        In the fall of 2023, I had the privilege of enrolling in the Special
-        Topics: Computer Graphics course at NYU under the esteemed guidance of
-        graphics pioneer&nbsp;
-        <span>
-          <Link href={"https://cs.nyu.edu/~perlin/"}>Ken Perlin</Link>
-        </span>
-        . This course became the highlight of my academic journey. We delved
-        into the fundamentals of computer graphics through WebGL. This page
-        provides a directory of the projects I developed for this class, each
-        demonstrating various principles of computer graphics. Please note that
-        compatibility may vary across different browsers and systems.
-      </h2>
+      <center>
+        <h1 className={CustomStyles.intro + " p"}>
+          In the fall of 2023, I had the privilege of enrolling in the Special
+          Topics: Computer Graphics course at NYU under the esteemed guidance of
+          graphics pioneer&nbsp;
+          <span>
+            <Link href={"https://cs.nyu.edu/~perlin/"} className="a">
+              <u>Ken Perlin</u>
+            </Link>
+          </span>
+          . This course became the highlight of my academic journey. We delved
+          into the fundamentals of computer graphics through WebGL. This page
+          provides a directory of the projects I developed for this class, each
+          demonstrating various principles of computer graphics. Please note
+          that compatibility may vary across different browsers and systems.
+        </h1>
+      </center>
       <ProjectGrid project_data={allProjects} />
     </div>
   );
