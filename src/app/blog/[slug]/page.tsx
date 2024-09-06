@@ -67,6 +67,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
           iframe: {
             component: IFrameWrapper,
           },
+          a: {
+            props: {
+              className: "a",
+            },
+          },
         },
       }}
       className={Styles.blog_text}
