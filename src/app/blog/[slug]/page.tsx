@@ -6,6 +6,7 @@ import Styles from "@/styles/blog_post.module.css";
 import Link from "next/link";
 
 import { getBlogPost } from "@/components/blog";
+import React, { FC, ReactNode } from "react";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const post_data = await getBlogPost(params.slug + ".md");
@@ -23,7 +24,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     </h4>
   ));
 
-  const IFrameWrapper = ({ children, ...props }) => (
+  const IFrameWrapper = ({ children, ...props }: { children: ReactNode }) => (
     <div className={Styles.iframe_wrapper}>
       <iframe {...props}>{children}</iframe>
     </div>
