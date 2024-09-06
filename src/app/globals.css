@@ -89,7 +89,7 @@
   margin: 1rem 0;
 }
 
-.button:hover {
+.button:hover, .button:focus {
   background-color: var(--secondary-color);
   transition: var(--transition-time) ease-out;
 
@@ -99,7 +99,7 @@ svg {
   fill: var(--text-color);
 }
 
-svg:hover{
+svg:hover, svg:focus{
   fill: var(--secondary-color);
   transition: var(--transition-time) ease-out;
 }
@@ -129,7 +129,7 @@ main{
   width: fit-content;
 }
 
-.a:hover{
+.a:hover, .a:focus{
   color: var(--secondary-color);
   transition: var(--transition-time) ease-out;
   

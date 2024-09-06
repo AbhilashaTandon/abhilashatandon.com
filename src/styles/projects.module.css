@@ -52,7 +52,7 @@
   width: 100% !important;
 }
 
-.image_wrapper:hover {
+.image_wrapper:hover, .image_wrapper:focus {
   filter: brightness(70%);
   transition: var(--transition-time);
   width: max-content;

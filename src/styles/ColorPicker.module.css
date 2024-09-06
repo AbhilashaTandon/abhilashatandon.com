@@ -34,7 +34,7 @@
   border-radius: 32px;
 }
 
-.reset:hover{
+.reset:hover, .reset:focus{
   background-color: var(--secondary-color);
   transition: 1s;
 }
