@@ -23,7 +23,56 @@ export default async function Page({ params }: { params: { slug: string } }) {
     </h4>
   ));
 
-  const body = <Markdown className="p">{post_data.text}</Markdown>;
+  const IFrameWrapper = ({ children, ...props }) => (
+    <div className={Styles.iframe_wrapper}>
+      <iframe {...props}>{children}</iframe>
+    </div>
+  );
+
+  const body = (
+    <Markdown
+      options={{
+        overrides: {
+          h1: {
+            props: {
+              className: "h1",
+            },
+          },
+          h2: {
+            props: {
+              className: "h2",
+            },
+          },
+          h3: {
+            props: {
+              className: "h3",
+            },
+          },
+          h4: {
+            props: {
+              className: "h4",
+            },
+          },
+          h5: {
+            props: {
+              className: "h5",
+            },
+          },
+          p: {
+            props: {
+              className: "p",
+            },
+          },
+          iframe: {
+            component: IFrameWrapper,
+          },
+        },
+      }}
+      className={Styles.blog_text}
+    >
+      {post_data.text}
+    </Markdown>
+  );
 
   const back_to_blog: JSX.Element = (
     <div className={Styles.back_to_blog}>
@@ -41,7 +90,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <>
       <Navbar main_page={false} />
       <main>
-        <div className={Styles.blog_post}>
+        <article className={Styles.blog_post}>
           <div className={Styles.header}>
             <h1 className="h1">{post_data.frontmatter["title"]}</h1>
             <h2 className="h4">{post_data.frontmatter["description"]}</h2>
@@ -55,7 +104,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <hr></hr>
             <h3 className="h5">{back_to_blog}</h3>
           </div>
-        </div>
+        </article>
       </main>
     </>
   );

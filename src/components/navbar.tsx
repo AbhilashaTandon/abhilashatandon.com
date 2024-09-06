@@ -13,7 +13,9 @@ function ThemeSwitch() {
   return (
     <p className="h5">
       <button onClick={handleClick} className="button">
-        {darkMode ? "Light Mode" : "Dark Mode"}
+        <span style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
+          {darkMode ? "Light Mode" : "Dark Mode"}
+        </span>
       </button>
     </p>
   );
@@ -35,7 +37,7 @@ export default function Navbar({ main_page }: { main_page: boolean }) {
   if (main_page) {
     var buttons = (
       <>
-        <Resume route="/resume.pdf" name="My Resume" />
+        <Resume route="/resume.pdf" name="Resume" />
         <ThemeSwitch />
       </>
     );
@@ -67,7 +69,7 @@ function Logo({ route, name }: { route: string; name: string }) {
   return (
     <h4 className="h5">
       <Link className="a" href={route}>
-        <b>{name}</b>
+        <b style={{ overflow: "hidden", whiteSpace: "nowrap" }}>{name}</b>
       </Link>
     </h4>
   );
@@ -85,7 +87,7 @@ function Section({ route, name }: { route: string; name: string }) {
 
 function Resume({ route, name }: { route: string; name: string }) {
   return (
-    <p className="h5">
+    <p className="h5 resume">
       <button className="button">
         <Link href={route}>{name}</Link>
       </button>

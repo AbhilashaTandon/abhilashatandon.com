@@ -24,3 +24,13 @@
     align-items: baseline;
     gap: min(2vw);
 }
+
+
+@media screen and (width <= 930px){
+    .links, .resume{
+        display: none;
+        width: 0;
+        height: 0;
+    }
+    
+}

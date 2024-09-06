@@ -147,6 +147,7 @@ button, a{
   color: var(--text-color);
   font-family: Arvo, Roboto, sans-serif;
   font-size: 1rem;
+  margin: min(1vw, 1rem) 0;
 }
 
 code{
@@ -159,10 +160,17 @@ hr{
 
 .p, li, table, td, th, tr{
   color: var(--text-color);
-  font-size: 1.266rem;
-  line-height: 140%;
   text-align: justify;
   width: min(100%, 61ch);
+  font-size: min(2.78vw, 1.266rem);
+  line-height: 150%;
+  font-weight: 300;
+  padding: .5rem 0;
+}
+
+.p{
+  
+  text-indent: 3rem;
 }
 
 
@@ -214,18 +222,14 @@ tr, th, td{
 }
 
 .h5 {
-  font-size: 1.266rem;
+  font-size: min(3.525vw, 1.266rem);
   line-height: 140%;
   font-weight: 400;
   padding: .5vw 0;
+  width: min(100%, 53ch);
 }
 
-.p {
-  font-size: min(2.78vw, 1.266rem);
-  line-height: 150%;
-  font-weight: 300;
-  text-indent: 3rem;
-}
+
 
 
 nav {
@@ -241,8 +245,8 @@ canvas{
   margin: 2vw 0;
 }
 
-@media (min-width: 1201px) {  
+/* @media (min-width: 1201px) {  
   
   /* css code here */
 
-}
+} */

@@ -1,10 +1,26 @@
 .blog_post{
     padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.blog_text > *{
     width: min(690px, calc(100vw - var(--content-margin)));
+}
+
+.blog_text > .iframe_wrapper{
+    margin: 5vw 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .header{
     color: inherit;
+    width: min(690px, calc(100vw - var(--content-margin)));
 }
 
 .blog_post > h1{ /* title */

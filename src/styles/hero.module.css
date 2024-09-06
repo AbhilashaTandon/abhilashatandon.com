@@ -5,9 +5,10 @@
     align-items: center;
     padding-left: var(--content-margin);
     padding-right: var(--content-margin);
-    height: 40vw;
     background-color: var(--background-color);
     color: var(--text-color);
+    height: fit-content;
+    margin: 5vw 0;
 }
 
 .intro {
@@ -33,7 +34,7 @@
     height: unset !important;
 }
 
-@media screen and (width <= 850px) {
+/* @media screen and (width <= 850px) {
     .hero {
         height: 60vh;
     }
@@ -44,7 +45,7 @@
     .hero {
         height: 45vh;
     }
-}
+} */
 
 .button {
     background-color: var(--primary-color);
@@ -60,3 +61,16 @@
     transition: var(--transition-time) ease-out;
 }
 
+@media screen and (width <= 930px){
+    .image_container{
+        display: block; 
+        width: 0;
+        height: 0;
+    }
+    
+    .intro{
+        width: 100%;
+        align-items: center;
+        text-align: center;
+    }
+}
