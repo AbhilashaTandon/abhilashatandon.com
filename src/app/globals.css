@@ -161,7 +161,7 @@ hr{
 
 .p, li, table, td, th, tr{
   color: var(--text-color);
-  text-align: justify;
+  text-align: left;
   width: min(100%, 61ch);
   font-size: min(2.78vw, 1.266rem);
   line-height: 150%;
