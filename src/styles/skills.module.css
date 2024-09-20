@@ -43,7 +43,6 @@
     padding: 10px 0;
     text-align: center;
     height: 30%;
-    display: flex;
     color: var(--text-color);
 }
 
