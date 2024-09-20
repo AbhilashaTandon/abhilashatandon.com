@@ -3,12 +3,9 @@ import path from "path";
 
 import { notFound } from "next/navigation";
 
-import Styles from "./computer_graphics.module.css";
+import Styles from "@/styles/computer-graphics.module.css";
 
-const projectsDir: string = path.join(
-  process.cwd(),
-  "public/computer-graphics-files"
-);
+const projectsDir: string = "/computer-graphics-files";
 
 async function getProject(project_name: string): Promise<string> {
   const projectPaths: string[] = (

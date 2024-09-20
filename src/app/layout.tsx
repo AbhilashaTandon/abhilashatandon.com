@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { ThemeContext, ThemeProvider } from "@/context/lightDarkMode";
 import React, { useContext } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 // export const metadata: Metadata = {
 //   title: "AbhilashaTandon.com",
@@ -32,7 +33,10 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeProvider>
-          <ThemeContainer>{children}</ThemeContainer>
+          <ThemeContainer>
+            {children}
+            <Analytics />
+          </ThemeContainer>
         </ThemeProvider>
       </body>
     </html>
