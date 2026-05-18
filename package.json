@@ -1,4 +1,5 @@
 {
+    // https://alistairshepherd.uk/writing/js-library-bundling-esbuild/
     "name": "Static",
     "version": "1.0",
     "description": "Static",
@@ -6,6 +7,11 @@
     "license": "ISC",
     "devDependencies": {
         "@tailwindcss/typography": "^0.5.10"
+    },
+    "scripts": {
+        "dev": "concurrently --kill-others \"node build.js --watch\" \"npx esbuild ./assets/js/main.js --bundle --outfile=./_site/assets/js/main.js --watch\"",
+    "build": "node build.js && npx tailwindcss -i ./assets/css/main.css -o ./_site/assets/css/main.css --minify && npx esbuild ./assets/js/main.js --bundle --outfile=./_site/assets/js/main.js --minify",
+        "test": "jest"
     },
     "dependencies": {
         "@fontsource-variable/archivo": "^5.2.8",
@@ -18,5 +24,14 @@
         "esbuild": "^0.28.0",
         "isbot": "^5.1.40",
         "tailwindcss": "^4.3.0"
-    }
+    },
+    "type": "module"
+    {
+  "main": "./_site/assets/js/main.js",
+	"exports": {
+		"require": "./_site/assets/js/cjs.js",
+		"import": "./_site/assets/js/esm.js",
+		"default": "./_site/assets/js/esm.js"
+	},
+}
 }
