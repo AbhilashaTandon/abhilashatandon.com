@@ -4,8 +4,8 @@
 
 
 import toggleDarkMode from "./darkMode";
-import test from "./spotify_artists";
+import createVis from "./spotify_artists";
 
 toggleDarkMode();
-test();
+createVis();
 

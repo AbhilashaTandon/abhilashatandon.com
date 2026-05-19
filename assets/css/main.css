@@ -221,7 +221,7 @@
         --accent: var(--light-accent);
 }
 
-main {
+.content {
         position: relative;
         width: 100%;
         background: var(--background);
@@ -388,4 +388,11 @@ code {
 #lightModeToggleIcon:hover {
         filter: drop-shadow(0 0 1rem var(--text));
         transition: filter .2s ease-in-out;
+}
+
+html,
+body,
+main {
+        margin: 0;
+        min-height: 100vh;
 }

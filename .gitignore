@@ -3,4 +3,4 @@ node_modules
 _site
 package-lock.json
 .github
-
+assets/js/artist_data.json

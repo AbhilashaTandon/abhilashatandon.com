@@ -1,44 +1,94 @@
 import * as d3 from "d3";
+import data from "./artist_data.json"
 
+// Final colors: "#005151", "#e6ac07", "#bc8dff", "#00bbff", "#ff9488", "#6c4700", "#64364d", "#3f9818",
 
-export default function test() {
-  // Declare the chart dimensions and margins.
-  const width = 640;
-  const height = 400;
-  const marginTop = 20;
-  const marginRight = 20;
-  const marginBottom = 30;
-  const marginLeft = 40;
+function spatial_hash_max(data, scale) {
+  //
+  const cell_size_x = 2.5 / scale;
+  const cell_size_y = .5 / scale;
 
-  // Declare the x (horizontal position) scale.
-  const x = d3.scaleUtc()
-    .domain([new Date("2023-01-01"), new Date("2024-01-01")])
-    .range([marginLeft, width - marginRight]);
+  let hash_table = {};
 
-  // Declare the y (vertical position) scale.
-  const y = d3.scaleLinear()
-    .domain([0, 100])
-    .range([height - marginBottom, marginTop]);
+  for (const artist of data) {
+    const cell = [Math.floor(artist.x / cell_size_x), Math.floor(artist.y / cell_size_y)];
+    if (cell in hash_table) {
+      if (hash_table[cell].popularity < artist.popularity) {
+        hash_table[cell] = artist;
+      }
+    }
+    else {
+      hash_table[cell] = artist;
+    }
 
-  // Create the SVG container.
-  const svg = d3.create("svg")
-    .attr("width", width)
-    .attr("height", height);
-
-  // Add the x-axis.
-  svg.append("g")
-    .attr("transform", `translate(0,${height - marginBottom})`)
-    .call(d3.axisBottom(x));
-
-  // Add the y-axis.
-  svg.append("g")
-    .attr("transform", `translate(${marginLeft},0)`)
-    .call(d3.axisLeft(y));
-
-  // Append the SVG element.
-  let container = document.querySelector("main");
-  if (container !== null && svg !== null) {
-    container.append(svg.node());
   }
-  console.log("hlfnks");
+
+  return Object.values(hash_table);
+
+}
+
+
+
+export default function createVis() {
+  const svg = d3.select("svg")
+    .attr("viewBox", [-1, -1, 10, 10]).style('width', '100vw').style('height', '100vh');
+
+
+  const points_group = svg.append("g").attr('opacity', '.6');
+
+  const points = points_group.selectAll("circle")
+    .enter()
+    .data(data)
+    .join("circle")
+    .attr("cx", (d => d.x))
+    .attr("cy", (d => d.y))
+    .attr('fill', "rgba(0, 0, 0, .25)")
+    .attr("r", (d => Math.sqrt(d.popularity) / 200))
+    .append("title")
+    .text((d) => d.artist);
+
+
+  const labels_group = svg.append('g');
+
+  const labels = labels_group.selectAll('text')
+    .enter()
+    .data(data)
+    .join('text')
+    .text(d => d.artist)
+    .attr('x', d => d.x)
+    .attr('y', d => d.y)
+    .attr('font-size', '0.001em')
+    .attr('text-anchor', 'middle');
+
+  const zoom = d3.zoom().scaleExtent([.4, 32]);
+  // .extent([[marginLeft, 0], [width - marginRight, height]])
+  // .translateExtent([[marginLeft, -Infinity], [width - marginRight, Infinity]]);
+
+  zoom.on("zoom", e => {
+    // console.log(e.transform.invert());
+    const max_artists = spatial_hash_max(data, e.transform.k);
+    points_group.attr("transform", (transform = e.transform));
+    labels_group.attr("transform", (transform = e.transform));
+    points.data(data).attr("r", (d) => (d.popularity / (e.transform.k * e.transform.k)) / 200);
+    labels.data(data).attr("font-size", (d) => {
+      if (!max_artists.includes(d)) {
+        return 0;
+      }
+      return .2 / e.transform.k;
+
+    });
+
+    // points.data(data).attr("r", (d) => {
+    //   return Math.sqrt(d.popularity / e.transform.k) / 200;
+    // });
+  });
+
+
+
+  svg
+    .call(zoom)
+    .call(zoom.transform, d3.zoomIdentity)
+
+
+// return svg.node();
 }
