@@ -18,6 +18,10 @@ export default function toggleDarkMode() {
                         "dark": document.querySelector("#githubDark")
                 },
                 {
+                        "light": document.querySelector("#githubLightMobile"),
+                        "dark": document.querySelector("#githubDarkMobile")
+                },
+                {
                         "light": document.querySelector("#hamburgerLight"),
                         "dark": document.querySelector("#hamburgerDark")
                 }

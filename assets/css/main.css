@@ -388,6 +388,8 @@ code {
 #lightModeToggleIcon:hover,
 #githubDark:hover,
 #githubLight:hover,
+#githubDarkMobile:hover,
+#githubLightMobile:hover,
 .hamburger:hover {
         filter: drop-shadow(0 0 1rem var(--text));
         transition: filter .2s ease-in-out;
