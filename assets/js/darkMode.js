@@ -32,11 +32,15 @@ export default function toggleDarkMode() {
         function updateMode() {
                 let navbar = document.querySelector("nav");
                 let content = document.querySelector("main");
+                let footer = document.querySelector("footer");
                 if (darkMode) {
                         navbar.classList.add("dark_mode");
                         content.classList.add("dark_mode");
+                        footer.classList.add("dark_mode");
                         navbar.classList.remove("light_mode");
                         content.classList.remove("light_mode");
+                        footer.classList.remove("light_mode");
+
 
                         for (const icon of icons) {
                                 icon['light'].classList.remove("hidden");
@@ -46,8 +50,10 @@ export default function toggleDarkMode() {
                 else {
                         navbar.classList.add("light_mode");
                         content.classList.add("light_mode");
+                        footer.classList.add("light_mode");
                         navbar.classList.remove("dark_mode");
                         content.classList.remove("dark_mode");
+                        footer.classList.remove("dark_mode");
 
 
                         for (const icon of icons) {
