@@ -5,9 +5,9 @@
     <div id="hero"
       class="flex flex-row items-center justify-between w-full h-max mt-16 max-md:flex-col-reverse gap-y-(--medium) gap-x-(--xs)">
       <div id="hero_text" class="flex flex-col grid gap-y-4 gap-x-8 items-start justify-start w-fit h-max">
-        <h4 class="h4 text-(--text)">Hi! I&rsquo;m</h4>
-        <h1 class="h1 text-(--accent)">Abhilasha Tandon</h1>
-        <h5 class="h5 text-(--text)">I like to make fun and interesting things with code.</h5>
+        <h4 class="h4 ">Hi! I&rsquo;m</h4>
+        <h1 class="h1 accent">Abhilasha Tandon</h1>
+        <h5 class="h5 ">I like to make fun and interesting things with code.</h5>
       </div>
       <img src="/assets/images/hero_graphic.svg"
         class="h-fit w-min overflow-hidden max-lg:w-fit max-lg:h-min lg:max-xl:hidden"></img>
@@ -15,7 +15,7 @@
     </div>
     <div id="blog" class="flex flex-col gap-(--small) items-start justify-start w-full h-max max-sm:gap-16">
 
-      <h3 class="h3 text-(--text)">My Ramblings</h3>
+      <h3 class="h3 ">My Ramblings</h3>
 
       <div id="blogposts"
         class="items-start content-stretch justify-between gap-y-(--small) gap-x-15 blogpost_grid max-lg:w-full max-sm:gap-y-16">
@@ -23,7 +23,7 @@
           <If condition="{post.active}">
             <div
               class="basis-0 grow shrink flex flex-col justify-start border-1 border-(--text) align-center content-center rounded-lg overflow-hidden hover:expand blogpost w-full">
-              <a href="/blog/{post.slug} flex content-center align-center">
+              <a href="/blog/{post.slug}" class="flex content-center align-center">
 
                 <img src="assets/images/{post.image}" class="h-max md:h-100 xl:h-90 max-lg:h-70 object-cover w-full" />
                 <div class="h-0.25 bg-(--text)" id="white-bar"></div>
@@ -32,10 +32,10 @@
                 class="flex flex-col flex-nowrap items-start content-stretch justify-start gap-8 p-8 blogpost-metadata">
                 <a href="/blog/{post.slug}">
                   <div class="flex flex-col flex-nowrap items-start content-stretch justify-between gap-4">
-                    <h4 class=" h4 text-(--text)">{post.title}</h4>
-                    <h5 class="h5 text-(--accent)">{post.tagline}</h5>
-                    <p class="p text-(--text) expandable">{post.excerpt}</p>
-                    <small class="small text-(--text) expandable">{post.date}</small>
+                    <h4 class=" h4 ">{post.title}</h4>
+                    <h5 class="h5 accent">{post.tagline}</h5>
+                    <p class="p  expandable">{post.excerpt}</p>
+                    <small class="small  expandable">{post.date}</small>
                   </div>
                 </a>
                 <!-- <div class="flex flex-col flex-nowrap items-start content-stretch justify-between gap-4 expandable" -->
@@ -49,7 +49,7 @@
     </div>
 
     <!-- <div id="contact" class="flex flex-col flex-nowrap items-start content-stretch justify-start gap-(--small) w-full"> -->
-    <!--   <h3 class="h3 text-(--text)">Find Me On...</h3> -->
+    <!--   <h3 class="h3 ">Find Me On...</h3> -->
     <!--   <div -->
     <!--     class="grid grid-cols-3 items-center content-stretch justify-between justify-items-center gap-(--small) w-full"> -->
     <!--     <ForEach collection="socials" as="social"> -->

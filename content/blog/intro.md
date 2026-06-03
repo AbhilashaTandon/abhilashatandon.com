@@ -6,7 +6,7 @@ image: cover.jpg
 tagline: Post \#2
 excerpt: fjkldjfkljdklfjsklfjklsa
 tags: ['tag1', 'tag2', 'tag3']
-slug: intro2
+slug: intro
 ---
 
 # Hello, World!

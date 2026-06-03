@@ -11,7 +11,7 @@
       "tag2",
       "tag3"
     ],
-    "slug": "intro",
+    "slug": "fdk",
     "content": "# Hello, World!\n\nI'm Abhilasha Tandon!",
     "link": "/blog/fdk"
   },
@@ -27,7 +27,7 @@
       "tag2",
       "tag3"
     ],
-    "slug": "alien",
+    "slug": "testing",
     "content": "# Aliens are real.\n\nYes, indeed.",
     "link": "/blog/testing"
   },
@@ -43,7 +43,7 @@
       "tag2",
       "tag3"
     ],
-    "slug": "intro2",
+    "slug": "intro",
     "content": "# Hello, World!\n\nI'm Abhilasha Tandon!",
     "link": "/blog/intro"
   },
@@ -59,7 +59,7 @@
       "tag2",
       "tag3"
     ],
-    "slug": "intro3",
+    "slug": "quot",
     "content": "# Hello, World!\n\nI'm Abhilasha Tandon!",
     "link": "/blog/quot"
   },
@@ -75,7 +75,7 @@
       "tag2",
       "tag3"
     ],
-    "slug": "tesg",
+    "slug": "tesfjk",
     "content": "# Aliens are real.\n\nYes, indeed.",
     "link": "/blog/tesfjk"
   },
@@ -91,7 +91,7 @@
       "tag2",
       "tag3"
     ],
-    "slug": "tesg",
+    "slug": "test",
     "content": "# Aliens are real.\n\nYes, indeed.",
     "link": "/blog/test"
   }

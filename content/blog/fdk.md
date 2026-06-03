@@ -6,7 +6,7 @@ image: cover.jpg
 tagline: Introducing myself
 excerpt: Hi! I'm Abhilasha Tandon. Welcome to my blog.
 tags: ['tag1', 'tag2', 'tag3']
-slug: intro
+slug: fdk
 ---
 
 # Hello, World!

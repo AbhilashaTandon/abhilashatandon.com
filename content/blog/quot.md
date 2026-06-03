@@ -6,7 +6,7 @@ image: cover.jpg
 tagline: post fjdkfkd
 excerpt: Hello, World! I'm Abhilasha Tandon!
 tags: ['tag1', 'tag2', 'tag3']
-slug: intro3
+slug: quot
 ---
 
 # Hello, World!
