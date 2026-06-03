@@ -5,7 +5,9 @@
 
 import toggleDarkMode from "./darkMode";
 import createVis from "./spotify_artists";
+import toggleMobileNav from "./hamburger";
 
 toggleDarkMode();
 createVis();
+toggleMobileNav();
 

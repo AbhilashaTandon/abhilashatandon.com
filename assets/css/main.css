@@ -229,7 +229,7 @@
         align-items: center;
         align-content: stretch;
         justify-content: start;
-        gap: var(--xl);
+        gap: var(--medium);
         padding-inline-start: var(--medium);
         padding-inline-end: var(--medium);
         padding-block-start: var(--small);
@@ -385,14 +385,177 @@ code {
 }
 
 #darkModeToggleIcon:hover,
-#lightModeToggleIcon:hover {
+#lightModeToggleIcon:hover,
+#githubDark:hover,
+#githubLight:hover,
+.hamburger:hover {
         filter: drop-shadow(0 0 1rem var(--text));
         transition: filter .2s ease-in-out;
 }
+
+
 
 html,
 body,
 main {
         margin: 0;
         min-height: 100vh;
+}
+
+main {
+        background-image: linear-gradient(to bottom, rgba(26, 1, 49, 0) 0%, rgba(26, 1, 49, 1) 100%);
+}
+
+.blogpost_grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+}
+
+.blogpost_grid div:nth-last-child(1) {
+        grid-column: 1;
+        grid-row: 1;
+}
+
+.blogpost_grid div:nth-last-child(2) {
+        grid-column: 2;
+        grid-row: 1;
+}
+
+.blogpost_grid div:nth-last-child(3) {
+        grid-column: 3;
+        grid-row: 1;
+}
+
+.blogpost_grid div:nth-last-child(4) {
+        display: none;
+}
+
+@media only screen and (max-width: 96em) {
+
+        .blogpost_grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .blogpost_grid div:nth-last-child(1) {
+                grid-column: 1;
+                grid-row: 1;
+        }
+
+        .blogpost_grid div:nth-last-child(2) {
+                grid-column: 2;
+                grid-row: 1;
+        }
+
+        .blogpost_grid div:nth-last-child(3) {
+                grid-column: 1;
+                grid-row: 2;
+        }
+
+        .blogpost_grid div:nth-last-child(4) {
+                grid-column: 2;
+                grid-row: 2;
+                display: block;
+        }
+
+}
+
+
+@media only screen and (max-width: 64em) {
+
+        .blogpost_grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .blogpost_grid div:nth-last-child(1) {
+                grid-column: 1;
+                grid-row: 3;
+        }
+
+        .blogpost_grid div:nth-last-child(2) {
+                grid-column: 1;
+                grid-row: 2;
+        }
+
+        .blogpost_grid div:nth-last-child(3) {
+                grid-column: 1;
+                grid-row: 1;
+        }
+
+        .blogpost_grid div:nth-last-child(4) {
+                display: none;
+        }
+
+}
+
+.blogpost-metadata {
+        transition: padding 0.5s ease-in-out;
+        padding-bottom: 0;
+}
+
+.expandable {
+        max-height: 0;
+        /* Hide content initially */
+        overflow: hidden;
+        /* Clip content when collapsed */
+
+        /* Add transitions */
+        transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in, display step-start allow-discrete, position step-start;
+
+        /* Start transparent (for fade effect) */
+        opacity: 0;
+
+        display: hidden;
+        /* position: absolute; */
+}
+
+.expanded {
+        position: relative;
+
+        max-height: 500px;
+        /* Larger than content's actual height */
+        opacity: 1;
+        /* Fade in */
+
+        display: auto;
+}
+
+.blogpost:hover .blogpost-metadata {
+        padding-bottom: 2rem;
+}
+
+.blogpost:hover .expandable {
+        position: relative;
+
+        max-height: 500px;
+        /* Larger than content's actual height */
+        opacity: 1;
+        /* Fade in */
+
+        display: auto;
+}
+
+.skip {
+        position: absolute;
+        left: -10000px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+}
+
+.skip:focus {
+        position: static;
+        width: auto;
+        height: auto;
+}
+
+@media only screen and (min-width: 48em) {
+        .hamburger {
+                display: none;
+                visibility: collapse;
+        }
 }
