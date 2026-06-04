@@ -2,8 +2,34 @@
   <main
     class="content flex flex-col grid py-16 px-(--xl) items-center justify-start w-full h-max bg-gradient-to- from-(--background)/0 to-(--background)"
     id="main">
-    <div>
 
+    <div id="blogposts"
+      class="flex flex-row flex-wrap items-start content-stretch justify-between gap-y-15 gap-x-15 max-lg:w-full max-sm:gap-y-16 mt-24 lg:mt-16">
+      <ForEach content="blog" as="post" orderBy="date">
+        <If condition="{post.active}">
+          <div
+            class="basis-0 grow shrink flex flex-col justify-start border-1 border-(--text) align-center content-center rounded-lg overflow-hidden hover:expand blogpost w-full 3xl:min-w-1/5 min-w-1/4 max-xl:min-w-1/3 max-lg:min-w-1/2">
+            <a href="/blog/{post.slug}" class="flex content-center align-center">
+
+              <img src="assets/images/{post.image}" class="h-max md:h-100 xl:h-90 max-lg:h-70 object-cover w-full" />
+            </a>
+            <div class="h-px bg-(--text) w-full" id="white-bar"></div>
+            <div
+              class="flex flex-col flex-nowrap items-start content-stretch justify-start gap-8 p-8 blogpost-metadata">
+              <a href="/blog/{post.slug}">
+                <div class="flex flex-col flex-nowrap items-start content-stretch justify-between gap-4">
+                  <h5 class=" h5 ">{post.title}</h5>
+                  <p class="p  expandable">{post.excerpt}</p>
+                  <small class="small  expandable">{post.date}</small>
+                </div>
+              </a>
+              <!-- <div class="flex flex-col flex-nowrap items-start content-stretch justify-between gap-4 expandable" -->
+              <!--   id="tags"> -->
+              <!-- </div> -->
+            </div>
+          </div>
+        </If>
+      </ForEach>
     </div>
   </main>
 

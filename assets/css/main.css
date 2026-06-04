@@ -189,7 +189,8 @@
         --dark-background: #1A0131;
         --dark-text: #F3E8FF;
         --dark-accent: #C27AFF;
-        --gray: #C2C2C2;
+        --light-gray: #cdc7d1;
+        --dark-gray: #342e38;
 
         --xs: clamp(0.938rem, 4.688vw, 5.625rem);
         /* 15 to 90 px */
@@ -212,6 +213,7 @@
         --background: var(--dark-background);
         --text: var(--dark-text);
         --accent: var(--dark-accent);
+        --gray: var(--dark-gray);
 }
 
 
@@ -219,6 +221,7 @@
         --background: var(--light-background);
         --text: var(--light-text);
         --accent: var(--light-accent);
+        --gray: var(--light-gray);
 }
 
 .content {
@@ -389,6 +392,11 @@ small {
 
 code {
         font-family: var(--font-mono);
+        background-color: var(--gray);
+}
+
+article a {
+        text-decoration-line: underline;
 }
 
 a:hover,
@@ -416,6 +424,7 @@ body,
 main {
         margin: 0;
         min-height: 100vh;
+        color: var(--text);
 }
 
 main {
