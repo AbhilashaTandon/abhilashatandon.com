@@ -1,0 +1,18 @@
+[
+    {
+        "title" : "Github",
+        "link" : "https://github.com/AbhilashaTandon",
+        "image": "assets/images/github.png"
+    },
+    {
+        "title" : "Youtube",
+        "link" : "https://www.youtube.com/@abhilashaabbytandon5799",
+        "image": "assets/images/youtube.png"
+    },
+
+    {
+        "title" : "Cara",
+        "link" : "https://cara.app/icyshadow",
+        "image": "assets/images/cara.svg"
+    }
+]

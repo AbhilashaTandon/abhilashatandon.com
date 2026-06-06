@@ -3,33 +3,63 @@
 
 // https://stackoverflow.com/questions/56393880/how-do-i-detect-dark-mode-using-javascript
 
-function toggleDarkMode() {
+export default function toggleDarkMode() {
         const darkModeMql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
 
-        let darkMode = true;
+        let darkMode = darkModeMql;
+
+        const icons = [
+                {
+                        "light": document.querySelector("#lightModeToggleIcon"),
+                        "dark": document.querySelector("#darkModeToggleIcon")
+                },
+                {
+                        "light": document.querySelector("#githubLight"),
+                        "dark": document.querySelector("#githubDark")
+                },
+                {
+                        "light": document.querySelector("#githubLightMobile"),
+                        "dark": document.querySelector("#githubDarkMobile")
+                },
+                {
+                        "light": document.querySelector("#hamburgerLight"),
+                        "dark": document.querySelector("#hamburgerDark")
+                }
+        ];
 
         const button = document.querySelector("#darkModeToggle");
-        const darkIcon = document.querySelector("#darkModeToggleIcon");
-        const lightIcon = document.querySelector("#lightModeToggleIcon");
 
         function updateMode() {
                 let navbar = document.querySelector("nav");
                 let content = document.querySelector("main");
+                let footer = document.querySelector("footer");
                 if (darkMode) {
                         navbar.classList.add("dark_mode");
                         content.classList.add("dark_mode");
+                        footer.classList.add("dark_mode");
                         navbar.classList.remove("light_mode");
                         content.classList.remove("light_mode");
-                        lightIcon.classList.remove("hidden"); //we want to show light icon in dark mode to tell user what we're switching to
-                        darkIcon.classList.add("hidden");
+                        footer.classList.remove("light_mode");
+
+
+                        for (const icon of icons) {
+                                icon['light'].classList.remove("hidden");
+                                icon['dark'].classList.add("hidden");
+                        }
                 }
                 else {
                         navbar.classList.add("light_mode");
                         content.classList.add("light_mode");
+                        footer.classList.add("light_mode");
                         navbar.classList.remove("dark_mode");
                         content.classList.remove("dark_mode");
-                        darkIcon.classList.remove("hidden");
-                        lightIcon.classList.add("hidden");
+                        footer.classList.remove("dark_mode");
+
+
+                        for (const icon of icons) {
+                                icon['light'].classList.add("hidden");
+                                icon['dark'].classList.remove("hidden");
+                        }
                 }
 
                 window.darkMode = darkMode;

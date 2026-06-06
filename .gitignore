@@ -2,5 +2,4 @@ node_modules
 .DS_Store
 _site
 package-lock.json
-.github
-
+assets/js/artist_data.json

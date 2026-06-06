@@ -1,0 +1,16 @@
+
+[
+    {
+        "label": "PROGRAMMING", 
+        "image": "assets/images/code_background.png",
+        "desc": "“Programming to me is the perfect blend of logic and creativity. It takes mathematical precision and uses it to create things that can be both practical and elegant. There is something so satisfying to me when my code finally works: not only the gratitude of making something functional, but the knowledge that the journey never stops. Abstraction has no endpoint, and our job as technologists is to push it further, always building on our past selves, our peers, and our predecessors to make things more complex than anyone could alone.”",
+        "alt": "A blurred image of a source code file with syntax highlighting"
+    },
+    {
+        "label": "ART", 
+        "image": "assets/images/cropped_art.webp",
+        "desc": "“Art is something I have been doing since grade school and has always held an important role in my life. It has a way of exposing my deepest insecurities: perfectionism, self-doubt, and fear of rejection. Studying art for me has been an endeavour both in learning technical skills and emotional ones. It requires me to face both my strengths and weaknesses and accept all of them as part of who I am.”",
+        "alt": "A pencil and paper drawing of a bedroom"
+    }
+
+]

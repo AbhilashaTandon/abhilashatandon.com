@@ -189,7 +189,8 @@
         --dark-background: #1A0131;
         --dark-text: #F3E8FF;
         --dark-accent: #C27AFF;
-        --gray: #C2C2C2;
+        --light-gray: #cdc7d1;
+        --dark-gray: #342e38;
 
         --xs: clamp(0.938rem, 4.688vw, 5.625rem);
         /* 15 to 90 px */
@@ -212,6 +213,7 @@
         --background: var(--dark-background);
         --text: var(--dark-text);
         --accent: var(--dark-accent);
+        --gray: var(--dark-gray);
 }
 
 
@@ -219,9 +221,10 @@
         --background: var(--light-background);
         --text: var(--light-text);
         --accent: var(--light-accent);
+        --gray: var(--light-gray);
 }
 
-main {
+.content {
         position: relative;
         width: 100%;
         background: var(--background);
@@ -229,17 +232,23 @@ main {
         align-items: center;
         align-content: stretch;
         justify-content: start;
-        gap: var(--xl);
+        gap: var(--large);
         padding-inline-start: var(--medium);
         padding-inline-end: var(--medium);
         padding-block-start: var(--small);
-        padding-block-end: var(--medium);
+        padding-block-end: var(--small);
         flex-direction: column;
         flex-wrap: nowrap;
         flex-grow: 1;
 }
 
-.h1 {
+
+.accent {
+        color: var(--accent);
+}
+
+.h1,
+article h1 {
         font-family: var(--font-headings);
         font-size: 5.25rem;
         font-style: normal;
@@ -247,71 +256,86 @@ main {
         line-height: normal;
 }
 
-.h2 {
+.h2,
+article h2 {
         font-family: var(--font-headings);
         font-size: 4rem;
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+        color: var(--text);
 }
 
-.h3 {
+.h3,
+article h3 {
         font-family: var(--font-headings);
         font-size: 3rem;
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+        color: var(--text);
 }
 
-.h4 {
+.h4,
+article h4 {
         font-family: var(--font-headings);
         font-size: 2.25rem;
         font-style: normal;
         font-weight: 600;
         line-height: 3.25rem;
+        color: var(--text);
         /* 144.444% */
 }
 
-.h5 {
+.h5,
+article h5 {
 
         font-family: var(--font-headings);
         font-size: 1.75rem;
         font-style: normal;
         font-weight: 500;
-        line-height: 2.25rem;
-        /* 128.571% */
+        line-height: 2.75rem;
+        color: var(--text);
+        /* 157% */
 }
 
-.body {
+.body,
+article body {
         font-family: var(--font-body);
         font-size: 1.25rem;
         font-style: normal;
         font-weight: 400;
         line-height: 2rem;
+        color: var(--text);
         /* 160% */
 }
 
 
-.p {
+.p,
+article p {
         font-family: var(--font-body);
         font-size: 1.25rem;
         font-style: normal;
         font-weight: 400;
         line-height: 2rem;
+        color: var(--text);
         /* 160% */
 }
 
-.small {
+.small,
+article small {
         font-family: var(--font-body);
         font-size: 1.125rem;
         font-style: normal;
         font-weight: 400;
         line-height: normal;
+        color: var(--text);
 }
 
 @media only screen and (max-width: 64em) {
 
-        .h1 {
+        .h1,
+        article h1 {
                 font-family: var(--font-headings);
                 font-size: 2.5rem;
                 font-style: normal;
@@ -319,7 +343,8 @@ main {
                 line-height: normal;
         }
 
-        .h2 {
+        .h2,
+        article h2 {
 
                 font-family: var(--font-headings);
                 font-size: 2rem;
@@ -328,7 +353,8 @@ main {
                 line-height: normal;
         }
 
-        .h3 {
+        .h3,
+        article h3 {
                 font-family: var(--font-headings);
                 font-size: 1.75rem;
                 font-style: normal;
@@ -336,14 +362,16 @@ main {
                 line-height: normal;
         }
 
-        .h4 {
+        .h4,
+        article h4 {
                 font-family: var(--font-headings);
                 font-size: 1.5rem;
                 font-style: normal;
                 font-weight: 600;
         }
 
-        .h5 {
+        .h5,
+        article h5 {
 
                 font-family: var(--font-headings);
                 font-size: 1.25rem;
@@ -351,21 +379,24 @@ main {
                 font-weight: 500;
         }
 
-        .body {
+        .body,
+        article body {
                 font-family: var(--font-body);
                 font-size: 1rem;
                 font-style: normal;
                 font-weight: 400;
         }
 
-        .p {
+        .p,
+        article p {
                 font-family: var(--font-body);
                 font-size: 1rem;
                 font-style: normal;
                 font-weight: 400;
         }
 
-        .small {
+        .small,
+        article small {
                 font-family: var(--font-body);
                 font-size: .875rem;
                 font-style: normal;
@@ -376,8 +407,14 @@ main {
 
 code {
         font-family: var(--font-mono);
+        background-color: var(--gray);
 }
 
+article a {
+        text-decoration-line: underline;
+}
+
+a:hover,
 .a:hover,
 .link:hover {
         color: var(--accent);
@@ -385,7 +422,144 @@ code {
 }
 
 #darkModeToggleIcon:hover,
-#lightModeToggleIcon:hover {
+#lightModeToggleIcon:hover,
+#githubDark:hover,
+#githubLight:hover,
+#githubDarkMobile:hover,
+#githubLightMobile:hover,
+.hamburger:hover {
         filter: drop-shadow(0 0 1rem var(--text));
         transition: filter .2s ease-in-out;
+}
+
+
+
+html,
+body,
+main {
+        margin: 0;
+        color: var(--text);
+}
+
+/* main { */
+/*         background-image: linear-gradient(to bottom, rgba(26, 1, 49, 0) 0%, rgba(26, 1, 49, 1) 100%); */
+/* } */
+
+.blogpost_grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+}
+
+@media only screen and (max-width: 96em) {
+
+        .blogpost_grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+
+}
+
+
+@media only screen and (max-width: 64em) {
+
+        .blogpost_grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+}
+
+.blogpost-metadata {
+        transition: padding 0.5s ease-in-out;
+        padding-bottom: 0;
+}
+
+.expandable {
+        max-height: 0;
+        /* Hide content initially */
+        overflow: hidden;
+        /* Clip content when collapsed */
+
+        /* Add transitions */
+        transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in, display step-start allow-discrete, position step-start;
+
+        /* Start transparent (for fade effect) */
+        opacity: 0;
+
+        display: hidden;
+        /* position: absolute; */
+}
+
+.expanded {
+        position: relative;
+
+        max-height: 500px;
+        /* Larger than content's actual height */
+        opacity: 1;
+        /* Fade in */
+
+        display: auto;
+}
+
+.blogpost:hover .blogpost-metadata {
+        padding-bottom: 2rem;
+}
+
+.blogpost:hover .expandable {
+        position: relative;
+
+        max-height: 500px;
+        /* Larger than content's actual height */
+        opacity: 1;
+        /* Fade in */
+
+        display: auto;
+}
+
+.skip {
+        position: absolute;
+        left: -10000px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+}
+
+.skip:focus {
+        position: static;
+        width: auto;
+        height: auto;
+}
+
+@media only screen and (min-width: 48em) {
+        .hamburger {
+                display: none;
+                visibility: collapse;
+        }
+}
+
+footer p {
+        padding-top: clamp(1.250rem, calc(0.000rem + 3.125vw), 3.750rem);
+        padding-bottom: clamp(1.250rem, calc(0.000rem + 3.125vw), 3.750rem);
+}
+
+.image-container {
+        overflow: hidden;
+}
+
+.image-container img {
+        width: 100%;
+        transition: all .8s ease-in-out;
+}
+
+.image-container:hover img {
+        transform: scale(1.1, 1.1)
+}
+
+.blogpost {
+        min-width: calc((100% - 40rem)/2);
+        flex-grow: 0;
 }

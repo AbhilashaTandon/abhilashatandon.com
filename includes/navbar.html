@@ -1,23 +1,97 @@
-<nav class="sticky top-0 z-100">
-  <div class="flex flex-row flex-nowrap py-4 px-(--small) items-center justify-between content-stretch w-full h-18 max-lg:h-16 bg-(--background)">
-    <a href="/" class="h5 text-(--accent)">AbhilashaTandon.com </a>
-    <ul class="gap-(--small) flex flex-row flex-nowrap items-center justify-between content-stretch max-md:hidden">
-      <li>
-        <a class="body link text-(--text)" href="/blog">Blog</a>
+<nav class="sticky top-0 z-100 w-full">
+  <a href="#main" class="skip p ">Skip to main content</a>
+  <div
+    class="flex flex-row flex-nowrap py-4 px-(--small) items-center justify-between content-stretch w-full h-18 max-lg:h-16 bg-(--background)">
+    <p class="h5">
+      <a href="/" class="accent">
+        <span class="no-underline">
+          AbhilashaTandon.com
+        </span>
+      </a>
+    </p>
+    <ul class="gap-(--small) flex flex-row flex-nowrap items-center justify-between content-stretch ">
+      <li class="max-md:hidden">
+        <p class="p">
+          <a class="link font-medium " href="/blog">
+            Blog
+          </a>
+        </p>
       </li>
-      <li>
-        <a class="body link text-(--text)" href="#contact">Contact</a>
+      <!-- <li class="max-md:hidden"> -->
+      <!--   <p> -->
+      <!--     <a class="link font-medium" href="#contact"> -->
+      <!--       Contact -->
+      <!--     </a> -->
+      <!--   </p> -->
+      <!-- </li> -->
+      <li class="max-md:hidden">
+        <p class="p">
+          <a class="link font-medium" href="/resume/resume.pdf">
+            Resume
+          </a>
+        </p>
       </li>
-      <li>
-        <a class="body link text-(--text)" href="/resume">Resume</a>
+      <li class="max-md:hidden">
+        <a class="link" href="https://github.com/AbhilashaTandon">
+          <img height="36" width="36" id="githubDark" class="hidden" src="/assets/images/GitHub_Invertocat_Black.svg"
+            alt="GitHub logo">
+          <img height="36" width="36" id="githubLight" class="hidden" src="/assets/images/GitHub_Invertocat_White.svg"
+            alt="GitHub logo">
+        </a>
       </li>
-      <li>
+      <li class="h-9">
         <button id="darkModeToggle">
-          <img height="36" width="36" id="darkModeToggleIcon" class="hidden" src="/assets/images/dark_mode.svg">
-          <img height="36" width="36" id="lightModeToggleIcon" class="hidden" src="/assets/images/light_mode.svg">
+          <img height="36" width="36" id="darkModeToggleIcon" class="hidden" src="/assets/images/dark_mode.svg"
+            alt="Enable dark mode">
+          <img height="36" width="36" id="lightModeToggleIcon" class="hidden" src="/assets/images/light_mode.svg"
+            alt="Enable light mode">
+        </button>
+      </li>
+      <li class="h-9 flex">
+        <button id="hamburger">
+          <img height="30" width="30" id="hamburgerDark" class="hidden hamburger" src="/assets/images/hamburger.svg"
+            alt="Hamburger menu">
+          <img height="30" width="30" id="hamburgerLight" class="hidden hamburger"
+            src="/assets/images/hamburger-light.svg" alt="Hamburger menu">
         </button>
       </li>
     </ul>
+
   </div>
   <div class="bg-(--text) h-px top-0 w-full"></div>
+  <div class="expandable md:hidden" id="mobileNav">
+    <ul
+      class="flex flex-row flex-nowrap py-4 px-(--small) items-center justify-between content-stretch w-full h-18 max-lg:h-16 bg-(--background)">
+      <li>
+        <p class="p">
+          <a class="link " href="/blog">
+            Blog
+          </a>
+        </p>
+      </li>
+      <!-- <li> -->
+      <!--   <p> -->
+      <!--     <a class="link " href="#contact"> -->
+      <!--       Contact -->
+      <!--     </a> -->
+      <!--   </p> -->
+      <!-- </li> -->
+      <li>
+        <p class="p">
+          <a class="link " href="/resume/resume.pdf">
+            Resume
+          </a>
+        </p>
+      </li>
+      <li>
+        <a class="link " href="https://github.com/AbhilashaTandon">
+          <img height="36" width="36" id="githubDarkMobile" class="hidden"
+            src="/assets/images/GitHub_Invertocat_Black.svg" alt="GitHub logo">
+          <img height="36" width="36" id="githubLightMobile" class="hidden"
+            src="/assets/images/GitHub_Invertocat_White.svg" alt="GitHub logo">
+        </a>
+      </li>
+    </ul>
+    <div class="bg-(--text) h-px top-0 w-full"></div>
+  </div>
 </nav>
