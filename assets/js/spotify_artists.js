@@ -1,7 +1,53 @@
 import * as d3 from "d3";
 import data from "./artist_data.json"
 
+
+const sorted_data = data.sort((a, b) => a.popularity < b.popularity);
 // Final colors: "#005151", "#e6ac07", "#bc8dff", "#00bbff", "#ff9488", "#6c4700", "#64364d", "#3f9818",
+
+const x_offset = 0;
+const y_offset = 0;
+
+function artists_shown(transform) {
+  let shown = [];
+
+  const top = (-0.3 - transform.y) / transform.k;
+  const bottom = (9.1 - transform.y) / transform.k;
+  const left = (-6.8 - transform.x) / transform.k;
+  const right = (15 - transform.x) / transform.k;
+
+  const x_threshold = 1.6 / transform.k;
+  const y_threshold = .2 / transform.k;
+
+  for (const artist of sorted_data) {
+    if (artist.x < left) {
+      continue;
+    }
+    if (artist.x > right) {
+      continue;
+    }
+    if (artist.y < top) {
+      continue;
+    }
+    if (artist.y > bottom) {
+      continue;
+    }
+
+    let invalid = false;
+    for (const prev_artist of shown) {
+      if (Math.abs(prev_artist.x - artist.x) < x_threshold && Math.abs(prev_artist.y - artist.y) < y_threshold) {
+        invalid = true;
+        break;
+      }
+    }
+
+    if (!invalid) {
+      shown.push(artist)
+    }
+  }
+
+  return shown;
+}
 
 function spatial_hash_max(data, scale) {
   //
@@ -28,9 +74,28 @@ function spatial_hash_max(data, scale) {
 }
 
 
+function handleZoom(event) {
+  const { k, x, y } = event.transform;
+
+  const points = d3.selectAll("circle");
+  const labels = d3.selectAll("text");
+  const max_artists = artists_shown(event.transform);
+  points.data(data).attr("r", d => Math.sqrt(d.popularity / k) / (200));
+  labels.data(data).attr("font-size", (d) => {
+    if (!max_artists.includes(d)) {
+      return 0;
+    }
+    return .2 / k;
+  });
+
+
+  points.attr("transform", (transform = event.transform));
+  labels.attr("transform", (transform = event.transform));
+
+}
 
 export default function createVis() {
-  const svg = d3.select("svg")
+  const svg = d3.select("#spotify_artists")
     .attr("viewBox", [-1, -1, 10, 10]).style('width', '100vw').style('height', '100vh');
 
 
@@ -40,8 +105,8 @@ export default function createVis() {
     .enter()
     .data(data)
     .join("circle")
-    .attr("cx", (d => d.x))
-    .attr("cy", (d => d.y))
+    .attr("cx", (d => d.x + x_offset))
+    .attr("cy", (d => d.y + y_offset))
     .attr('fill', "rgba(0, 0, 0, .25)")
     .attr("r", (d => Math.sqrt(d.popularity) / 200))
     .append("title")
@@ -55,33 +120,16 @@ export default function createVis() {
     .data(data)
     .join('text')
     .text(d => d.artist)
-    .attr('x', d => d.x)
-    .attr('y', d => d.y)
+    .attr('x', d => d.x + x_offset)
+    .attr('y', d => d.y + y_offset)
     .attr('font-size', '0.001em')
     .attr('text-anchor', 'middle');
 
-  const zoom = d3.zoom().scaleExtent([.4, 32]);
+  const zoom = d3.zoom().scaleExtent([.8, 40]);
   // .extent([[marginLeft, 0], [width - marginRight, height]])
   // .translateExtent([[marginLeft, -Infinity], [width - marginRight, Infinity]]);
 
-  zoom.on("zoom", e => {
-    // console.log(e.transform.invert());
-    const max_artists = spatial_hash_max(data, e.transform.k);
-    points_group.attr("transform", (transform = e.transform));
-    labels_group.attr("transform", (transform = e.transform));
-    points.data(data).attr("r", (d) => (d.popularity / (e.transform.k * e.transform.k)) / 200);
-    labels.data(data).attr("font-size", (d) => {
-      if (!max_artists.includes(d)) {
-        return 0;
-      }
-      return .2 / e.transform.k;
-
-    });
-
-    // points.data(data).attr("r", (d) => {
-    //   return Math.sqrt(d.popularity / e.transform.k) / 200;
-    // });
-  });
+  zoom.on("zoom", e => handleZoom(e));
 
 
 
@@ -90,5 +138,4 @@ export default function createVis() {
     .call(zoom.transform, d3.zoomIdentity)
 
 
-// return svg.node();
 }
