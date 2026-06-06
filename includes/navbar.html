@@ -1,32 +1,31 @@
-<nav class="fixed top-0 z-100 w-full">
-  <!-- this is fixed instead of sticky to allow us to easily set the height of our main element to fill the rest of the page without overflow or extra white space at the bottom of the page. -->
+<nav class="sticky top-0 z-100 w-full">
   <a href="#main" class="skip p ">Skip to main content</a>
   <div
     class="flex flex-row flex-nowrap py-4 px-(--small) items-center justify-between content-stretch w-full h-18 max-lg:h-16 bg-(--background)">
-    <h5>
+    <p class="h5">
       <a href="/" class="accent">
         <span class="no-underline">
           AbhilashaTandon.com
         </span>
       </a>
-    </h5>
+    </p>
     <ul class="gap-(--small) flex flex-row flex-nowrap items-center justify-between content-stretch ">
       <li class="max-md:hidden">
-        <p>
+        <p class="p">
           <a class="link font-medium " href="/blog">
             Blog
           </a>
         </p>
       </li>
+      <!-- <li class="max-md:hidden"> -->
+      <!--   <p> -->
+      <!--     <a class="link font-medium" href="#contact"> -->
+      <!--       Contact -->
+      <!--     </a> -->
+      <!--   </p> -->
+      <!-- </li> -->
       <li class="max-md:hidden">
-        <p>
-          <a class="link font-medium" href="#contact">
-            Contact
-          </a>
-        </p>
-      </li>
-      <li class="max-md:hidden">
-        <p>
+        <p class="p">
           <a class="link font-medium" href="/resume/resume.pdf">
             Resume
           </a>
@@ -34,21 +33,26 @@
       </li>
       <li class="max-md:hidden">
         <a class="link" href="https://github.com/AbhilashaTandon">
-          <img height="36" width="36" id="githubDark" class="hidden" src="/assets/images/GitHub_Invertocat_Black.svg">
-          <img height="36" width="36" id="githubLight" class="hidden" src="/assets/images/GitHub_Invertocat_White.svg">
+          <img height="36" width="36" id="githubDark" class="hidden" src="/assets/images/GitHub_Invertocat_Black.svg"
+            alt="GitHub logo">
+          <img height="36" width="36" id="githubLight" class="hidden" src="/assets/images/GitHub_Invertocat_White.svg"
+            alt="GitHub logo">
         </a>
       </li>
       <li class="h-9">
         <button id="darkModeToggle">
-          <img height="36" width="36" id="darkModeToggleIcon" class="hidden" src="/assets/images/dark_mode.svg">
-          <img height="36" width="36" id="lightModeToggleIcon" class="hidden" src="/assets/images/light_mode.svg">
+          <img height="36" width="36" id="darkModeToggleIcon" class="hidden" src="/assets/images/dark_mode.svg"
+            alt="Enable dark mode">
+          <img height="36" width="36" id="lightModeToggleIcon" class="hidden" src="/assets/images/light_mode.svg"
+            alt="Enable light mode">
         </button>
       </li>
       <li class="h-9 flex">
         <button id="hamburger">
-          <img height="30" width="30" id="hamburgerDark" class="hidden hamburger" src="/assets/images/hamburger.svg">
+          <img height="30" width="30" id="hamburgerDark" class="hidden hamburger" src="/assets/images/hamburger.svg"
+            alt="Hamburger menu">
           <img height="30" width="30" id="hamburgerLight" class="hidden hamburger"
-            src="/assets/images/hamburger-light.svg">
+            src="/assets/images/hamburger-light.svg" alt="Hamburger menu">
         </button>
       </li>
     </ul>
@@ -59,21 +63,21 @@
     <ul
       class="flex flex-row flex-nowrap py-4 px-(--small) items-center justify-between content-stretch w-full h-18 max-lg:h-16 bg-(--background)">
       <li>
-        <p>
+        <p class="p">
           <a class="link " href="/blog">
             Blog
           </a>
         </p>
       </li>
+      <!-- <li> -->
+      <!--   <p> -->
+      <!--     <a class="link " href="#contact"> -->
+      <!--       Contact -->
+      <!--     </a> -->
+      <!--   </p> -->
+      <!-- </li> -->
       <li>
-        <p>
-          <a class="link " href="#contact">
-            Contact
-          </a>
-        </p>
-      </li>
-      <li>
-        <p>
+        <p class="p">
           <a class="link " href="/resume/resume.pdf">
             Resume
           </a>
@@ -82,9 +86,9 @@
       <li>
         <a class="link " href="https://github.com/AbhilashaTandon">
           <img height="36" width="36" id="githubDarkMobile" class="hidden"
-            src="/assets/images/GitHub_Invertocat_Black.svg">
+            src="/assets/images/GitHub_Invertocat_Black.svg" alt="GitHub logo">
           <img height="36" width="36" id="githubLightMobile" class="hidden"
-            src="/assets/images/GitHub_Invertocat_White.svg">
+            src="/assets/images/GitHub_Invertocat_White.svg" alt="GitHub logo">
         </a>
       </li>
     </ul>
