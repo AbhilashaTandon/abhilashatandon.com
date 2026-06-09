@@ -8,8 +8,8 @@
     "@tailwindcss/typography": "^0.5.10"
   },
   "scripts": {
-    "dev": "concurrently --kill-others \"node build.js --watch\" \"npx esbuild ./assets/js/script.js --bundle --outfile=./_site/assets/js/script.js --watch\"",
-    "build": "node build.js && npx tailwindcss -i ./assets/css/main.css -o ./_site/assets/css/main.css --minify && npx esbuild ./assets/js/script.js --bundle --outfile=./_site/assets/js/script.js --minify",
+    "dev": "concurrently --kill-others \"node build.js --watch\" \"npx esbuild ./assets/js/main.js --bundle --outfile=./_site/assets/js/main.js --watch\"",
+    "build": "node build.js && npx tailwindcss -i ./assets/css/main.css -o ./_site/assets/css/main.css --minify && npx esbuild ./assets/js/main.js --bundle --outfile=./_site/assets/js/main.js --minify",
     "test": "jest"
   },
   "dependencies": {
@@ -25,7 +25,7 @@
     "tailwindcss": "^4.3.0"
   },
   "type": "module",
-  "main": "./_site/assets/js/script.js",
+  "main": "./_site/assets/js/main.js",
   "exports": {
     "require": "./_site/assets/js/cjs.js",
     "import": "./_site/assets/js/esm.js",

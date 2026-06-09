@@ -5,17 +5,17 @@ buildAll()
 async function buildAll() {
         return Promise.all([
                 build('main', {
-                        entryPoints: ['assets/js/script.js'],
+                        entryPoints: ['assets/js/main.js'],
                         platform: 'browser',
                         minify: true,
                         target: ['es6'],
                 }),
                 build('esm', {
-                        entryPoints: ['assets/js/script.js'],
+                        entryPoints: ['assets/js/main.js'],
                         platform: 'neutral'
                 }),
                 build('cjs', {
-                        entryPoints: ['assets/js/script.js'],
+                        entryPoints: ['assets/js/main.js'],
                         target: ['node10.4'],
                         platform: 'node',
                 }),
