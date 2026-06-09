@@ -564,3 +564,8 @@ footer p {
         min-width: calc((100% - 40rem)/2);
         flex-grow: 0;
 }
+
+.fit-width {
+        width: 100%;
+        max-width: 100vw;
+}

@@ -1,10 +1,10 @@
 <layout title="Home Page" src="blogpost.html">
   <main
-    class="content flex flex-col grid px-(--xl) items-center justify-start w-full h-max bg-gradient-to- from-(--background)/0 to-(--background)"
+    class="content flex flex-col grid px-(--xl) items-center justify-start fit-width h-max bg-gradient-to- from-(--background)/0 to-(--background)"
     id="main">
 
     <div id="blogposts"
-      class="items-start content-stretch justify-between gap-y-(--small) gap-x-15 blogpost_grid max-lg:w-full max-sm:gap-y-16">
+      class="items-start content-stretch justify-between gap-y-(--small) gap-x-15 blogpost_grid max-lg:fit-width max-sm:gap-y-16">
       <ForEach content="blog" as="post" orderBy="date,desc">
         <If condition="{post.active}">
           <include src="./blogpost.html" url="/blog/{post.slug}" image="/assets/images/{post.image}"

@@ -1,12 +1,12 @@
 <layout title="Home Page" src="blogpost.html">
   <main
-    class="content flex flex-col grid py-16 px-(--xl) items-center justify-start w-full h-max bg-gradient-to- from-(--background)/0 to-(--background)"
+    class="content flex flex-col grid py-16 px-(--xl) items-center justify-start fit-width h-max bg-gradient-to- from-(--background)/0 to-(--background)"
     id="main">
     <div class="flex flex-col gap-y-16 items-center justify-between">
       <header class="max-lg:max-w-2xl lg:w-2xl flex flex-col items-start gap-y-6 max-md:mt-8">
         <h1 class="h3">{frontmatter.title}</h1>
         <h2 class="p">{frontmatter.excerpt}</h2>
-        <div class="flex flex-row w-full justify-between items-center">
+        <div class="flex flex-row fit-width justify-between items-center">
           <h3 class="small">Abhilasha Tandon</h3>
           <h3 class="small">{frontmatter.date}</h3>
         </div>
@@ -15,7 +15,7 @@
       <div href="/blog/{post.slug}"
         class="flex content-center align-center max-w-6xl max-h-lg min-w-3xl min-h-xl max-lg:min-w-2 max-md:max-w-lg">
         <img src="../assets/images/{frontmatter.image}"
-          class="h-max object-cover w-full border-1 border-(--text) rounded-lg max-h-[60svh]" />
+          class="h-max object-cover fit-width border-1 border-(--text) rounded-lg max-h-[60svh]" />
       </div>
       <article class="max-w-2xl flex flex-col gap-y-8 items-start justify-between">
         {content}
