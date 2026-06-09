@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import data from "./artist_data.json"
+import data from "../../collections/artist_data.json"
 
 
 const sorted_data = data.sort((a, b) => a.popularity < b.popularity);
