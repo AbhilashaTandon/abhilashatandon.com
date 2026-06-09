@@ -9,7 +9,7 @@
           <h1 class="h1 accent">Abhilasha Tandon</h1>
           <h2 class="h5">I like to make fun and interesting things with code.</h5>
       </div>
-      <img src="/assets/images/hero_graphic.svg"
+      <img src="assets/images/hero_graphic.svg"
         class="h-fit w-min overflow-hidden max-lg:w-fit max-lg:h-min lg:max-xl:hidden"
         alt="Vector art of woman using a laptop" />
 
@@ -25,7 +25,7 @@
           class="items-start content-stretch justify-between gap-y-(--small) gap-x-15 blogpost_grid max-lg:fit-width max-sm:gap-y-16">
           <ForEach content="blog" as="post" orderBy="date,desc" count="3">
             <If condition="{post.active}">
-              <include src="./blogpost.html" url="/blog/{post.slug}" image="/assets/images/{post.image}"
+              <include src="./blogpost.html" url="blog/{post.slug}" image="assets/images/{post.image}"
                 post_title={post.title} post_excerpt={post.excerpt} post_date={post.date} alt={post.alt}></include>
             </If>
           </ForEach>
@@ -46,6 +46,6 @@
 
   </main>
 
-  <img src="/assets/images/swoosh.svg" class="absolute fit-width max-lg:w-fit top-96 z-1 max-2xl:hidden lg:block"
+  <img src="assets/images/swoosh.svg" class="absolute fit-width max-lg:w-fit top-96 z-1 max-2xl:hidden lg:block"
     alt="Purple wave shaped background gradient"></img>
 </layout>
