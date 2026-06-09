@@ -492,7 +492,6 @@ main {
         /* Start transparent (for fade effect) */
         opacity: 0;
 
-        display: none;
         /* position: absolute; */
 }
 
