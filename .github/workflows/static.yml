@@ -30,9 +30,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
       - name: Setup Pages
-        uses: actions/configure-pages@main
+        uses: actions/configure-pages@v5
       - name: GitHub Action for npx
         uses: mikeal/npx@1.0.0
       - name: Run NPM Install
@@ -40,11 +40,11 @@ jobs:
       - name: Run the static build step
         run: npx @devdojo/static build
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@main
+        uses: actions/upload-pages-artifact@v4
         with:
           # Upload entire repository
           path: './_site/'
           overwrite: true
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@main
+        uses: actions/deploy-pages@v5

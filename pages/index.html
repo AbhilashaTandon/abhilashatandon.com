@@ -5,9 +5,9 @@
     <div id="hero"
       class="flex flex-row items-center justify-between w-full h-max max-md:flex-col-reverse gap-y-(--medium) gap-x-(--xs) z-2">
       <div id="hero_text" class="flex flex-col grid gap-y-4 gap-x-8 items-start justify-start w-fit h-max">
-        <h1 class="h4">Hi! I&rsquo;m</h1>
-        <h1 class="h1 accent">Abhilasha Tandon</h1>
-        <h2 class="h5">I like to make fun and interesting things with code.</h2>
+        <h1 class="h4">Hi! I&rsquo;m</h4>
+          <h1 class="h1 accent">Abhilasha Tandon</h1>
+          <h2 class="h5">I like to make fun and interesting things with code.</h5>
       </div>
       <img src="/assets/images/hero_graphic.svg"
         class="h-fit w-min overflow-hidden max-lg:w-fit max-lg:h-min lg:max-xl:hidden"
@@ -19,17 +19,17 @@
     </ForEach>
     <div id="blog" class="flex flex-col gap-(--small) items-start justify-start w-full h-max max-sm:gap-16 z-3">
 
-      <h3 class="h4">My Ramblings</h3>
+      <h3 class="h4">My Ramblings</h4>
 
-      <div id="blogposts"
-        class="items-start content-stretch justify-between gap-y-(--small) gap-x-15 blogpost_grid max-lg:w-full max-sm:gap-y-16">
-        <ForEach content="blog" as="post" orderBy="date,desc" count="3">
-          <If condition="{post.active}">
-            <include src="./blogpost.html" url="/blog/{post.slug}" image="/assets/images/{post.image}"
-              post_title={post.title} post_excerpt={post.excerpt} post_date={post.date} alt={post.alt}></include>
-          </If>
-        </ForEach>
-      </div>
+        <div id="blogposts"
+          class="items-start content-stretch justify-between gap-y-(--small) gap-x-15 blogpost_grid max-lg:w-full max-sm:gap-y-16">
+          <ForEach content="blog" as="post" orderBy="date,desc" count="3">
+            <If condition="{post.active}">
+              <include src="./blogpost.html" url="/blog/{post.slug}" image="/assets/images/{post.image}"
+                post_title={post.title} post_excerpt={post.excerpt} post_date={post.date} alt={post.alt}></include>
+            </If>
+          </ForEach>
+        </div>
     </div>
 
     <!-- <div id="contact" class="flex flex-col flex-nowrap items-start content-stretch justify-start gap-(--small) w-full"> -->
@@ -47,5 +47,5 @@
   </main>
 
   <img src="/assets/images/swoosh.svg" class="absolute w-full max-lg:w-fit top-96 z-1 max-2xl:hidden lg:block"
-    alt="Purple wave shaped background gradient">
+    alt="Purple wave shaped background gradient"></img>
 </layout>
