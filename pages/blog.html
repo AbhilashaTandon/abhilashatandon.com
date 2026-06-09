@@ -1,13 +1,13 @@
 <layout title="Home Page" src="blogpost.html">
   <main
-    class="content flex flex-col grid px-(--xl) items-center justify-start fit-width h-max bg-gradient-to- from-(--background)/0 to-(--background)"
+    class="content flex flex-col px-(--xl) items-center justify-start fit-width h-max bg-gradient-to- from-(--background)/0 to-(--background)"
     id="main">
 
     <div id="blogposts"
       class="items-start content-stretch justify-between gap-y-(--small) gap-x-15 blogpost_grid max-lg:fit-width max-sm:gap-y-16">
       <ForEach content="blog" as="post" orderBy="date,desc">
         <If condition="{post.active}">
-          <include src="./blogpost.html" url="blog/{post.slug}" image="assets/images/{post.image}"
+          <include src="./blogpost.html" url="/blog/{post.slug}" image="/assets/images/{post.image}"
             post_title={post.title} post_excerpt={post.excerpt} post_date={post.date}></include>
         </If>
       </ForEach>
