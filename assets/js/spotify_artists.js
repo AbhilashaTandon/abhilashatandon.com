@@ -3,6 +3,8 @@ import data from "../../collections/artist_data.json"
 
 var initial_zoom_level = .8;
 
+let zoom_level = 1;
+
 const scale_factor = .9;
 
 const sorted_data = data.sort((a, b) => a.popularity < b.popularity);
@@ -11,10 +13,10 @@ const sorted_data = data.sort((a, b) => a.popularity < b.popularity);
 const x_offset = 0;
 const y_offset = 0;
 
-function artists_shown(transform) {
-  // if (transform.k > 38) {
-  //   return sorted_data;
-  // }
+function artists_shown(transform, only_clip) {
+  //if only clip is true it will find all artists within the current window
+  //if false, it will try to pick artists such that their names don't overlap, prioritizing the most popular artists
+
   let shown = [];
 
   const top = (-1 - transform.y) / transform.k;
@@ -24,6 +26,8 @@ function artists_shown(transform) {
 
   const x_threshold = 1.7 / Math.pow(transform.k, 1.0);
   const y_threshold = .2 / Math.pow(transform.k, 1.0);
+
+
 
   for (const artist of sorted_data) {
     if (artist.x < left) {
@@ -36,6 +40,11 @@ function artists_shown(transform) {
       continue;
     }
     if (artist.y > bottom) {
+      continue;
+    }
+
+    if (only_clip) {
+      shown.push(artist);
       continue;
     }
 
@@ -59,25 +68,26 @@ function artists_shown(transform) {
 function handleZoom(event) {
   const { k, x, y } = event.transform;
 
-
-  // zoom_level = k;
-  console.log(k, x, y);
-
-  const scale_factor = Math.max(Math.sqrt(k), .9);
-
-
   const points = d3.selectAll("circle");
   const labels = d3.selectAll("text");
   const max_artists = artists_shown(event.transform);
+
+  zoom_level = k;
+
+  const scale_factor = Math.max(Math.sqrt(k), .9);
 
   points.data(data).attr("r", (d) => {
     return Math.sqrt(d.popularity) / 200 / scale_factor;
   });
 
-  labels.data(data).attr("font-size", (d) => {
+  labels.data(data).attr('display', (d) => {
+
     if (!max_artists.includes(d)) {
-      return 0;
+      return "none";
     }
+    return "inline";
+
+  }).attr("font-size", (d) => {
     return Math.max(.035 * Math.pow(Math.log(d.popularity), 1 / Math.pow(scale_factor, .75)) / scale_factor, 0.002);
 
   });
