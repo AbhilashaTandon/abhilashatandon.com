@@ -566,7 +566,17 @@ footer p {
         flex-grow: 0;
 }
 
-.fit-width {
+.fit-width,
+#spotify-canvas {
+        /* position: absolute; */
         width: 100%;
         max-width: 100vw;
+
+
+}
+
+#spotify-canvas {
+        width: 100%;
+        height: 100%;
+
 }
