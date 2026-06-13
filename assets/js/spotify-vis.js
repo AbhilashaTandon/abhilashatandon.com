@@ -14,6 +14,16 @@ export default function createVis() {
 
         const MAX_ZOOM = 100;
 
+        let rect = canvas.getBoundingClientRect()
+        console.log(rect.width, rect.height)
+
+        const centerX = rect.left + rect.width / 2
+        const centerY = rect.top + rect.height / 2
+
+        canvas.addEventListener('resize', (e) => {
+                rect = canvas.getBoundingClientRect()
+        });
+
         //adapted from https://harrisonmilbradt.com/blog/canvas-panning-and-zooming
 
         updateVis(ctx, canvas, transform)
@@ -21,9 +31,12 @@ export default function createVis() {
         let previousX = 0,
                 previousY = 0
 
+        const getPos = (e) => {
+                return [((e.clientX - centerX) * 1.40 + centerX + 41) * (1440 / rect.width) - (1440 - rect.width) * .05, ((e.clientY - centerY) * 1.39 + centerY + 66.5) * (721 / rect.height) - (721 - rect.height) * .66]
+        }
+
         const updatePanning = (e) => {
-                const currentX = e.clientX
-                const currentY = e.clientY
+                const [currentX, currentY] = getPos(e);
 
                 transform.x += currentX - previousX
                 transform.y += currentY - previousY
@@ -36,8 +49,7 @@ export default function createVis() {
                 const oldX = transform.x
                 const oldY = transform.y
 
-                const localX = e.clientX
-                const localY = e.clientY
+                const [localX, localY] = getPos(e);
 
                 const previousScale = transform.zoom
 
@@ -50,14 +62,14 @@ export default function createVis() {
                         transform.zoom = previousScale
                         return;
                 }
+
                 if (newScale >= MAX_ZOOM) {
                         transform.zoom = previousScale
                         return;
                 }
 
-
-                transform.x = newX
-                transform.y = newY
+                transform.x += (newX - oldX)
+                transform.y += (newY - oldY)
                 transform.zoom = newScale
         }
 
@@ -69,8 +81,9 @@ export default function createVis() {
         }
 
         canvas.addEventListener('mousedown', (e) => {
-                previousX = e.clientX
-                previousY = e.clientY
+                const pos = getPos(e)
+                previousX = pos[0]
+                previousY = pos[1]
 
                 canvas.addEventListener('mousemove', onMouseMove)
         })
@@ -78,8 +91,6 @@ export default function createVis() {
         canvas.addEventListener('mouseup', (e) => {
                 canvas.removeEventListener('mousemove', onMouseMove)
         })
-
-
 
         const onMouseWheel = (e) => {
                 updateZooming(e)
