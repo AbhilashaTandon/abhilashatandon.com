@@ -1,5 +1,6 @@
 import data from "../../collections/artist_data.json"
 let sorted_data = data.sort((a, b) => a.popularity < b.popularity);
+//sorted by popularity in descending order
 
 function drawCircle(ctx, x, y, radius, color) {
         ctx.beginPath();
@@ -8,6 +9,9 @@ function drawCircle(ctx, x, y, radius, color) {
         ctx.fillStyle = color;
         ctx.fill();
 }
+
+const x_threshold = 0.15
+const y_threshold = .025
 
 export default function updateVis(ctx, canvas, transform) {
 
@@ -24,8 +28,63 @@ export default function updateVis(ctx, canvas, transform) {
         )
 
 
+
+        const left = -transform.x / transform.zoom - 1
+        const top = -transform.y / transform.zoom - 1
+        const right = (2000 - transform.x) / transform.zoom + 1
+        const bottom = (1000 - transform.y) / transform.zoom + 1
+
+
+
         sorted_data.map((artist) => {
-                drawCircle(ctx, 100 * artist.x + 600, 100 * artist.y + 300, Math.sqrt(artist.popularity) / Math.pow(transform.zoom, .6), "#00000040")
+                const x_coord = 100 * artist.x + 600
+                const y_coord = 100 * artist.y + 300
+                const radius = .75 * Math.sqrt(artist.popularity) / Math.pow(transform.zoom, .6)
+
+                if (x_coord < left || x_coord > right || y_coord < top || y_coord > bottom) {
+                        return
+                }
+
+                drawCircle(ctx, x_coord, y_coord, radius, "#69696920")
+
+
+        });
+
+        //I need to do go through the artists twice so that the circles dont cover the labels
+        let labeled_artists = []
+        sorted_data.map((artist) => {
+                const x_coord = 100 * artist.x + 600
+                const y_coord = 100 * artist.y + 300
+                const size = 6 * Math.pow(artist.popularity / transform.zoom + 2, .2) / Math.pow(transform.zoom, .7)
+                const threshold = size / Math.pow(transform.zoom, .25)
+
+
+                if (x_coord < left || x_coord > right || y_coord < top || y_coord > bottom) {
+                        return
+                }
+
+
+
+
+
+                let overlap = false
+
+                for (const labeled_artist of labeled_artists) {
+                        const x_distance = Math.abs(artist.x - labeled_artist.x)
+                        const y_distance = Math.abs(artist.y - labeled_artist.y)
+                        if (x_distance < x_threshold * threshold && y_distance < y_threshold * threshold) {
+                                overlap = true
+                                break
+                        }
+
+                }
+
+                if (!overlap) {
+                        ctx.fillStyle = "#000000ff";
+                        ctx.font = size + "px serif";
+                        ctx.fillText(artist.artist, x_coord, y_coord)
+                        labeled_artists.push(artist)
+                }
         });
 
 //left -x / z

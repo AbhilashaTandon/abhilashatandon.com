@@ -14,8 +14,17 @@ export default function createVis() {
 
         const MAX_ZOOM = 100;
 
+        const MIN_X = -222400
+        const MAX_X = -9400
+        const MIN_Y = -68000
+        const MAX_Y = 300
+
+        // Object { x: -4888.101146055941, y: -14830.411183743961, zoom: 15.490802233011848 }
+        //Object { x: -92610.05706844841, y: 258.7759369478374, zoom: 101.57604483928662 }
+        //Object { x: -1247142.405891415, y: -379265.441151771, zoom: 816.7466642802924 }
+
         let rect = canvas.getBoundingClientRect()
-        console.log(rect.width, rect.height)
+        // console.log(rect.width, rect.height)
 
         const centerX = rect.left + rect.width / 2
         const centerY = rect.top + rect.height / 2
@@ -40,9 +49,19 @@ export default function createVis() {
 
                 transform.x += currentX - previousX
                 transform.y += currentY - previousY
+                //
+                // if (transform.x > MAX_X || transform.x < MIN_X || transform.y > MAX_Y || transform.y < MIN_Y) {
+                //         transform.x -= currentX - previousX
+                //         transform.y -= currentY - previousY
+                //         console.log(transform.x, transform.y)
+                //         return;
+                // }
+
 
                 previousX = currentX
                 previousY = currentY
+                // console.log(transform.x / transform.zoom, transform.y / transform.zoom)
+
         }
 
         const updateZooming = (e) => {
@@ -58,26 +77,28 @@ export default function createVis() {
                 const newX = localX - (localX - oldX) * (newScale / previousScale)
                 const newY = localY - (localY - oldY) * (newScale / previousScale)
 
-                if (newScale <= MIN_ZOOM) {
-                        transform.zoom = previousScale
-                        return;
-                }
 
-                if (newScale >= MAX_ZOOM) {
-                        transform.zoom = previousScale
-                        return;
-                }
+
 
                 transform.x += (newX - oldX)
                 transform.y += (newY - oldY)
                 transform.zoom = newScale
+
+
+
+                // if (transform.zoom <= MIN_ZOOM || transform.zoom >= MAX_ZOOM || transform.x > MAX_X || transform.x < MIN_X || transform.y > MAX_Y || transform.y < MIN_Y) {
+                //         transform.zoom = previousScale
+                //         transform.x = oldX
+                //         transform.y = oldY
+                //         console.log(transform.x, transform.y)
+                // }
+
         }
 
         const onMouseMove = (e) => {
                 updateVis(ctx, canvas, transform)
                 updatePanning(e)
 
-                console.log(e)
         }
 
         canvas.addEventListener('mousedown', (e) => {
@@ -97,7 +118,6 @@ export default function createVis() {
 
                 updateVis(ctx, canvas, transform)
 
-                console.log(e)
         }
 
         canvas.addEventListener('wheel', onMouseWheel)
