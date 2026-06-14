@@ -588,3 +588,7 @@ footer p {
         cursor: crosshair;
 
 }
+
+datalist {
+        background-color: var(--background);
+}

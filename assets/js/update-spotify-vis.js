@@ -87,6 +87,43 @@ export default function updateVis(ctx, canvas, transform) {
                 }
         });
 
+
+
+        const search = document.querySelector('#search-bar')
+        const suggestions = document.querySelector('#search-suggestions')
+
+
+        search.addEventListener(
+                "input",
+                (event) => {
+                        const query = event.target.value.toLowerCase();
+                        while (suggestions.lastElementChild) {
+                                suggestions.removeChild(suggestions.lastElementChild);
+                        }
+
+                        let suggested_artists = []
+
+                        for (const artist of sorted_data) {
+                                const artist_name = artist.artist.toLowerCase()
+                                if (artist_name.includes(query)) {
+                                        suggested_artists.push(artist.artist)
+                                        if (suggested_artists.length == 5) {
+                                                break;
+                                        }
+                                }
+
+                        }
+
+
+                        for (const suggestion of suggested_artists) {
+                                const suggestion_tag = document.createElement("option")
+                                suggestion_tag.setAttribute("value", suggestion)
+                                suggestions.appendChild(suggestion_tag)
+                        }
+                },
+
+        );
+
 //left -x / z
 //top -y / z
 //right (2000 - x) / z

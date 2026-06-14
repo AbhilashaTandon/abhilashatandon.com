@@ -1,7 +1,21 @@
 <layout title="Spotify Artists" src="spotify-vis.html">
   <main class="bg-(--background) px-(--large) h-max">
 
-    <canvas width="2000" height="1000" class="border border-(--text)" id="spotify-canvas"></canvas>
+    <div class="z-50 grid">
+      <canvas width="2000" height="1000" class="border border-(--text) col-start-1 row-start-1" id="spotify-canvas">
+      </canvas>
+      <div
+        class="col-start-1 row-start-1 flex flex-row items-center h-min w-fit gap-x-4 px-4 py-2 border bg-(--background)">
+        <label for="search-bar" class="p ">Search for an artist</label>
+        <input id="search-bar" class="border z-50 hover:cursor-text" type="search" list="search-suggestions"
+          autocomplete="off" />
+        <datalist id="search-suggestions" class="bg-(--background)">
+
+
+        </datalist>
+
+      </div>
+    </div>
   </main>
 
 </layout>

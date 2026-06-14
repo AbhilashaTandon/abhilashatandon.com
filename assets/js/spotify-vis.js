@@ -3,7 +3,6 @@ import updateVis from "./update-spotify-vis.js"
 export default function createVis() {
         let canvas = document.getElementById("spotify-canvas");
         if (canvas == null) {
-                alert("Canvas not found");
                 return;
         }
         let ctx = canvas.getContext('2d');
