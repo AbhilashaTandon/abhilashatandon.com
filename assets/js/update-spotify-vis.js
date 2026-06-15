@@ -17,9 +17,14 @@ function artist_coord_to_local_coord(x, y) {
                 , y]
 }
 
-export default function updateVis(ctx, canvas, transform) {
+const genreColormap = {
+        "Hip-Hop": "#dea0ff", "Pop": "#00aece", "Indie": "#f95543", "Rock": "#f0e240", "Alt": "#04a000", "Country": "#820300", "Spanish": "#004700", "K-pop": "#ff9901", "South Asian": "#006dd0", "CCM": "#68405f",
+};
 
-        console.log(transform)
+export default function updateVis(ctx, canvas, transform, showGenres) {
+
+        console.log(showGenres)
+
         ctx.setTransform(1, 0, 0, 1, 0, 0)
         ctx.fillStyle = "#ffffff"
         //clear screen
@@ -54,7 +59,13 @@ export default function updateVis(ctx, canvas, transform) {
                 const opacity = Math.min(Math.max(Math.floor(Math.sqrt(transform.zoom) * 2), 16), 64)
 
 
-                drawCircle(ctx, x_coord, y_coord, radius, "#696969" + opacity.toString(16))
+                let color = "#696969"
+
+                if (showGenres) {
+                        color = genreColormap[artist.genre]
+                }
+
+                drawCircle(ctx, x_coord, y_coord, radius, color + opacity.toString(16))
 
 
         });
@@ -81,6 +92,7 @@ export default function updateVis(ctx, canvas, transform) {
                 let overlap = false
 
                 for (const labeled_artist of labeled_artists) {
+
 
 
                         const x_distance = Math.abs(artist.x - labeled_artist.x)

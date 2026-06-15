@@ -5,15 +5,15 @@
       <canvas width="2000" height="1000" class="border border-(--text) col-start-1 row-start-1" id="spotify-canvas">
       </canvas>
       <div
-        class="col-start-1 row-start-1 flex flex-row items-center h-min w-fit gap-x-4 px-4 py-2 border bg-(--background)">
+        class="col-start-1 row-start-1 h-min w-fit gap-x-4 px-4 py-2 border bg-(--background) grid grid-cols-2 items-center">
         <label for="search-bar" class="p ">Search for an artist</label>
-        <input id="search-bar" class="border z-50 hover:cursor-text" type="search" list="search-suggestions"
+        <input id="search-bar" class="border z-50 hover:cursor-text h-min small" type="search" list="search-suggestions"
           autocomplete="off" />
         <datalist id="search-suggestions" class="bg-(--background)">
-
-
+          <!-- This will be filled dynamically with javascript -->
         </datalist>
-
+        <!-- <label for="toggle-genre" class="p ">Toggle Genre Display</label> -->
+        <!-- <input class="w-4" id="toggle-genre" type="checkbox" checked="true"> </input> -->
       </div>
     </div>
   </main>
