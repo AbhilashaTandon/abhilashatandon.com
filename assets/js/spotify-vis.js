@@ -9,9 +9,8 @@ export default function createVis() {
         }
         let ctx = canvas.getContext('2d');
 
-        const initial_transform = { x: 440, y: 224, zoom: 72 }
+        let initial_transform = { x: 440, y: 224, zoom: 72 }
 
-        let transform = initial_transform
 
         const MIN_ZOOM = .8;
 
@@ -30,6 +29,14 @@ export default function createVis() {
         canvas.height = rect.height
         canvas.width = rect.width
 
+        if (window.screen.width < 1024) {
+                canvas.height = 1.5 * canvas.width;
+                initial_transform = { x: 41, y: 188, zoom: 43 }
+        }
+
+
+        let transform = initial_transform
+
         const centerX = rect.left + rect.width / 2
         const centerY = rect.top + rect.height / 2
 
@@ -40,13 +47,14 @@ export default function createVis() {
         });
 
         //adapted from https://harrisonmilbradt.com/blog/canvas-panning-and-zooming
+        //and partially from https://codepen.io/chengarda/pen/wRxoyB
 
         let showGenres = false
 
         updateVis(ctx, canvas, transform, showGenres)
 
         let previousX = 0,
-                previousY = 0
+                previousY = 0, previousDist = null
 
         function getPosXY(x, y) {
                 return [(x - rect.left), (y - rect.top)]
@@ -109,8 +117,58 @@ export default function createVis() {
         }
 
         const onMouseMove = (e) => {
+                console.log(transform)
                 updateVis(ctx, canvas, transform)
                 updatePanning(e)
+
+        }
+
+        const handlePinch = (e) => {
+                e.preventDefault();
+
+                let touch1 = { x: e.touches[0].clientX, y: e.touches[0].clientY }
+                let touch2 = { x: e.touches[1].clientX, y: e.touches[1].clientY }
+
+
+                const oldX = transform.x
+                const oldY = transform.y
+
+                const midpointX = touch1.x * .5 + touch2.x * .5
+                const midpointY = touch1.y * .5 + touch2.y * .5
+
+                const distance = (touch1.x - touch2.x) ** 2 + (touch1.y - touch2.y) ** 2
+
+                const [localX, localY] = getPosXY(midpointX, midpointY);
+
+                if (previousDist == null) {
+                        previousDist = distance
+                        return
+                }
+
+                const previousScale = transform.zoom
+
+                const newScale = (transform.zoom += (previousDist / distance) * (-0.0004 * transform.zoom))
+
+                const newX = localX - (localX - oldX) * (newScale / previousScale)
+                const newY = localY - (localY - oldY) * (newScale / previousScale)
+
+
+
+                transform.x += (newX - oldX)
+                transform.y += (newY - oldY)
+                transform.zoom = newScale
+
+        }
+
+        const onTouch = (e) => {
+                console.log("touch")
+                e.preventDefault()
+                if (e.touches.length == 1) {
+                        updatePanning(e)
+                }
+                else if (e.type == "touchmove" && e.touches.length == 2) {
+                        handlePinch(e)
+                }
 
         }
 
@@ -135,6 +193,23 @@ export default function createVis() {
 
         canvas.addEventListener('wheel', onMouseWheel)
 
+
+        canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault()
+                const pos = getPos(e)
+                previousX = pos[0]
+                previousY = pos[1]
+                previousDist = null
+
+                canvas.addEventListener('touchmove', onTouch)
+        })
+
+
+        canvas.addEventListener('touchend', (e) => {
+                previousDist = null
+                e.preventDefault()
+                canvas.removeEventListener('touchmove', onTouch)
+        })
 
 
         // const genreToggleButton = document.querySelector("#toggle-genre")

@@ -1,11 +1,11 @@
 <layout title="Spotify Artists" src="spotify-vis.html">
   <main class="bg-(--background) px-(--large) h-max">
 
-    <div class="z-50 grid">
+    <div class="z-50 md:grid">
       <canvas width="2000" height="1000" class="border border-(--text) col-start-1 row-start-1" id="spotify-canvas">
       </canvas>
       <div
-        class="col-start-1 row-start-1 h-min w-fit gap-x-4 px-4 py-2 border bg-(--background) grid grid-cols-2 items-center">
+        class="md:col-start-1 md:row-start-1 h-min w-fit gap-x-4 px-4 py-2 border bg-(--background) grid grid-cols-2 items-center">
         <label for="search-bar" class="p ">Search for an artist</label>
         <input id="search-bar" class="border z-50 hover:cursor-text h-min small" type="search" list="search-suggestions"
           autocomplete="off" />
