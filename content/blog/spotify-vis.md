@@ -2,7 +2,7 @@
 title: Making New Genres With the Spotify API
 excerpt: An excursion into unsupervised machine learning.
 active: true
-date: 07/14/2026
+date: 07/24/2026
 image: spotify_artist_visualization.png
 alt: 
  tags:
