@@ -2,7 +2,7 @@
 title: Hello World!
 excerpt: A brief introduction to who I am, my interests, and my skills.
 active: true
-date: 08/09/2024
+date: 06/06/2026
 image: hello.gif
 alt: Animated gif of medium-brown skinned hand emoji waving
 tags:
