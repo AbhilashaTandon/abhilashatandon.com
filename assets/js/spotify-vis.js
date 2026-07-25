@@ -4,6 +4,7 @@ let sorted_data = data.sort((a, b) => a.popularity < b.popularity);
 
 export default function createVis() {
         let canvas = document.getElementById("spotify-canvas");
+
         if (canvas == null) {
                 return;
         }
@@ -50,11 +51,14 @@ export default function createVis() {
         //and partially from https://codepen.io/chengarda/pen/wRxoyB
 
         let showGenres = false
+        let clickStart = { x: undefined, y: undefined }
 
-        updateVis(ctx, canvas, transform, showGenres)
+        updateVis(ctx, canvas, transform, showGenres, clickStart)
 
         let previousX = 0,
                 previousY = 0, previousDist = null
+
+
 
         function getPosXY(x, y) {
                 return [(x - rect.left), (y - rect.top)]
@@ -66,6 +70,7 @@ export default function createVis() {
 
         const updatePanning = (e) => {
                 const [currentX, currentY] = getPos(e);
+
 
                 transform.x += currentX - previousX
                 transform.y += currentY - previousY
@@ -117,8 +122,7 @@ export default function createVis() {
         }
 
         const onMouseMove = (e) => {
-                console.log(transform)
-                updateVis(ctx, canvas, transform)
+                updateVis(ctx, canvas, transform, showGenres, null)
                 updatePanning(e)
 
         }
@@ -144,7 +148,6 @@ export default function createVis() {
                         previousDist = distance
                         return
                 }
-
                 const previousScale = transform.zoom
 
                 const newScale = (transform.zoom += (previousDist / distance) * (-0.0004 * transform.zoom))
@@ -152,18 +155,20 @@ export default function createVis() {
                 const newX = localX - (localX - oldX) * (newScale / previousScale)
                 const newY = localY - (localY - oldY) * (newScale / previousScale)
 
-
-
                 transform.x += (newX - oldX)
                 transform.y += (newY - oldY)
                 transform.zoom = newScale
-
         }
 
         const onTouch = (e) => {
-                console.log("touch")
                 e.preventDefault()
                 if (e.touches.length == 1) {
+                        const pos = getPos(e)
+
+                        clickStart.x = pos[0]
+                        clickStart.y = pos[1]
+
+                        console.log(clickStart, transform)
                         updatePanning(e)
                 }
                 else if (e.type == "touchmove" && e.touches.length == 2) {
@@ -177,6 +182,14 @@ export default function createVis() {
                 previousX = pos[0]
                 previousY = pos[1]
 
+                clickStart.x = pos[0]
+                clickStart.y = pos[1]
+
+                console.log(clickStart, transform)
+
+                updateVis(ctx, canvas, transform, showGenres, clickStart)
+                updateVis(ctx, canvas, transform, showGenres, clickStart)
+
                 canvas.addEventListener('mousemove', onMouseMove)
         })
 
@@ -187,7 +200,7 @@ export default function createVis() {
         const onMouseWheel = (e) => {
                 updateZooming(e)
 
-                updateVis(ctx, canvas, transform)
+                updateVis(ctx, canvas, transform, showGenres, null)
 
         }
 
@@ -296,7 +309,7 @@ export default function createVis() {
                 const total_time = 2000
 
                 const original_transform = initial_transform
-                updateVis(ctx, canvas, original_transform, showGenres)
+                updateVis(ctx, canvas, transform, showGenres, clickStart)
 
                 let i = 0
 
@@ -306,7 +319,7 @@ export default function createVis() {
                                 transform.x = original_transform.x * (1 - mix) + new_transform.x * mix
                                 transform.y = original_transform.y * (1 - mix) + new_transform.y * mix
                                 transform.zoom = original_transform.zoom * (1 - mix) + new_transform.zoom * mix
-                                updateVis(ctx, canvas, transform, showGenres)
+                                updateVis(ctx, canvas, transform, showGenres, clickStart)
                                 i++;
                         } else {
                                 clearInterval(interval); // Stop the interval when done
