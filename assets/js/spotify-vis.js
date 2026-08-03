@@ -65,7 +65,7 @@ export default function createVis() {
         }
 
         const getPos = (e) => {
-                return getPosXY(e.clientX, e.clientY)
+                return getPosXY(e.clientX, e.clientY + 2)
         }
 
         const updatePanning = (e) => {

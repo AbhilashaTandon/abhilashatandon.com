@@ -215,7 +215,7 @@
         --background: var(--dark-background);
         --text: var(--dark-text);
         --accent: var(--dark-accent);
-        --gray: var(--dark-gray);
+        --gray: var(--light-gray);
 }
 
 
@@ -223,7 +223,7 @@
         --background: var(--light-background);
         --text: var(--light-text);
         --accent: var(--light-accent);
-        --gray: var(--light-gray);
+        --gray: var(--dark-gray);
 }
 
 .content {

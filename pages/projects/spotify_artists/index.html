@@ -1,18 +1,6 @@
 <layout title="Spotify Artists" src="spotify-vis.html">
-  <main class="bg-(--background) px-(--large) h-max">
-    <article class="max-w-3xl flex flex-col gap-y-8 items-start justify-between align-center">
-      <h1>Spotify Genre Visualizer</h1>
-
-      <h5>The following is an interactive data visualization compiled from over 6000 playlists created by American
-        users scraped from Spotify. It contains 5000 unique artists, the positions of which were determined by an
-        algorithm such that artists that coocur in the same playlists (i.e. have similar fanbases) are closer together.
-        The visualization illustrates large scale and small scale structure of the US music landscape. Use the search
-        bar to see if your favorite artists are included and where, and click on any artist to mark them in red. Have
-        fun!
-
-      </h5>
-    </article>
-    <div class="z-50 md:grid">
+  <main class="bg-(--background) px-(--large) h-max flex flex-col items-center">
+    <div class="z-50 md:grid mt-12">
       <canvas width="2000" height="1000" class="border border-(--text) col-start-1 row-start-1" id="spotify-canvas">
       </canvas>
       <div
@@ -27,6 +15,18 @@
         <!-- <input class="w-4" id="toggle-genre" type="checkbox" checked="true"> </input> -->
       </div>
     </div>
+
+    <article class="max-w-3xl flex flex-col gap-y-8 items-start justify-between align-center py-8">
+      <h1>Spotify Genre Visualizer</h1>
+
+      <h5>The above is an interactive data visualization compiled from over 6000 playlists created by American
+        users scraped from Spotify. It contains 5000 unique artists, the positions of which were determined by an
+        algorithm such that artists that coocur in the same playlists (i.e. have similar fanbases) are closer together.
+        The visualization illustrates large scale and small scale structure of the US music landscape. Use the search
+        bar to see if your favorite artists are included and where, and click on any artist to mark them in red. Have
+        fun!
+      </h5>
+    </article>
   </main>
 
 </layout>
