@@ -68,6 +68,7 @@ export default function toggleDarkMode() {
         updateMode();
 
         button.addEventListener("click", () => {
+                console.log("toggle mode");
                 darkMode = !darkMode;
                 updateMode();
         });

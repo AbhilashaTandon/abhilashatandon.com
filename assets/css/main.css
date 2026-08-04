@@ -191,8 +191,8 @@
         --dark-background: #1A0131;
         --dark-text: #F3E8FF;
         --dark-accent: #C27AFF;
-        --light-gray: #cdc7d1;
-        --dark-gray: #342e38;
+        --light-gray: #887a92;
+        --dark-gray: #8b7d95;
 
         --xs: clamp(0.938rem, 4.688vw, 5.625rem);
         /* 15 to 90 px */
@@ -215,7 +215,7 @@
         --background: var(--dark-background);
         --text: var(--dark-text);
         --accent: var(--dark-accent);
-        --gray: var(--light-gray);
+        --gray: var(--dark-gray);
 }
 
 
@@ -223,7 +223,7 @@
         --background: var(--light-background);
         --text: var(--light-text);
         --accent: var(--light-accent);
-        --gray: var(--dark-gray);
+        --gray: var(--light-gray);
 }
 
 .content {
