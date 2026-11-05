@@ -686,3 +686,7 @@ footer p {
 datalist {
         background-color: var(--background);
 }
+
+article p image {
+        display: flex;
+}
