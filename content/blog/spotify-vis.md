@@ -244,4 +244,4 @@ I'll call this "Disney(Channel)Core". I'm glad I could at least make up one stup
 Finally, I decided to perform UMAP again, but use only two dimensions as output, to make a chart of sorts, and I think this really shows the strengths and weaknesses of this approach more clearly. You can check it out for yourself [here](https://abhilashatandon.com/projects/spotify_artists/).
 
 I find it's a pretty useful tool for discovering new music, and it's also just really interesting to browse around the chart and see all the little niches it's able to find. Of course, the issues explained
-above are also present, so take some of the correlations here with a heavy grain of salt. Have fun exploring!
+above are also present, so take some of the correlations here with a heavy grain of salt. Have fun exploring, and happy hacking!

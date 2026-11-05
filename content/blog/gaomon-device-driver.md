@@ -1,10 +1,10 @@
 ---
 title: How I Wrote a Device Driver for My Graphics Tablet  
-excerpt:  
+excerpt: "Spoiler: It involved a lot of system reboots"
 active: true  
 date: 11/05/2026  
-image: none  
-alt: xxx  
+image: gaomon-pd1560.webp
+alt: An image of a Gaomon graphics tablet and stylus
 tags:
 - c
 - linux
@@ -13,11 +13,11 @@ tags:
 slug: gaomon-device-driver
 ---
 
-Most of what I do in my spare time revolves around my two major hobbies: programming and art. I often draw in my sketchbook, but I am nominally a digital artist, as most of my proper "finished pieces" are digital works. Making digital art is thankfully easy nowadays; all you need is a computer with software like Photoshop (or the FOSS alternative I use called [Krita](https://krita.org/)) and a graphics tablet. My tablet is essentially a screen with a special stylus that, when pressed to the surface, registers a mouse click. It also has nice features like pressure sensitivity and buttons for common commands/hotkeys. While it is technically possible to draw digitally with a mouse or even a trackpad, it's much more ergonomic to imitate the mechanics of traditional art.
+Most of what I do in my spare time revolves around my two major hobbies: programming and art. I often draw in my sketchbook, but I am nominally a digital artist. Most of my proper "finished pieces" are digital works. Making digital art is thankfully easy nowadays; all you need is a computer with software like Photoshop (or the FOSS alternative I use called [Krita](https://krita.org/)) and a graphics tablet. My tablet is essentially a screen with a special stylus that, when pressed to the surface, registers a mouse click. It also has nice features like pressure sensitivity and buttons for common commands/hotkeys. While it is technically possible to draw digitally with a mouse or even a trackpad, it's much more ergonomic to imitate the mechanics of traditional art.
 
-I use a graphics tablet called the [Gaomon PD1560](https://discord.com/invite/zy69eWtVb), which I have used for many years. I spent a lot of time developing my skills and learning the ins and outs of digital painting, and my tablet served me well on this journey. It was friendly and worked wonderfully … until I decided to switch from Windows to Linux. Unfortunately, at the time, Gaomon did not make Linux drivers for their tablets (thankfully they do [now](https://prodsens.live/2026/01/19/gaomon-finally-released-full-featured-linux-drivers-for-their-graphic-tablets/)), which made adapting my workflow to Linux difficult. I did get the tablet working with a helpful open-source tool called [OpenTabletDriver](https://github.com/OpenTabletDriver/OpenTabletDriver), but this took a lot of configuration before I got it to work, so for a couple of months I needed to boot up Windows whenever I wanted to draw.
+I use a graphics tablet called the [Gaomon PD1560](https://gaomon.net/products/gaomon-pd1561-v2-pen-display), which I have used for many years. I spent a lot of time developing my skills and learning the ins and outs of digital painting, and my tablet served me well on this journey. It was friendly and worked wonderfully … until I decided to switch from Windows to Linux. Unfortunately, at the time, Gaomon did not make Linux drivers for their tablets (thankfully they do [now](https://prodsens.live/2026/01/19/gaomon-finally-released-full-featured-linux-drivers-for-their-graphic-tablets/)), which made adapting my workflow to Linux difficult. I did get the tablet working with a helpful open-source tool called [OpenTabletDriver](https://github.com/OpenTabletDriver/OpenTabletDriver), but this took a lot of configuration before I got it to work, so for a couple of months I needed to boot up Windows whenever I wanted to draw.
 
-All the while, I wondered if I could sidestep this issue by writing my own device driver. How hard could it be? I finally decided to pursue this idea as a semester project for my graduate-level operating systems class. You can find the code for the driver [on my GitHub](https://github.com/AbhilashaTandon/Gaomon-PD1560-Device-Driver).
+All the while, I wondered if I could sidestep this issue by writing my own device driver. I finally decided to pursue this idea as a semester project for my graduate-level operating systems class. You can find the code for the driver [on my GitHub](https://github.com/AbhilashaTandon/Gaomon-PD1560-Device-Driver).
 
 ## Device Drivers on Linux
 
@@ -80,7 +80,7 @@ The first two words here appear to be constants of some kind, as they always hav
   
 ## Results
 
-Thankfully, this story has a happy ending: it worked! I did only get it working at the last minute, but what's done is done. I'm really proud that I was actually able to get everything to work right, as in all the basic functionality of the tablet: pen presses, pressure sensitivity, and the tablet buttons function reliably. That doesn't mean the driver is perfect though, far from it.
+Thankfully, this story has a happy ending: it worked! I did only get it working at the last minute, but what's done is done. I'm really proud that I actually got everything to work right, as in all the basic functionality of the tablet: pen presses, pressure sensitivity, and the tablet buttons function reliably. That doesn't mean the driver is perfect though, far from it.
 
 There is a considerable amount of lag when drawing, not too much to make the tablet unusable, but enough to be an annoyance. I think the reason for this is because my driver communicates with the tablet over interrupts, which are inefficient in large quantities. Polling wasn't an option since most of the time no input is coming from the tablet, but I think a better solution would have been to enable polling after an interrupt detected actual input, which can then be disabled once input stops. That's something I can work on later, I suppose. The code also is very sloppy, I didn't have time to adhere to standard conventions for Linux drivers so it wouldn't be very nice to maintain. At best it's a bunch of memory leaks held together with duct tape.
 
