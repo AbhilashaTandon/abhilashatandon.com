@@ -1,0 +1,18 @@
+<layout title="Home Page" src="blogpost.html">
+  <main
+    class="content flex flex-col px-(--xl) items-center justify-start fit-width h-max bg-gradient-to- from-(--background)/0 to-(--background)"
+    id="main">
+
+    <div id="artwork"
+      class=" content-stretch justify-between gap-y-(--small) gap-x-15 artwork_grid max-lg:fit-width max-sm:gap-y-16">
+      <ForEach content="art" as="post" orderBy="date,desc">
+        <If condition="{post.active}">
+          <include src="./artwork.html" url="/art/{post.slug}" image="/assets/images/{post.image}"
+            post_title={post.title} post_excerpt={post.excerpt} post_date={post.date}></include>
+        </If>
+      </ForEach>
+    </div>
+    </div>
+  </main>
+
+</layout>

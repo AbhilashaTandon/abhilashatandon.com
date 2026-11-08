@@ -1,0 +1,54 @@
+[
+  {
+    "title": "Some Fanart for Control",
+    "excerpt": null,
+    "active": true,
+    "date": "06/04/2026",
+    "image": "art/jesse_faden.png",
+    "alt": {
+      "tags": null
+    },
+    "slug": "jesse_faden",
+    "content": "",
+    "link": "/art/jesse_faden"
+  },
+  {
+    "title": "Some Fanart for Control",
+    "excerpt": null,
+    "active": false,
+    "date": "06/04/2026",
+    "image": "art/jesse_faden.png",
+    "alt": {
+      "tags": null
+    },
+    "slug": "test",
+    "content": "",
+    "link": "/art/test"
+  },
+  {
+    "title": "Laura Palmer",
+    "excerpt": null,
+    "active": true,
+    "date": "07/20/2026",
+    "image": "art/laura_palmer.png",
+    "alt": {
+      "tags": null
+    },
+    "slug": "laura_palmer",
+    "content": "Based on this photo: [https://www.instagram.com/p/DbRPbW7jrtC/](https://www.instagram.com/p/DbRPbW7jrtC/)",
+    "link": "/art/laura_palmer"
+  },
+  {
+    "title": "Shopping Cart",
+    "excerpt": null,
+    "active": true,
+    "date": "10/25/2026",
+    "image": "art/study.png",
+    "alt": {
+      "tags": null
+    },
+    "slug": "shopping_cart",
+    "content": "Based on a photo my friend took.",
+    "link": "/art/shopping_cart"
+  }
+]
